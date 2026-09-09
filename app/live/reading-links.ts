@@ -1,0 +1,2 @@
+export function readingLink(book:string,chapter=0){const url=new URL(window.location.href);url.search='';url.searchParams.set('book',book);if(chapter)url.searchParams.set('chapter',String(chapter));url.hash='';return url.toString()}
+export function nextUnrated(count:number,ratings:{chapter:number}[]){const done=new Set(ratings.map(r=>r.chapter));for(let n=1;n<=count;n++)if(!done.has(n))return n;return 0}
