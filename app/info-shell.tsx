@@ -1,0 +1,2 @@
+import './launch.css';
+export default function InfoShell({title,children}:{title:string;children:React.ReactNode}){return <div className="info-shell"><header className="info-header"><a href="/" className="info-brand">ChillyMZ</a><a href="/">Explore books</a></header><main id="main-content" className="info-content" tabIndex={-1}><h1>{title}</h1>{children}</main><footer className="info-footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies & preferences</a><a href="/">Back to books</a></footer></div>}

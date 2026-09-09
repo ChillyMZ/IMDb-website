@@ -1,0 +1,34 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),ts=require('typescript'),{DatabaseSync}=require('node:sqlite');
+test('owner bulk import is atomic, duplicate-safe, unrated and paginated',async()=>{
+ const sql=new DatabaseSync(':memory:');for(const f of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sql.exec(fs.readFileSync('drizzle/'+f,'utf8'));
+ let current={id:'reader',email:'reader@example.test',name:'Reader'};
+ const db={prepare(q){const make=(args=[])=>({bind(...v){return make(v)},async all(){return {results:sql.prepare(q).all(...args)}},async first(){return sql.prepare(q).get(...args)||null},async run(){const r=sql.prepare(q).run(...args);return {meta:{changes:Number(r.changes)}}}});return make()},async batch(commands){sql.exec('BEGIN');try{const out=[];for(const c of commands)out.push(await c.run());sql.exec('COMMIT');return out}catch(e){sql.exec('ROLLBACK');throw e}}};
+ const cache={};function load(file){file=path.resolve(file);if(cache[file])return cache[file];const output=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,module={exports:{}};const req=s=>{if(s==='next/headers')return {headers:async()=>new Headers(current?{'oai-authenticated-user-id':current.id}:{})};if(s.endsWith('chatgpt-auth'))return {getChatGPTUser:async()=>current?{email:current.email,fullName:current.name}:null};if(s.endsWith('core-store'))return {storage:()=>({db,bucket:{}})};if(s.startsWith('.'))return load(path.resolve(path.dirname(file),s)+'.ts');throw Error(s)};new Function('require','module','exports',output)(req,module,module.exports);return cache[file]=module.exports}
+ const batch=load('app/api/catalogue-import/route.ts'),catalogue=load('app/api/catalogue/route.ts'),core=load('app/api/core/route.ts');
+ const request=(route,body,origin='https://example.test')=>new Request('https://example.test/api/'+route,{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify(body)});
+ const list=async(params='')=>(await catalogue.GET(new Request('https://example.test/api/catalogue?'+params))).json();
+ current=null;assert.equal((await batch.GET()).status,401);
+ current={id:'reader',email:'reader@example.test',name:'Reader'};assert.equal((await batch.GET()).status,403);assert.equal((await batch.POST(request('catalogue-import',{action:'import',batch:'fantasy-25'}))).status,403);
+ current={id:'owner',email:'owner@example.invalid',name:'Owner'};
+ assert.equal((await batch.POST(request('catalogue-import',{action:'import',batch:'fantasy-25'},'https://evil.test'))).status,403);
+ let preview=await (await batch.GET()).json();assert.equal(preview.books.length,25);assert.equal(preview.books.filter(b=>!b.duplicate).length,25);assert.equal(preview.books.reduce((n,b)=>n+b.chapterCount,0),516);
+ const bad={title:'Invalid',author:'Author',chapterCount:501,sourceUrl:'https://example.test/source'};
+ assert.equal((await batch.POST(request('catalogue-import',{action:'import',books:[bad]}))).status,400);
+ assert.equal((await batch.POST(request('catalogue-import',{action:'import',books:Array(51).fill({...bad,chapterCount:5})}))).status,400);
+ sql.prepare('INSERT INTO ratings (user,book,chapter,score,date) VALUES (?,?,?,?,?)').run('reader','gutenberg-11',1,84,'2026-09-08');
+ const imported=await (await batch.POST(request('catalogue-import',{action:'import',batch:'fantasy-25'}))).json();assert.equal(imported.added,25);assert.equal(imported.skipped,0);
+ assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM books').get().n,30);assert.equal(sql.prepare('SELECT SUM(chapter_count) AS n FROM books WHERE catalogue_key IS NOT NULL').get().n,516);
+ assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM ratings').get().n,1);assert.equal(sql.prepare('SELECT score FROM ratings').get().score,84);
+ const again=await (await batch.POST(request('catalogue-import',{action:'import',batch:'fantasy-25'}))).json();assert.equal(again.added,0);assert.equal(again.skipped,25);
+ const alias={...preview.books[0],title:"Harry Potter and the Sorcerer’s Stone",author:'J.K. Rowling'};
+ const duplicate=await (await batch.POST(request('catalogue-import',{action:'preview',books:[alias,alias]}))).json();assert(duplicate.books.every(b=>b.duplicate));
+ const pages=await Promise.all([list('sort=Title&page=1'),list('sort=Title&page=2'),list('sort=Title&page=3')]);assert.deepEqual(pages.map(p=>p.books.length),[12,12,6]);assert.equal(new Set(pages.flatMap(p=>p.books.map(b=>b.id))).size,30);
+ assert.equal((await list('q=Rowling')).total,7);assert.equal((await list('q=%25')).total,0);assert.equal((await list('page=999')).page,3);
+ const fresh=pages.flatMap(p=>p.books).find(b=>b.title==='The Hobbit');assert.equal(fresh.cover,'');assert.equal(fresh.votes,0);assert.equal(fresh.average,null);assert(fresh.source_url);assert(fresh.chapter_note);
+ current={id:'reader',email:'reader@example.test',name:'Reader'};
+ const bootstrap=await (await core.GET()).json();assert.equal(bootstrap.totals.length,0);assert.equal(bootstrap.books.length,1);
+ assert.equal((await core.POST(request('core',{action:'rate',book:fresh.id,chapter:19,score:9.8}))).status,200);
+ const detail=await (await core.GET(new Request('https://example.test/api/core?book='+fresh.id))).json();assert.equal(detail.totals.length,1);assert.equal(detail.totals[0].average,9.8);assert.equal(detail.totals[0].count,1);
+ assert.equal((await list('sort=Highest+rated')).books[0].id,fresh.id);assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM ratings').get().n,2);
+ sql.close();
+});

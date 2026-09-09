@@ -1,0 +1,3 @@
+export type MetricView='books'|'book'|'chapter'|'community'|'diary'|'profile'|'submissions'|'admin'|'safety'|'privacy'|'terms'|'cookies'|'other';
+export function analyticsAllowed(){return typeof document!=='undefined'&&document.cookie.split('; ').some(c=>c==='chillymz_metrics=allow')&&navigator.doNotTrack!=='1'&&!(navigator as any).globalPrivacyControl}
+export function trackView(view:MetricView){if(!analyticsAllowed())return;const nav=performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming|undefined;const loadMs=nav&&nav.loadEventEnd>0?Math.min(60000,Math.round(nav.loadEventEnd/100)*100):null;fetch('/api/analytics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({view,loadMs}),keepalive:true}).catch(()=>{});}

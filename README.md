@@ -19,8 +19,12 @@ This server-backed Vinext/React application targets Cloudflare Workers and uses 
 
 Moving hosting requires configuring storage and securely adapting authentication. Never trust identity headers sent directly by clients. Live accounts, ratings, uploaded files, and credentials are not included.
 
-This repository does not automatically deploy or sync to the existing live website. The .openai/hosting.json file identifies the existing Sites project.
+This repository does not automatically deploy or sync to the existing live website. The live hosting manifest is omitted from this public export.
 
 ## Beta status
 
 Privacy and terms require review before public launch. Live mobile and speed verification remain outstanding. Indexing is disabled in this private-beta source. Cover provenance is in public/covers/SOURCES.md.
+
+## Required configuration before deployment
+
+Personal owner/contact details and the site URL have been replaced with example.invalid placeholders. Set the owner email in app/core-service.ts, the domain in app/site-config.ts, and the operator/contact details in the policy pages. Configure the hosting manifest with your own project. Until configured, real accounts will not receive owner privileges. Tests use the matching placeholder identity. Do not treat the policy placeholders as a finished public policy.

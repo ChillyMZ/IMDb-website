@@ -1,0 +1,1 @@
+export default function BookArt({book}:{book:{title:string;author:string;cover?:string}}){return book.cover?<img src={book.cover} alt={`Cover of ${book.title} by ${book.author}`} width={600} height={900} loading="lazy" decoding="async"/>:<div className="book-type-card"><small>CHILLYMZ / BOOKS</small><strong>{book.title}</strong><span>{book.author}</span></div>}

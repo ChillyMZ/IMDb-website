@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788744655851,
+      "tag": "0000_secret_taskmaster",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788816652182,
+      "tag": "0001_chilly_bushwacker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788837330828,
+      "tag": "0002_starter_books",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788876954767,
+      "tag": "0003_wonderful_sleeper",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1788879297154,
+      "tag": "0004_natural_medusa",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1788910935991,
+      "tag": "0005_lively_yellowjacket",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1788913433008,
+      "tag": "0006_volatile_rhodey",
+      "breakpoints": true
+    }
+  ]
+}

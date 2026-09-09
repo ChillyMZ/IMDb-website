@@ -1,0 +1,38 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),ts=require('typescript'),{DatabaseSync}=require('node:sqlite');
+test('moderation holding, reporting, blocking, suspension and appeals',async()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'chapterd-test-'));const filename=path.join(dir,'data.sqlite');let sql=new DatabaseSync(filename);
+ sql.exec(fs.readFileSync('drizzle/0000_secret_taskmaster.sql','utf8'));sql.exec(fs.readFileSync('drizzle/0001_chilly_bushwacker.sql','utf8'));sql.exec(fs.readFileSync('drizzle/0002_starter_books.sql','utf8'));sql.exec(fs.readFileSync('drizzle/0003_wonderful_sleeper.sql','utf8'));
+ sql.exec(fs.readFileSync('drizzle/0004_natural_medusa.sql','utf8'));
+ sql.exec(fs.readFileSync('drizzle/0006_volatile_rhodey.sql','utf8'));
+ let current={id:'reader-1',email:'reader@example.test',name:'Reader'};const objects=new Map();
+ const db={async batch(commands){sql.exec('BEGIN');try{const results=[];for(const c of commands)results.push(await c.run());sql.exec('COMMIT');return results}catch(e){sql.exec('ROLLBACK');throw e}},prepare(q){return {bind(...args){return {async run(){const r=sql.prepare(q).run(...args);return {meta:{changes:Number(r.changes)}}},async first(){return sql.prepare(q).get(...args)||null},async all(){return {results:sql.prepare(q).all(...args)}}}},async all(){return {results:sql.prepare(q).all()}}}}};
+ const bucket={async put(key,bytes,meta){objects.set(key,{body:bytes,meta})},async get(key){return objects.get(key)||null}};
+ const cache={};function load(file){if(cache[file])return cache[file];const output=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const module={exports:{}};const req=(s)=>{if(s==='next/headers')return {headers:async()=>new Headers(current?{'oai-authenticated-user-id':current.id}: {})};if(s.endsWith('chatgpt-auth'))return {getChatGPTUser:async()=>current?{email:current.email,fullName:current.name}:null};if(s.endsWith('core-store'))return {storage:()=>({db,bucket})};if(s.endsWith('catalogue-service'))return load('app/catalogue-service.ts');if(s.endsWith('core-service'))return load('app/core-service.ts');if(s.endsWith('request-guard'))return load('app/request-guard.ts');if(s.endsWith('moderation'))return load('app/moderation.ts');throw Error(s)};new Function('require','module','exports',output)(req,module,module.exports);cache[file]=module.exports;return module.exports}
+ const community=load('app/api/community/route.ts'),mod=load('app/api/moderation/route.ts'),reviews=load('app/api/chapter-reviews/route.ts'),core=load('app/api/core/route.ts');
+ const post=(api,body)=>api.POST(new Request('https://example.test/api/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify(body)}));
+ const reader={id:'reader-1',email:'reader@example.test',name:'Reader'},other={id:'other',email:'other@example.test',name:'Other'},owner={id:'owner',email:'owner@example.invalid',name:'Owner'};
+ const make={action:'post',title:'A book discussion',body:'A quiet chapter was my favorite.',topic:'Book talk'};
+ current=null;assert.equal((await mod.GET()).status,401);current=reader;
+ const created=await post(community,make);assert.equal(created.status,200);const id=(await created.json()).id;
+ const held=await post(community,{...make,body:'https://example.test '.repeat(5)});assert.equal((await held.json()).held,true);
+ assert.equal((await (await community.GET()).json()).posts.length,1);
+ current=other;await post(core,{action:'profile',name:'Other',bio:''});
+ assert.equal((await post(mod,{action:'report',kind:'post',target:id,reason:'Spam'})).status,200);
+ const report=sql.prepare("SELECT id FROM moderation_cases WHERE target=?").get(id).id;
+ assert.equal((await post(mod,{action:'remove',id:report,reason:'Remove'})).status,403);
+ assert.equal((await post(mod,{action:'relation',kind:'block',other:reader.id,value:true})).status,200);
+ assert.equal((await (await community.GET()).json()).posts.length,0);
+ assert.equal((await post(community,{action:'comment',post:id,body:'Reply'})).status,403);
+ await post(mod,{action:'relation',kind:'block',other:reader.id,value:false});
+ current=owner;assert.equal((await post(mod,{action:'remove',id:report,reason:'Spam removed.'})).status,200);
+ assert.equal((await post(mod,{action:'warn',id:report,reason:'Avoid spam.'})).status,200);
+ assert.equal((await (await community.GET()).json()).posts.length,0);
+ assert.equal((await post(mod,{action:'suspend',id:report,days:1,reason:'Repeated spam.'})).status,200);
+ current=reader;assert.equal((await post(community,make)).status,403);
+ assert.equal((await post(reviews,{action:'save',book:'gutenberg-11',chapter:1,body:'Review',spoiler:0})).status,403);
+ assert.equal((await post(mod,{action:'appeal',id:report,text:'Please reconsider.'})).status,200);
+ current=owner;assert.equal((await post(mod,{action:'restore',id:report,reason:'Appeal accepted.'})).status,200);
+ current=reader;assert.equal((await post(community,make)).status,200);
+ sql.close();sql=new DatabaseSync(filename);const cases=await (await mod.GET()).json();assert.equal(cases.cases.find(c=>c.id===report).appeal_state,'accepted');assert.equal(cases.restriction,null);
+ sql.close();
+});

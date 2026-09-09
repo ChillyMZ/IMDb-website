@@ -1,0 +1,10 @@
+"use client";
+import {useEffect,useState} from 'react';
+import {trackView} from './analytics-client';
+export default function CookiePreferences({page=false}:{page?:boolean}){
+ const [choice,setChoice]=useState<string|null>(null),[ready,setReady]=useState(false),[notice,setNotice]=useState('');
+ useEffect(()=>{const refresh=()=>{const found=document.cookie.split('; ').find(c=>c.startsWith('chillymz_metrics='))?.split('=')[1];setChoice(found==='allow'||found==='deny'?found:null);setReady(true)};refresh();window.addEventListener('chillymz-consent',refresh);return()=>window.removeEventListener('chillymz-consent',refresh)},[]);
+ function choose(value:string){const privacySignal=navigator.doNotTrack==='1'||(navigator as any).globalPrivacyControl;const actual=privacySignal?'deny':value;document.cookie=`chillymz_metrics=${actual}; Path=/; Max-Age=15552000; SameSite=Lax${location.protocol==='https:'?'; Secure':''}`;setChoice(actual);setNotice(actual==='allow'?'Optional analytics enabled.':'Optional analytics disabled.');window.dispatchEvent(new Event('chillymz-consent'));if(actual==='allow')trackView(page?'cookies':'other')}
+ if(!ready||(!page&&(choice||location.pathname==='/cookies')))return null;
+ return <section className={page?'cookie-page':'cookie-banner'} aria-label="Cookie preferences"><h2>{page?'Your preferences':'Your privacy choices'}</h2><p>Sign-in uses essential cookies. With your permission, ChillyMZ also counts section visits and page-load times to improve the site. No advertising trackers.</p>{page&&<div className="cookie-choice"><b>Optional analytics: {choice==='allow'?'allowed':choice==='deny'?'disabled':'not enabled'}</b><p>Your choice is saved in this browser for six months. You can change it here at any time. Do Not Track and Global Privacy Control signals keep analytics off.</p></div>}<div className="cookie-actions"><button onClick={()=>choose('deny')}>Essential only</button><button onClick={()=>choose('allow')}>Allow analytics</button></div>{!page&&<p><a href="/cookies">Cookie details</a> · <a href="/privacy">Privacy policy</a></p>}{notice&&<p role="status">{notice}</p>}</section>
+}
