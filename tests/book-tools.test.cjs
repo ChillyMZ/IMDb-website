@@ -24,5 +24,13 @@ test('book requests require verification and owner edits preserve reader data',a
  assert.equal(sql.prepare('SELECT chapter_count FROM books WHERE id=?').get(id).chapter_count,25);
  assert.equal(links.nextUnrated(3,[{chapter:1},{chapter:3}]),2);assert.equal(links.nextUnrated(2,[{chapter:1},{chapter:2}]),0);
  global.window={location:{href:'https://example.test/?old=1'}};assert.equal(links.readingLink('book space',25),'https://example.test/?book=book+space&chapter=25');delete global.window;
+ current=null;
+ const guest=await (await core.GET(new Request('https://example.test/api/core?book='+id))).json();
+ assert.equal(guest.user.id,'');assert.equal(guest.user.admin,false);assert.deepEqual(guest.mine,[]);
+ assert.equal(guest.books.length,1);assert.equal(guest.books[0].owner,undefined);assert.equal(guest.books[0].cover_key,undefined);
+ assert.equal((await post({action:'rate',book:id,chapter:1,score:10,user:'reader'})).status,401);
+ assert.equal((await update(id,30)).status,401);
+ const catalogue=load('app/api/catalogue/route.ts');
+ assert.equal((await catalogue.GET(new Request('https://example.test/api/catalogue'))).status,200);
  sql.close();
 });

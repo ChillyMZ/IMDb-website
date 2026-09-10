@@ -6,15 +6,15 @@ import {mayPost,inspectContent} from '../../moderation';
 import {readJson,limitRequests,boundedBody} from '../../request-guard';
 import {bookCover} from '../../catalogue-service';
 export const dynamic='force-dynamic';
-async function identity(){const u=await getChatGPTUser();const h=await headers();const id=h.get('oai-authenticated-user-id');if(!u||!id)throw new RequestError(401,'Sign in to continue.');return {id,name:u.fullName||'Reader',admin:u.email.toLowerCase()===OWNER_EMAIL}}
+async function identity(optional=false){const u=await getChatGPTUser();const h=await headers();const id=h.get('oai-authenticated-user-id');if(!u||!id){if(optional)return {id:'',name:'Guest',admin:false};throw new RequestError(401,'Sign in to contribute.');}return {id,name:u.fullName||'Reader',admin:u.email.toLowerCase()===OWNER_EMAIL}}
 function respond(data:unknown,status=200){return Response.json(data,{status,headers:{'Cache-Control':'private, no-store'}})}
 function failure(e:unknown){if(e instanceof RequestError)return respond({error:e.message},e.status);console.error('Core storage operation failed',e);return respond({error:'Could not access saved data. Your form is still here; please retry.'},503)}
 export async function GET(request?:Request){try{
- const user=await identity(),{db}=storage();
+ const user=await identity(true),{db}=storage();
  const selected=request?new URL(request.url).searchParams.get('book')||'':'';
- await db.prepare('INSERT INTO profiles (id,name,bio) VALUES (?, ?, ?) ON CONFLICT(id) DO NOTHING').bind(user.id,user.name,'').run();
- const profile=await db.prepare('SELECT name,bio FROM profiles WHERE id=?').bind(user.id).first();
- const rows=await db.prepare("SELECT * FROM books WHERE (status<>'approved' AND (owner=? OR ?=1)) OR (status='approved' AND (id=? OR id IN (SELECT book FROM ratings WHERE user=?))) ORDER BY created DESC").bind(user.id,user.admin?1:0,selected,user.id).all();
+ if(user.id)await db.prepare('INSERT INTO profiles (id,name,bio) VALUES (?, ?, ?) ON CONFLICT(id) DO NOTHING').bind(user.id,user.name,'').run();
+ const profile=user.id?await db.prepare('SELECT name,bio FROM profiles WHERE id=?').bind(user.id).first():{name:'Guest',bio:''};
+ const rows=!user.id?await db.prepare("SELECT * FROM books WHERE status='approved' AND id=?").bind(selected).all():await db.prepare("SELECT * FROM books WHERE (status<>'approved' AND (owner=? OR ?=1)) OR (status='approved' AND (id=? OR id IN (SELECT book FROM ratings WHERE user=?))) ORDER BY created DESC").bind(user.id,user.admin?1:0,selected,user.id).all();
  const totals=await db.prepare("SELECT r.book,r.chapter,AVG(r.score)/10.0 AS average,COUNT(*) AS count FROM ratings r JOIN books b ON r.book=b.id WHERE b.status='approved' AND r.book=? GROUP BY r.book,r.chapter").bind(selected).all();
  const distribution=await db.prepare("SELECT r.book,CAST((r.score-1)/10 AS INTEGER)+1 AS band,COUNT(*) AS count FROM ratings r JOIN books b ON r.book=b.id WHERE b.status='approved' AND r.book=? GROUP BY r.book,band").bind(selected).all();
  const mine=await db.prepare('SELECT book,chapter,score/10.0 AS score,date FROM ratings WHERE user=?').bind(user.id).all();

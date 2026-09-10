@@ -2,7 +2,7 @@ import {storage} from '../../core-store';
 import {catalogueUser,catalogueResponse,catalogueError,bookCover} from '../../catalogue-service';
 export const dynamic='force-dynamic';
 export async function GET(request:Request){try{
- await catalogueUser();const {db}=storage(),p=new URL(request.url).searchParams;
+ const {db}=storage(),p=new URL(request.url).searchParams;
  const query=(p.get('q')||'').trim().slice(0,160),pageSize=12;
  const requested=Number(p.get('page')||1),page=Number.isSafeInteger(requested)&&requested>0?requested:1;
  const filter="b.status='approved' AND (?='' OR instr(lower(b.title || ' ' || b.author),lower(?))>0)";

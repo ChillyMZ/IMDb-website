@@ -10,7 +10,7 @@ test('community posts, replies and unique votes survive reload; unauthorized del
  const cache={};function load(file){if(cache[file])return cache[file];const output=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const module={exports:{}};const req=(s)=>{if(s==='next/headers')return {headers:async()=>new Headers(current?{'oai-authenticated-user-id':current.id}: {})};if(s.endsWith('chatgpt-auth'))return {getChatGPTUser:async()=>current?{email:current.email,fullName:current.name}:null};if(s.endsWith('core-store'))return {storage:()=>({db,bucket})};if(s.endsWith('catalogue-service'))return load('app/catalogue-service.ts');if(s.endsWith('core-service'))return load('app/core-service.ts');if(s.endsWith('request-guard'))return load('app/request-guard.ts');if(s.endsWith('moderation'))return load('app/moderation.ts');throw Error(s)};new Function('require','module','exports',output)(req,module,module.exports);cache[file]=module.exports;return module.exports}
  const api=load('app/api/community/route.ts');
  const post=body=>api.POST(new Request('https://example.test/api/community',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify(body)}));
- current=null;assert.equal((await api.GET()).status,401);
+ current=null;assert.equal((await api.GET()).status,200);assert.equal((await post({action:'rate'})).status,401);
  current={id:'reader-1',email:'reader@example.test',name:'Reader'};
  assert.equal((await post({action:'post',title:'',body:'test',topic:'Book talk'})).status,400);
  const created=await post({action:'post',title:'What are you reading?',body:'Share a recommendation.',topic:'Recommendations',spoiler:true});

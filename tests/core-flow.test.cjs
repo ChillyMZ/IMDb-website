@@ -10,7 +10,7 @@ test('authenticated submission, owner approval, rating overwrite and durable rel
  const cache={};function load(file){if(cache[file])return cache[file];const output=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const module={exports:{}};const req=(s)=>{if(s==='next/headers')return {headers:async()=>new Headers(current?{'oai-authenticated-user-id':current.id}: {})};if(s.endsWith('chatgpt-auth'))return {getChatGPTUser:async()=>current?{email:current.email,fullName:current.name}:null};if(s.endsWith('core-store'))return {storage:()=>({db,bucket})};if(s.endsWith('catalogue-service'))return load('app/catalogue-service.ts');if(s.endsWith('core-service'))return load('app/core-service.ts');if(s.endsWith('request-guard'))return load('app/request-guard.ts');if(s.endsWith('moderation'))return load('app/moderation.ts');throw Error(s)};new Function('require','module','exports',output)(req,module,module.exports);cache[file]=module.exports;return module.exports}
  const api=load('app/api/core/route.ts'),cover=load('app/api/cover/route.ts');
  const post=(body)=>api.POST(new Request('https://example.test/api/core',{method:'POST',headers:{origin:'https://example.test',...(body instanceof FormData?{}:{'content-type':'application/json'})},body:body instanceof FormData?body:JSON.stringify(body)}));
- current=null;assert.equal((await api.GET()).status,401);
+ current=null;assert.equal((await api.GET()).status,200);assert.equal((await post({action:'rate'})).status,401);
  current={id:'reader-1',email:'reader@example.test',name:'Reader'};
  assert.equal((await api.GET()).status,200);
  const form=new FormData(),id='12345678-1234-1234-1234-123456789abc';

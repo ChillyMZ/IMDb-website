@@ -11,7 +11,7 @@ test('chapter review edits persist and deletion is author-only',async()=>{
  const api=load('app/api/chapter-reviews/route.ts');
  const post=body=>api.POST(new Request('https://example.test/api/chapter-reviews',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify(body)}));
  const get=()=>api.GET(new Request('https://example.test/api/chapter-reviews?book=gutenberg-11&chapter=1'));
- current=null;assert.equal((await get()).status,401);
+ current=null;assert.equal((await get()).status,200);
  current={id:'reader-1',email:'reader@example.test',name:'Reader'};
  const review={action:'save',book:'gutenberg-11',chapter:1,body:'A strong opening.',spoiler:3};
  assert.equal((await post(review)).status,200);
