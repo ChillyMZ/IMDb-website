@@ -6,6 +6,7 @@ import '../platform.css';
 import './reader.css';
 import '../series.css';
 import '../launch.css';
+import './compact.css';
 import Analytics from './analytics';
 import {trackView,MetricView} from '../analytics-client';
 import {optimizeCover} from './optimize-cover';
