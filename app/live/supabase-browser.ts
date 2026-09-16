@@ -2,6 +2,7 @@ const SUPABASE_URL='https://ysxaabrbngghbhfdfcqy.supabase.co';
 const PUBLISHABLE_KEY='sb_publishable_ehLRNJ1i5K6QNKYVfVkOZg_CTmzsXrh';
 const API_BASE=SUPABASE_URL+'/functions/v1/chillymz-api';
 const ADMIN_BASE=SUPABASE_URL+'/functions/v1/chillymz-admin';
+const ANALYTICS_BASE=SUPABASE_URL+'/functions/v1/chillymz-analytics';
 const SESSION_KEY='chillymz.supabase.session';
 
 type Session={access_token:string;refresh_token?:string;expires_at?:number;expires_in?:number;token_type?:string;user?:unknown};
@@ -25,7 +26,7 @@ export function installApiProxy(){
   let path='';try{path=new URL(raw,location.href).pathname}catch{}
   if(raw.startsWith('/api/')||path.startsWith('/api/')){
    const u=new URL(raw,location.origin),endpoint=u.pathname.replace(/^\/api\//,'');
-   const base=(endpoint==='admin-test'||endpoint==='catalogue-import')?ADMIN_BASE:API_BASE;
+   const base=endpoint==='analytics'?ANALYTICS_BASE:(endpoint==='admin-test'||endpoint==='catalogue-import')?ADMIN_BASE:API_BASE;
    const target=new URL(base+'/'+endpoint);target.search=u.search;
    const session=await refreshSession();
    const headers=new Headers(input instanceof Request?input.headers:undefined);new Headers(init?.headers).forEach((v,k)=>headers.set(k,v));
