@@ -7,10 +7,10 @@ const SESSION_KEY='chillymz.supabase.session';
 
 type Session={access_token:string;refresh_token?:string;expires_at?:number;expires_in?:number;token_type?:string;user?:unknown};
 
-function basePath(){return location.hostname==='chillymz.github.io'?'/IMDb-website/':'/'}
-function readSession():Session|null{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}}
+function basePath(){if(typeof location==='undefined')return '/IMDb-website/';return location.hostname==='chillymz.github.io'?'/IMDb-website/':'/'}
+function readSession():Session|null{if(typeof localStorage==='undefined')return null;try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}}
 export function saveSession(s:Session){const next={...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)};localStorage.setItem(SESSION_KEY,JSON.stringify(next));return next}
-export function clearSession(){localStorage.removeItem(SESSION_KEY)}
+export function clearSession(){if(typeof localStorage!=='undefined')localStorage.removeItem(SESSION_KEY)}
 export function currentSession(){return readSession()}
 
 let originalFetch:typeof window.fetch|undefined;
@@ -18,7 +18,7 @@ async function refreshSession(){const s=readSession();if(!s?.refresh_token)retur
 export async function authSession(){return refreshSession()}
 
 export function installApiProxy(){
- if((window as any).__chillymzApiProxy)return;
+ if(typeof window==='undefined'||(window as any).__chillymzApiProxy)return;
  (window as any).__chillymzApiProxy=true;
  originalFetch=window.fetch.bind(window);
  window.fetch=async(input:RequestInfo|URL,init?:RequestInit)=>{
