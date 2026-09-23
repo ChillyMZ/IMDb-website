@@ -1,3 +1,11 @@
 'use client';
-export function signIn(){const returnTo=window.location.pathname+window.location.search+window.location.hash;window.open('/signin-with-chatgpt?return_to='+encodeURIComponent(returnTo),'_top')}
-export function SignInLink({children='Sign in'}:{children?:React.ReactNode}){return <a href="/signin-with-chatgpt?return_to=%2F" target="_top" onClick={e=>{e.preventDefault();signIn()}}>{children}</a>}
+import {supabaseBrowserConfig} from './supabase-browser';
+
+export function signIn(){
+ const returnTo=window.location.pathname+window.location.search+window.location.hash;
+ const base=supabaseBrowserConfig.basePath();
+ window.location.href=base+'login/?return_to='+encodeURIComponent(returnTo);
+}
+export function SignInLink({children='Sign in'}:{children?:React.ReactNode}){
+ return <a href="#sign-in" onClick={e=>{e.preventDefault();signIn()}}>{children}</a>
+}
