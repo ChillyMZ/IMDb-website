@@ -35,3 +35,6 @@ The existing Sites deployment remains the live application. The migration is iso
 The Supabase advisor reports informational `rls_enabled_no_policy` findings because the application tables are deliberately closed to direct browser access. Do not add broad client policies just to silence those notices. The service API performs authentication, authorization, moderation, ownership checks, chapter bounds, and rate limiting server-side.
 
 Reference: https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy
+
+## October 3, 2026 public cutover
+Owner email confirmation, legacy reader link and administrator membership were verified. The owner reports saving Pages Site/redirect URLs and choosing GitHub Actions. The owner explicitly requested public GitHub Pages publication. The newer private UI has been carried into the static build, with the original ScreenScore bands, scoped discussions and password recovery. API/admin/analytics functions are now versioned under `functions/`; authenticated live checks exposed and fixed an admin URL-parser shadowing bug. Existing data was reconciled (30 books, 8 ratings, 1 profile) and a rollback snapshot was retained. Static output `out/index.html` and `out/login/index.html` remains verified. See the updated launch checklist for completed and still-unverified checks.

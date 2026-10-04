@@ -12,6 +12,10 @@ function readSession():Session|null{if(typeof localStorage==='undefined')return 
 export function saveSession(s:Session){const next={...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)};localStorage.setItem(SESSION_KEY,JSON.stringify(next));return next}
 export function clearSession(){if(typeof localStorage!=='undefined')localStorage.removeItem(SESSION_KEY)}
 export function currentSession(){return readSession()}
+export async function signOut(){
+ const s=readSession();clearSession();
+ if(s?.access_token){const f=originalFetch||window.fetch.bind(window);await f(SUPABASE_URL+'/auth/v1/logout',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,Authorization:'Bearer '+s.access_token}}).catch(()=>{});}
+}
 
 let originalFetch:typeof window.fetch|undefined;
 async function refreshSession(){const s=readSession();if(!s?.refresh_token)return s;if((s.expires_at||0)>Math.floor(Date.now()/1000)+60)return s;const f=originalFetch||window.fetch.bind(window);const r=await f(SUPABASE_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});if(!r.ok){clearSession();return null}return saveSession(await r.json())}

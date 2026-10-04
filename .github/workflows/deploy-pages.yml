@@ -27,6 +27,7 @@ jobs:
       - run: npx next build
         env:
           GITHUB_ACTIONS: "true"
+      - run: node --test tests/static-auth.test.cjs
       - name: Verify required static pages
         run: |
           test -f out/index.html

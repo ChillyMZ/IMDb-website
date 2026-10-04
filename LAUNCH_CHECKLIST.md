@@ -22,30 +22,30 @@ This list is for the Supabase/GitHub Pages cutover. The product scope is frozen 
 - [x] Owner confirms selecting GitHub Actions as the Pages source; not independently re-read.
 
 ## Current private deployment
-The newer private Sites deployment is separate from this draft Supabase cutover. It uses its existing database and private owner-only hosting; successful checks there do not complete the Supabase end-to-end checks below. Do not merge this draft or enable public Pages deployment without explicit owner approval. Preserve the verified static export output `out/index.html` and `out/login/index.html`.
+The newer private Sites deployment is separate from this draft Supabase cutover. It uses its existing database and private owner-only hosting; successful checks there do not complete the Supabase end-to-end checks below. The owner explicitly approved public GitHub Pages deployment on October 3, 2026. Preserve the verified static export output `out/index.html` and `out/login/index.html`.
 
 ## Final test pass
-- [ ] Guest can browse catalogue, open a book, view ratings and read community posts.
-- [ ] Guest cannot rate, post, edit a profile, submit a book, or access admin actions.
-- [ ] Signed-in reader can edit profile and sign out.
+- [x] Guest can browse catalogue, open a book, view ratings and read community posts.
+- [x] Guest cannot rate, post, edit a profile, submit a book, or access admin actions.
+- [x] Signed-in reader can edit profile and sign out.
 - [ ] Reader can rate a chapter, update the score, and use Save & continue.
-- [ ] Diary reflects saved ratings.
+- [x] Diary reflects saved ratings.
 - [ ] Book and chapter links survive refresh/back/forward navigation.
-- [ ] Community post, reply and vote work.
-- [ ] Chapter review create/update/delete works.
+- [x] Community post, reply and vote work.
+- [x] Chapter review create/update/delete works.
 - [ ] Book request and full book submission work.
 - [ ] Cover upload accepts PNG/JPEG/WebP and rejects invalid/oversized files.
 - [ ] Block, mute, report and appeal flows work.
 - [ ] Admin can edit/review/publish/reject books and open moderation tools.
-- [ ] Invalid/expired tokens are rejected.
+- [x] Invalid/expired tokens are rejected.
 - [ ] Mobile test on Safari and Chrome; no horizontal page overflow.
 - [ ] Desktop test on Safari and Chrome.
 - [ ] Social share preview, favicon and page title render correctly.
 
 ## Cutover
-- [ ] Reconcile any database changes made after the original snapshot.
-- [ ] Keep a rollback copy of the pre-cutover state.
-- [ ] Run the cutover branch build one last time.
+- [x] Reconcile any database changes made after the original snapshot.
+- [x] Keep a rollback copy of the pre-cutover state.
+- [x] Run the cutover branch build one last time.
 - [ ] Merge the draft pull request to main.
 - [ ] Confirm GitHub Pages deployment succeeds.
 - [ ] Test the published URL as guest and signed-in owner.
@@ -53,3 +53,8 @@ The newer private Sites deployment is separate from this draft Supabase cutover.
 
 ## First 30 days
 Do not add major features because they sound useful. Watch what readers actually do: book opens, account creation, first ratings, completed rating sessions, return visits, discussions, requests, and where people stop.
+
+## October 3 cutover verification
+The updated static export builds `out/index.html` and `out/login/index.html`. Live Supabase checks verified password sign-in, token refresh, profile edits, rating save/update/readback, chapter bounds, scoped book discussions, replies/votes, review save/delete, administrator authorization and reader denial, and sign-out. The temporary test account and contributions were removed. The database has 30 books, 8 ratings, 1 legacy profile and 1 administrator after reconciliation. A retained pre-cutover backup and the private deployment remain rollback options. The JavaScript API bridge, token attachment, sign-out and Pages link handling passed a browser-environment simulation.
+
+Still unverified: manual Safari/Chrome flows and mobile layout, actual owner password login, new-reader confirmation email delivery/custom SMTP settings, password-recovery email delivery, and uploaded-cover end-to-end checks. These are not marked complete by the server tests. Search indexing remains disabled pending the final manual launch check.

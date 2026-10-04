@@ -1,5 +1,7 @@
 'use client';
-import {supabaseBrowserConfig} from './supabase-browser';
+import {supabaseBrowserConfig,signOut} from './supabase-browser';
+
+export async function browseAsGuest(){await signOut();window.location.href=supabaseBrowserConfig.basePath()}
 
 export function signIn(){
  const returnTo=window.location.pathname+window.location.search+window.location.hash;

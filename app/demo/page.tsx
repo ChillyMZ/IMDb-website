@@ -1,1 +1,2 @@
-export {default} from '../platform';
+import {notFound} from 'next/navigation';
+export default function Demo(){notFound()}
