@@ -16,7 +16,7 @@ async function loadCover(source?:string){
  }catch{return null}finally{clearTimeout(timer);if(url)URL.revokeObjectURL(url)}
 }
 
-export async function exportGrid(book:ExportBook,values:(number|undefined)[],counts:number[],mode:string,page=0){
+export async function exportGrid(book:ExportBook,values:(number|undefined)[],counts:number[],mode:string,page=0,starterChapters:number[]=[]){
  const pages=Math.ceil(book.chapter_count/100);
  if(!Number.isInteger(page)||page<0||page>=pages)throw Error('Choose a valid chapter range.');
  const start=page*100,end=Math.min(start+100,book.chapter_count),columns=Math.ceil((end-start)/10);
@@ -54,7 +54,7 @@ export async function exportGrid(book:ExportBook,values:(number|undefined)[],cou
  const average=rated.length?(rated.reduce((sum,v)=>sum+v,0)/rated.length).toFixed(2):'—';
  text('★ '+average+' / 10',36,infoY+27,25,gold,true);
  text(mode,36,infoY+60,17);text(rated.length+' / '+book.chapter_count+' chapters rated',36,infoY+86,15,muted);
- text('Average of rated chapters',36,infoY+111,13,muted);
+ text(starterChapters.length?'Grid average includes estimates':'Average of rated chapters',36,infoY+111,13,muted);
  const legend=[...scoreBands.map(b=>({color:b.color,label:b.label})),{color:'#34363c',label:'Unrated'}];
  legend.forEach((band,i)=>{const x=280+(i%4)*193,y=112+Math.floor(i/4)*29;box(x,y-11,11,11,band.color,5);text(band.label,x+17,y,12,muted)});
  const gridX=280,gridY=243,gapX=8,gapY=8,cellW=(764-(Math.max(columns,4)-1)*gapX)/Math.max(columns,4),cellH=48;
@@ -65,7 +65,7 @@ export async function exportGrid(book:ExportBook,values:(number|undefined)[],cou
    const index=start+col*10+row;if(index>=end)break;
    const v=values[index],band=scoreBand(v),x=gridX+col*(cellW+gapX),y=gridY+row*(cellH+gapY);
    box(x,y,cellW,cellH,band?.color||'#34363c');
-   text('C'+(index+1),x+7,y+15,10,band?.text||'#c5c5c7');
+   text('C'+(index+1)+(starterChapters.includes(index+1)?' E':''),x+7,y+15,10,band?.text||'#c5c5c7');
    c.textAlign='center';text(v===undefined?'—':v.toFixed(1),x+cellW/2,y+37,21,band?.text||'#c5c5c7',true);c.textAlign='left';
   }
  }
@@ -73,7 +73,7 @@ export async function exportGrid(book:ExportBook,values:(number|undefined)[],cou
  // Footer identifies the selected range and never implies missing scores are zero.
  box(36,829,1008,1,'#343438',0);
  text('C'+(start+1)+'–C'+end+' · '+counts.slice(start,end).reduce((sum,v)=>sum+v,0)+' ratings in this range',36,865,16,muted);
- text('Unrated chapters show — · Read down each column',36,893,14,muted);
+ text(starterChapters.length?'E = ChillyMZ editorial estimate, not a reader vote':'Unrated chapters show — · Read down each column',36,893,14,muted);
  text('ChillyMZ / ScreenScore',773,865,19,gold,true);
  text('One chapter at a time.',820,892,14,muted);
  const blob=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('Could not export image.')),'image/png'));
