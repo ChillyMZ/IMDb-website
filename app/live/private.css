@@ -84,3 +84,5 @@
 .reader-options-menu{background:#242424;color:#fff;border-color:#454545}
 @media(max-width:700px){.screenscore-intro{padding-top:12px}.platform.live-reader .screenscore-intro h1{padding-left:16px}.platform.live-reader .p-tile>b{font-size:14px}.platform.live-reader .p-tile>small{font-size:11px}.platform.live-reader .talk-vote button[aria-pressed=true]{background:#f4c95d20;color:#f4c95d}}
 .platform.live-reader .live-legend>span,.platform.live-reader .live-column-title{color:#c8c8c8}.platform.live-reader .p-spoiler{background:#292929;color:#ddd;border-color:#626262}.platform.live-reader .submission-preview summary{color:#f4c95d}.platform.live-reader .talk-sidebar,.platform.live-reader .talk-post,.platform.live-reader .talk-comment{border-color:#383838}.platform.live-reader .talk-title{color:#fff}.platform.live-reader .talk-meta,.platform.live-reader .talk-excerpt{color:#bbb}
+
+.platform.live-reader .p-jacket img{object-fit:contain;background:#161616}

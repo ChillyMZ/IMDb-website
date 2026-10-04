@@ -1,0 +1,284 @@
+[
+  {
+    "title": "A Wizard of Earthsea",
+    "author": "Ursula K. Le Guin",
+    "cover_url": "https://covers.openlibrary.org/b/id/13617691-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL59798W"
+  },
+  {
+    "title": "Catching Fire",
+    "author": "Suzanne Collins",
+    "cover_url": "https://covers.openlibrary.org/b/id/12646539-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL5735360W"
+  },
+  {
+    "title": "Crooked Kingdom",
+    "author": "Leigh Bardugo",
+    "cover_url": "https://covers.openlibrary.org/b/id/12667428-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL17597665W"
+  },
+  {
+    "title": "Dark Age",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/8748017-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL20072759W"
+  },
+  {
+    "title": "Fourth Wing",
+    "author": "Rebecca Yarros",
+    "cover_url": "https://covers.openlibrary.org/b/id/14407898-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL29226517W"
+  },
+  {
+    "title": "Golden Son",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/8454351-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL19340986W"
+  },
+  {
+    "title": "Harry Potter and the Chamber of Secrets",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/15158664-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82537W"
+  },
+  {
+    "title": "Harry Potter and the Deathly Hallows",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/15158660-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82586W"
+  },
+  {
+    "title": "Harry Potter and the Goblet of Fire",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/12059372-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82560W"
+  },
+  {
+    "title": "Harry Potter and the Half-Blood Prince",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/10716273-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82565W"
+  },
+  {
+    "title": "Harry Potter and the Order of the Phoenix",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/15158666-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82548W"
+  },
+  {
+    "title": "Harry Potter and the Philosopher's Stone",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/15155833-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82563W"
+  },
+  {
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "author": "J. K. Rowling",
+    "cover_url": "https://covers.openlibrary.org/b/id/10580435-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL82536W"
+  },
+  {
+    "title": "Iron Flame",
+    "author": "Rebecca Yarros",
+    "cover_url": "https://covers.openlibrary.org/b/id/14405746-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL34028551W"
+  },
+  {
+    "title": "Iron Gold",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/14511722-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL19726995W"
+  },
+  {
+    "title": "Light Bringer",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/15157697-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL26353967W"
+  },
+  {
+    "title": "Mistborn: The Final Empire",
+    "author": "Brandon Sanderson",
+    "cover_url": "https://covers.openlibrary.org/b/id/14658160-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL5738148W"
+  },
+  {
+    "title": "Mockingjay",
+    "author": "Suzanne Collins",
+    "cover_url": "https://covers.openlibrary.org/b/id/12646459-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL14908941W"
+  },
+  {
+    "title": "Morning Star",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/8566174-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL19650409W"
+  },
+  {
+    "title": "Onyx Storm",
+    "author": "Rebecca Yarros",
+    "cover_url": "https://covers.openlibrary.org/b/id/14826089-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL41943074W"
+  },
+  {
+    "title": "Prince Caspian",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/45897-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71069W"
+  },
+  {
+    "title": "Project Hail Mary",
+    "author": "Andy Weir",
+    "cover_url": "https://covers.openlibrary.org/b/id/11200092-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL21745884W"
+  },
+  {
+    "title": "Red Rising",
+    "author": "Pierce Brown",
+    "cover_url": "https://covers.openlibrary.org/b/id/7316188-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL17076473W"
+  },
+  {
+    "title": "Six of Crows",
+    "author": "Leigh Bardugo",
+    "cover_url": "https://covers.openlibrary.org/b/id/12667417-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL17332479W"
+  },
+  {
+    "title": "Sunrise on the Reaping",
+    "author": "Suzanne Collins",
+    "cover_url": "https://covers.openlibrary.org/b/id/14847912-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL43426400W"
+  },
+  {
+    "title": "The Ballad of Songbirds and Snakes",
+    "author": "Suzanne Collins",
+    "cover_url": "https://covers.openlibrary.org/b/id/14421833-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL20716197W"
+  },
+  {
+    "title": "The Battle of the Labyrinth",
+    "author": "Rick Riordan",
+    "cover_url": "https://covers.openlibrary.org/b/id/6274739-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL492640W"
+  },
+  {
+    "title": "The Fellowship of the Ring",
+    "author": "J. R. R. Tolkien",
+    "cover_url": "https://covers.openlibrary.org/b/id/14627060-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL27513W"
+  },
+  {
+    "title": "The Hero of Ages",
+    "author": "Brandon Sanderson",
+    "cover_url": "https://covers.openlibrary.org/b/id/14658094-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL5738154W"
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J. R. R. Tolkien",
+    "cover_url": "https://covers.openlibrary.org/b/id/14627509-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL27482W"
+  },
+  {
+    "title": "The Horse and His Boy",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/9184792-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71058W"
+  },
+  {
+    "title": "The Hunger Games",
+    "author": "Suzanne Collins",
+    "cover_url": "https://covers.openlibrary.org/b/id/12646537-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL5735363W"
+  },
+  {
+    "title": "The Last Battle",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/6529226-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71124W"
+  },
+  {
+    "title": "The Last Olympian",
+    "author": "Rick Riordan",
+    "cover_url": "https://covers.openlibrary.org/b/id/6624107-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL15270622W"
+  },
+  {
+    "title": "The Lightning Thief",
+    "author": "Rick Riordan",
+    "cover_url": "https://covers.openlibrary.org/b/id/7239831-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL492658W"
+  },
+  {
+    "title": "The Lion, the Witch and the Wardrobe",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/8441376-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71037W"
+  },
+  {
+    "title": "The Magician's Nephew",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/1072931-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71042W"
+  },
+  {
+    "title": "The Return of the King",
+    "author": "J. R. R. Tolkien",
+    "cover_url": "https://covers.openlibrary.org/b/id/14627062-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL27455W"
+  },
+  {
+    "title": "The Sea of Monsters",
+    "author": "Rick Riordan",
+    "cover_url": "https://covers.openlibrary.org/b/id/108909-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL492646W"
+  },
+  {
+    "title": "The Silver Chair",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/6950992-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71078W"
+  },
+  {
+    "title": "The Strength of the Few",
+    "author": "James Islington",
+    "cover_url": "https://covers.openlibrary.org/b/id/15150800-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL44370085W"
+  },
+  {
+    "title": "The Titan's Curse",
+    "author": "Rick Riordan",
+    "cover_url": "https://covers.openlibrary.org/b/id/14601475-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL492647W"
+  },
+  {
+    "title": "The Tombs of Atuan",
+    "author": "Ursula K. Le Guin",
+    "cover_url": "https://covers.openlibrary.org/b/id/6633403-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL59801W"
+  },
+  {
+    "title": "The Two Towers",
+    "author": "J. R. R. Tolkien",
+    "cover_url": "https://covers.openlibrary.org/b/id/14627564-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL27479W"
+  },
+  {
+    "title": "The Voyage of the Dawn Treader",
+    "author": "C. S. Lewis",
+    "cover_url": "https://covers.openlibrary.org/b/id/9184719-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL71132W"
+  },
+  {
+    "title": "The Well of Ascension",
+    "author": "Brandon Sanderson",
+    "cover_url": "https://covers.openlibrary.org/b/id/14658341-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL5738150W"
+  },
+  {
+    "title": "The Will of the Many",
+    "author": "James Islington",
+    "cover_url": "https://covers.openlibrary.org/b/id/15247547-L.jpg?default=false",
+    "source": "https://openlibrary.org/works/OL31088394W"
+  }
+]
