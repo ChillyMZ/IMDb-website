@@ -1,9 +1,12 @@
+// Scale calibration: 6 = bad, 7 = mid, 8 = good, 9 = great, 9.7+ = cinema.
+// Qualitative estimates balance positive engagement against specific criticism;
+// minor criticisms alone do not warrant the bad band. No blanket score offset.
 // Conservative editorial interpretations, not measured averages or user votes.
 // Sources retained for review; public cells are explicitly marked E.
 // Sparse evidence stays absent rather than filling every chapter artificially.
 export const starterScores:Record<string,Record<number,number>>={
- 'a21af306-88b7-4d28-b5b4-738d26d71adf':{1:6.8,2:7.0,3:6.9,4:6.7,5:7.3,6:7.6,12:7.5},
- '1702dc13-12ff-4438-b13e-637e7b230d46':{1:6.9,2:7.7,3:7.3,4:6.8,5:7.2,6:7.5,7:7.6,8:7.2,9:7.7,10:8.0,11:7.8,12:7.5,13:6.8,14:8.5,15:7.0,16:7.2,17:7.1,18:8.4,19:7.9,20:7.4,21:8.0,22:8.2,23:7.3,24:7.9,25:8.0,27:8.3,28:8.5,29:7.6,30:8.4,31:6.9,32:8.1,33:7.0,34:7.2,35:7.4,36:8.5,37:8.7,39:8.8}
+ 'a21af306-88b7-4d28-b5b4-738d26d71adf':{1:7.6,2:8.0,3:7.7,4:7.5,5:8.1,6:8.4,12:8.1},
+ '1702dc13-12ff-4438-b13e-637e7b230d46':{1:7.5,2:8.2,3:8.0,4:7.4,5:8.0,6:8.2,7:8.1,8:7.8,9:8.3,10:8.5,11:8.4,12:8.1,13:7.2,14:9.1,15:7.6,16:7.9,17:7.7,18:8.9,19:8.4,20:8.0,21:8.5,22:8.7,23:7.9,24:8.4,25:8.5,27:8.8,28:9.0,29:8.2,30:8.9,31:7.4,32:8.6,33:7.6,34:7.8,35:8.0,36:9.0,37:9.2,39:9.3}
 };
 export const starterResearch={
  book:'Red Rising',reviewed:'2026-10-04',confidence:'Limited; qualitative discussions, no measured chapter averages',
