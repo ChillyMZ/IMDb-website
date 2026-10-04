@@ -24,10 +24,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: node scripts/sync-book-pages.mjs
       - run: npx next build
         env:
           GITHUB_ACTIONS: "true"
-      - run: node --test tests/static-auth.test.cjs
+      - run: node --test tests/static-auth.test.cjs tests/seo-pages.test.cjs
       - name: Verify required static pages
         run: |
           test -f out/index.html
@@ -36,6 +37,9 @@ jobs:
           test -f out/terms/index.html
           test -f out/cookies/index.html
           test -f out/404.html
+          test -f out/books/index.html
+          test -f out/sitemap.xml
+          test -f out/robots.txt
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
