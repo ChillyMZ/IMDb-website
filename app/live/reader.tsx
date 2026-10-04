@@ -1,7 +1,7 @@
 "use client";
 import {apiResponse} from './api-response';
 import {signIn,SignInLink,browseAsGuest} from './sign-in';
-import {useEffect,useState} from 'react';
+import {useEffect,useLayoutEffect,useState} from 'react';
 import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {NativeSelect} from '@/components/ui/native-select';
 import '../platform.css';
@@ -32,6 +32,9 @@ export default function Live(){
  useEffect(()=>{if(data?.user.id)trackView((chapter?'chapter':selected?'book':tab) as MetricView)},[tab,selected,chapter,data?.user.id]);
  useEffect(()=>{if(!file){setCoverPreview('');return}const url=URL.createObjectURL(file);setCoverPreview(url);return()=>URL.revokeObjectURL(url)},[file]);
  useEffect(()=>{if(!notice)return;const timer=setTimeout(()=>setNotice(''),3500);return()=>clearTimeout(timer)},[notice]);
+ // Reset the catalogue's retained scroll after the book view is committed.
+ // Chapter changes and rating refreshes keep the reader's current position.
+ useLayoutEffect(()=>{if(selected&&tab==='books')window.scrollTo({top:0,left:0,behavior:'instant'})},[selected,tab]);
  const navigate=(next:string)=>{if(!data?.user.id&&!['books','community'].includes(next)){signIn();return}setTab(next);setChapter(0);setSelected('');setError('');setNotice('')};
  const beginSubmit=()=>{if(!data?.user.id){signIn();return}setSubmissionId(crypto.randomUUID());setError('');setSubmit(true)};
  async function refresh(){const r=await fetch('/api/core?book='+encodeURIComponent(selected),{cache:'no-store'});const d=await apiResponse<Data>(r);if(!r.ok)throw Error(d.error||'Could not load data');setData(d);return d as Data}
