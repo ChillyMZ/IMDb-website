@@ -29,7 +29,7 @@ type Data={user:{id:string;admin:boolean;name:string;bio:string};books:SavedBook
 export default function Live(){
  const [data,setData]=useState<Data|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[tab,setTab]=useState('books'),[selected,setSelected]=useState(''),[mode,setMode]=useState('Community'),[chapter,setChapter]=useState(0),[score,setScore]=useState('8.0'),[submit,setSubmit]=useState(false),[title,setTitle]=useState(''),[author,setAuthor]=useState(''),[count,setCount]=useState(''),[file,setFile]=useState<File|null>(null),[submissionId,setSubmissionId]=useState(''),[name,setName]=useState(''),[bio,setBio]=useState(''),[notice,setNotice]=useState(''),[coverPreview,setCoverPreview]=useState(''),[revision,setRevision]=useState(0),[coverProcessing,setCoverProcessing]=useState(false);
  const [urlReady,setUrlReady]=useState(false),[requestOpen,setRequestOpen]=useState(false),[requestTitle,setRequestTitle]=useState(''),[requestAuthor,setRequestAuthor]=useState(''),[exporting,setExporting]=useState(false),[exportPage,setExportPage]=useState(0);
- useEffect(()=>{if(data?.user.id)trackView((chapter?'chapter':selected?'book':tab) as MetricView)},[tab,selected,chapter,data?.user.id]);
+ useEffect(()=>{if(data)trackView((chapter?'chapter':selected?'book':tab) as MetricView,{...(selected?{book:selected}:{}),...(chapter?{chapter}:{})})},[tab,selected,chapter,data?.user.id]);
  useEffect(()=>{if(!file){setCoverPreview('');return}const url=URL.createObjectURL(file);setCoverPreview(url);return()=>URL.revokeObjectURL(url)},[file]);
  useEffect(()=>{if(!notice)return;const timer=setTimeout(()=>setNotice(''),3500);return()=>clearTimeout(timer)},[notice]);
  // Reset the catalogue's retained scroll after the book view is committed.
