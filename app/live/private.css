@@ -32,3 +32,55 @@
 .platform.live-reader .live-footer{padding-inline:24px;max-width:1180px}
 @media(max-width:1000px){.platform.live-reader .p-books{grid-template-columns:repeat(4,minmax(0,1fr))}.platform.live-reader .p-header{gap:12px}.platform.live-reader .p-header .p-primary{display:none}}
 @media(max-width:700px){.screenscore-intro{padding-top:4px;margin-bottom:24px;padding-bottom:26px}.platform.live-reader .screenscore-intro h1{font-size:44px}.screenscore-intro>p{font-size:15px}.platform.live-reader .p-books{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}.platform.live-reader .p-header .private-badge{margin-left:auto}.platform.live-reader .rating-board{padding:16px}.book-statistics{padding:16px}.book-discussion{padding-top:22px}.platform.live-reader .p-dialog{max-width:calc(100vw - 24px)!important}.platform.live-reader .catalogue-search select{min-width:0}.platform.live-reader .live-footer{padding-inline:0}}
+
+/* ChillyMZ: black, white and gold catalogue theme. */
+.platform.live-reader{background:#101010;color:#f5f5f5;--background:#101010;--foreground:#f5f5f5;--primary:#f4c95d;--primary-foreground:#17130a;--ring:#f4c95d;--border:#353535;--input:#353535;--muted:#232323;--muted-foreground:#b4b4b4}
+.platform.live-reader .p-header{background:#151515f5;border-color:#333;box-shadow:0 4px 20px #0003}
+.platform.live-reader .p-brand,.platform.live-reader h1,.platform.live-reader h2,.platform.live-reader h3{color:#fafafa}
+.platform.live-reader .p-brand span{color:#f4c95d}
+.platform.live-reader p,.platform.live-reader small,.platform.live-reader .p-muted,.platform.live-reader .p-panel p,.platform.live-reader label{color:#bdbdbd}
+.platform.live-reader button,.p-dialog button{background:#272727;border-color:#454545;color:#f5f5f5}
+.platform.live-reader button:hover,.p-dialog button:hover{background:#333;border-color:#8e7950}
+.platform.live-reader button:focus-visible,.p-dialog button:focus-visible{outline:3px solid #f4c95d;outline-offset:3px}
+.platform.live-reader .p-primary,.p-dialog .p-primary{background:#f4c95d;color:#191407;border-color:#f4c95d;font-weight:750}
+.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover{background:#ffdb7b;border-color:#ffdb7b}
+.platform.live-reader .p-header nav button{background:transparent;border:0;color:#ccc}
+.platform.live-reader .p-header nav button.selected{color:#f4c95d;background:#f4c95d14}
+.platform.live-reader .p-avatar{background:#f4c95d;color:#191407}
+.platform.live-reader .private-badge{color:#e9ce89;background:#f4c95d0c;border-color:#74613a}
+.screenscore-intro{border-color:#353535;padding:32px 0 36px}
+.platform.live-reader .screenscore-intro .eyebrow{color:#f4c95d}
+.platform.live-reader .screenscore-intro h1{color:white;border-left:5px solid #f4c95d;padding-left:22px;letter-spacing:-.045em}
+.platform.live-reader .intro-note{color:#bdbdbd}.intro-note i{background:#f4c95d}
+.platform.live-reader .catalogue-heading h1,.platform.live-reader .community-heading h1{border-left:4px solid #f4c95d;padding-left:13px}
+.platform.live-reader .p-tile{background:#1b1b1b;border:1px solid #303030;border-radius:10px;overflow:hidden;padding:0 0 16px;gap:7px;box-shadow:0 5px 16px #0002}
+.platform.live-reader .p-tile:hover{background:#222;border-color:#8e7950;box-shadow:0 8px 22px #0004}
+.platform.live-reader .p-tile .p-jacket{border:0;border-radius:0;margin:0 0 8px;box-shadow:none;width:100%}
+.platform.live-reader .p-tile>b,.platform.live-reader .p-tile>small{padding-inline:12px}
+.platform.live-reader .p-tile>small:last-child{color:#e8ca82}
+.platform.live-reader .book-type-card{background:linear-gradient(145deg,#272727,#151515);border-top:3px solid #f4c95d;color:#fff}
+.platform.live-reader .book-type-card small{color:#d8ba72;font-size:10px;letter-spacing:.12em}
+.platform.live-reader .book-type-card strong{color:#fff}
+.platform.live-reader .book-type-card span{color:#c5c5c5}
+.platform.live-reader .p-tile:nth-child(3n+2) .book-type-card{background:linear-gradient(145deg,#30291b,#181818)}
+.platform.live-reader .p-tile:nth-child(3n+3) .book-type-card{background:linear-gradient(145deg,#202020,#34302a)}
+.platform.live-reader .p-panel,.platform.live-reader .p-review,.platform.live-reader .p-chart,.platform.live-reader .live-form,.platform.live-reader .rating-board,.platform.live-reader .book-statistics{background:#1b1b1b;border-color:#383838;box-shadow:none}
+.platform.live-reader .book-statistics>summary,.platform.live-reader .board-overall,.platform.live-reader .p-link,.platform.live-reader .book-source a{color:#f4c95d}
+.platform.live-reader .book-discussion,.platform.live-reader .rating-board aside,.platform.live-reader .board-body{border-color:#383838}
+.platform.live-reader input,.platform.live-reader textarea,.platform.live-reader select,.platform.live-reader select option,.p-dialog input,.p-dialog textarea,.p-dialog select,.p-dialog select option{background:#252525;border-color:#626262;color:#fff}
+.platform.live-reader input:focus,.platform.live-reader textarea:focus,.p-dialog input:focus,.p-dialog textarea:focus{outline:2px solid #f4c95d;outline-offset:2px}
+.platform.live-reader .catalogue-shortcuts button,.platform.live-reader .talk-topics button,.platform.live-reader .reader-more{background:transparent;color:#c5c5c5}
+.platform.live-reader .catalogue-shortcuts button[aria-pressed=true],.platform.live-reader .talk-topics button[aria-pressed=true]{color:#f4c95d;box-shadow:inset 0 -2px #f4c95d}
+.platform.live-reader .live-footer{border-color:#353535;color:#aaa}.platform.live-reader .live-footer a{color:#ddd}.platform.live-reader .live-footer a:hover{color:#f4c95d}
+.platform.live-reader .live-bottom{background:#151515f5;border-color:#3c3c3c}
+.platform.live-reader .live-bottom button,.platform.live-reader .live-bottom button:nth-child(3){color:#bbb!important;background:transparent!important}
+.platform.live-reader .live-bottom button.selected{color:#f4c95d!important;box-shadow:inset 0 2px #f4c95d}
+.platform.live-reader .live-toast{background:#30291b;color:#fff3d2;border-color:#937b43}
+.platform.live-reader progress{accent-color:#f4c95d}
+.platform.live-reader .p-chart svg text{fill:#bbb}.platform.live-reader .p-chart svg circle{stroke:#f4c95d;fill:#1b1b1b}
+.p-dialog{background:#1b1b1b!important;color:#f5f5f5!important;border-color:#454545!important;--background:#1b1b1b;--foreground:#f5f5f5;--border:#454545;--ring:#f4c95d;--primary:#f4c95d}
+.p-dialog [data-slot=dialog-description],.p-dialog label,.p-dialog small{color:#bfbfbf}.p-dialog a{color:#f4c95d}.p-dialog .chapter-reviews,.p-dialog .chapter-review{border-color:#3c3c3c}
+.p-dialog .live-presets button[aria-pressed=true]{outline:3px solid #f4c95d;outline-offset:2px}
+.reader-options-menu{background:#242424;color:#fff;border-color:#454545}
+@media(max-width:700px){.screenscore-intro{padding-top:12px}.platform.live-reader .screenscore-intro h1{padding-left:16px}.platform.live-reader .p-tile>b{font-size:14px}.platform.live-reader .p-tile>small{font-size:11px}.platform.live-reader .talk-vote button[aria-pressed=true]{background:#f4c95d20;color:#f4c95d}}
+.platform.live-reader .live-legend>span,.platform.live-reader .live-column-title{color:#c8c8c8}.platform.live-reader .p-spoiler{background:#292929;color:#ddd;border-color:#626262}.platform.live-reader .submission-preview summary{color:#f4c95d}.platform.live-reader .talk-sidebar,.platform.live-reader .talk-post,.platform.live-reader .talk-comment{border-color:#383838}.platform.live-reader .talk-title{color:#fff}.platform.live-reader .talk-meta,.platform.live-reader .talk-excerpt{color:#bbb}
