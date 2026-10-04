@@ -9,5 +9,5 @@ export function signIn(){
  window.location.href=base+'login/?return_to='+encodeURIComponent(returnTo);
 }
 export function SignInLink({children='Sign in'}:{children?:React.ReactNode}){
- return <a href={supabaseBrowserConfig.basePath()+'login/'} onClick={e=>{e.preventDefault();signIn()}}>{children}</a>
+ return <button type="button" className="live-sign-in" onClick={()=>signIn()}>{children}</button>
 }
