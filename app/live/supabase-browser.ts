@@ -40,6 +40,7 @@ export function installApiProxy(){
   return originalFetch!(input as any,init);
  };
  document.addEventListener('click',async e=>{
+  if(e.defaultPrevented)return;
   const a=(e.target as HTMLElement)?.closest?.('a') as HTMLAnchorElement|null;if(!a)return;
   let u:URL;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin)return;
   const pages=location.hostname==='chillymz.github.io';

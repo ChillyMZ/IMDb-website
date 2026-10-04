@@ -17,6 +17,10 @@ test('API bridge handles Pages paths, reader tokens and sign-out',async()=>{
  assert.match(calls[0].url,/\/functions\/v1\/chillymz-api\/core\?book=gutenberg-11$/);
  assert.equal(calls[0].init.headers.get('Authorization'),'Bearer test-session');
  await exports.signOut();assert.equal(exports.currentSession(),null);
+ location.href='/IMDb-website/login/?return_to=test';
+ await handlers.click({defaultPrevented:true,target:{closest:()=>({href:'https://chillymz.github.io/IMDb-website/#sign-in'})},preventDefault:()=>{throw Error('Already handled click intercepted')}});
+ assert.equal(location.href,'/IMDb-website/login/?return_to=test');
+ location.href='https://chillymz.github.io/IMDb-website/';
  let prevented=false;handlers.click({target:{closest:()=>({href:'https://chillymz.github.io/privacy'})},preventDefault:()=>{prevented=true}});
  assert.equal(location.href,'/IMDb-website/privacy');assert.equal(prevented,true);
 });
