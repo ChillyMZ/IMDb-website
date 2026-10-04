@@ -86,3 +86,8 @@
 .platform.live-reader .live-legend>span,.platform.live-reader .live-column-title{color:#c8c8c8}.platform.live-reader .p-spoiler{background:#292929;color:#ddd;border-color:#626262}.platform.live-reader .submission-preview summary{color:#f4c95d}.platform.live-reader .talk-sidebar,.platform.live-reader .talk-post,.platform.live-reader .talk-comment{border-color:#383838}.platform.live-reader .talk-title{color:#fff}.platform.live-reader .talk-meta,.platform.live-reader .talk-excerpt{color:#bbb}
 
 .platform.live-reader .p-jacket img{object-fit:contain;background:#161616}
+/* Keep catalogue titles readable when pointer or keyboard focus enters a card. */
+.platform.live-reader .p-tile{color:#f2f2f2}
+.platform.live-reader .p-tile>b{color:#f2f2f2;transition:color .15s,text-shadow .15s}
+.platform.live-reader .p-tile:hover,.platform.live-reader .p-tile:focus-visible{color:#fff}
+.platform.live-reader .p-tile:hover>b,.platform.live-reader .p-tile:focus-visible>b{color:#fff;text-shadow:0 0 12px #ffffff30}
