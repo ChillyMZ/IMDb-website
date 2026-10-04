@@ -15,11 +15,14 @@ This list is for the Supabase/GitHub Pages cutover. The product scope is frozen 
 - [x] Privacy, terms, cookie controls, safety, reporting, blocking, moderation and admin tools remain in the build.
 
 ## Requires the owner before cutover
-- [ ] Create the owner Supabase Auth account.
-- [ ] Link that verified Auth account to the existing owner reader ID.
-- [ ] Add the owner Auth UUID to the protected administrators table.
-- [ ] Set Supabase Site URL and allowed redirect URL for GitHub Pages.
-- [ ] Confirm GitHub repository Pages source is GitHub Actions.
+- [x] Create the owner Supabase Auth account; email confirmation verified on October 3, 2026.
+- [x] Link that verified Auth account to the existing owner reader ID; owner confirmed the legacy profile and the database link was verified.
+- [x] Add the owner Auth UUID to the protected administrators table; membership verified by database query.
+- [x] Owner reports saving Site URL and allowed redirects for GitHub Pages, including `/IMDb-website/login/`; dashboard configuration has not been independently re-read.
+- [x] Owner confirms selecting GitHub Actions as the Pages source; not independently re-read.
+
+## Current private deployment
+The newer private Sites deployment is separate from this draft Supabase cutover. It uses its existing database and private owner-only hosting; successful checks there do not complete the Supabase end-to-end checks below. Do not merge this draft or enable public Pages deployment without explicit owner approval. Preserve the verified static export output `out/index.html` and `out/login/index.html`.
 
 ## Final test pass
 - [ ] Guest can browse catalogue, open a book, view ratings and read community posts.
