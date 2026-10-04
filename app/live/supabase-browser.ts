@@ -1,3 +1,4 @@
+import {trackEvent} from '../analytics-client';
 const SUPABASE_URL='https://ysxaabrbngghbhfdfcqy.supabase.co';
 const PUBLISHABLE_KEY='sb_publishable_ehLRNJ1i5K6QNKYVfVkOZg_CTmzsXrh';
 const API_BASE=SUPABASE_URL+'/functions/v1/chillymz-api';
@@ -35,7 +36,9 @@ export function installApiProxy(){
    const session=await refreshSession();
    const headers=new Headers(input instanceof Request?input.headers:undefined);new Headers(init?.headers).forEach((v,k)=>headers.set(k,v));
    headers.set('apikey',PUBLISHABLE_KEY);if(session?.access_token)headers.set('Authorization','Bearer '+session.access_token);
-   return originalFetch!(target.href,{...(input instanceof Request?{method:input.method,body:input.body,credentials:'omit'}:{}),...init,headers});
+   const response=await originalFetch!(target.href,{...(input instanceof Request?{method:input.method,body:input.body,credentials:'omit'}:{}),...init,headers});
+   if(endpoint!=='analytics'){let action:any;try{if(typeof init?.body==='string')action=JSON.parse(init.body)}catch{}if(!response.ok)trackEvent('action_error',{code:endpoint.replace(/[^a-z0-9_-]/gi,'')+':'+response.status});else if(action?.action==='rate'&&endpoint==='core')trackEvent('rating_saved',{book:action.book,chapter:action.chapter});else if(endpoint==='community'&&action?.action==='post')trackEvent('discussion_posted');else if(endpoint==='community'&&action?.action==='comment')trackEvent('reply_posted');}
+   return response;
   }
   return originalFetch!(input as any,init);
  };
