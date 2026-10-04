@@ -1,30 +1,51 @@
 # ChillyMZ
 
-A chapter-by-chapter book rating and discussion website. Source of the working Sites beta.
+ChillyMZ is a chapter-by-chapter book rating and discussion platform: rate every chapter, see the story curve, compare with other readers, and talk about the book.
 
-## Development
+## Current architecture
+
+The cutover build is a static Next.js export hosted with GitHub Pages. Browser requests are routed to Supabase Edge Functions for authenticated reads and writes.
+
+- Frontend: Next.js / React static export
+- Hosting: GitHub Pages
+- Authentication: Supabase Auth
+- Database: private `chillymz` schema in Supabase Postgres
+- API: Supabase Edge Functions
+- Uploaded covers: private Supabase Storage bucket
+- Legacy bundled covers: `public/covers`
+- Analytics: first-party, consent-aware aggregate metrics
+
+The browser does not receive direct table access. The API verifies identity server-side and applies ownership, moderation, chapter bounds and rate limits.
+
+## Local development
 
 Node.js 22.13+ and npm are required.
 
 ```sh
 npm ci
 npm run dev
-npm run build
-node --test tests/*.test.cjs
 ```
 
-## Hosting
+For a production-style static export:
 
-This server-backed Vinext/React application targets Cloudflare Workers and uses D1 (DB), R2 (BUCKET), migrations in drizzle/, and trusted ChatGPT authentication supplied by Sites. GitHub Pages alone cannot run the backend.
+```sh
+GITHUB_ACTIONS=true npx next build
+```
 
-Moving hosting requires configuring storage and securely adapting authentication. Never trust identity headers sent directly by clients. Live accounts, ratings, uploaded files, and credentials are not included.
+The generated site is written to `out/`.
 
-This repository does not automatically deploy or sync to the existing live website. The live hosting manifest is omitted from this public export.
+## Deployment
 
-## Beta status
+`.github/workflows/deploy-pages.yml` builds and deploys `main` to GitHub Pages. The Supabase cutover is kept on `supabase-cutover` until the owner Auth account, admin link and final tests are complete.
 
-Privacy and terms require review before public launch. Live mobile and speed verification remain outstanding. Indexing is disabled in this private-beta source. Cover provenance is in public/covers/SOURCES.md.
+See `LAUNCH_CHECKLIST.md` for the exact cutover checklist.
 
-## Required configuration before deployment
+## Safety and privacy
 
-Personal owner/contact details and the site URL have been replaced with example.invalid placeholders. Set the owner email in app/core-service.ts, the domain in app/site-config.ts, and the operator/contact details in the policy pages. Configure the hosting manifest with your own project. Until configured, real accounts will not receive owner privileges. Tests use the matching placeholder identity. Do not treat the policy placeholders as a finished public policy.
+Ratings, profiles, discussions, replies, moderation cases and account actions go through the API rather than direct browser table access. Community tools include reporting, blocking/muting, moderation holds and appeals.
+
+Search indexing remains disabled until the public launch is verified.
+
+## Repository notes
+
+Some legacy server files remain temporarily for migration history and rollback context. New production work should target the static/Supabase architecture rather than the old Cloudflare/Sites backend.

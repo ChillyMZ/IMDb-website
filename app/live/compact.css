@@ -39,3 +39,31 @@
 .platform.live-reader .talk-vote button{border:0;background:transparent;min-width:40px;min-height:44px}
 .platform.live-reader .talk-vote button[aria-pressed=true]{background:#eee5f7;color:#71479f}
 }
+
+
+/* Launch-ready catalogue intro and resilient loading states. */
+.platform.live-reader .catalogue-intro{margin:0 0 34px;padding:34px;border:1px solid #2e3944;border-radius:14px;background:linear-gradient(145deg,#141c23,#1b202b);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:26px;overflow:hidden}
+.platform.live-reader .catalogue-kicker{display:block;color:#5ce0b6;font-size:11px;font-weight:750;letter-spacing:.16em;margin-bottom:10px}
+.platform.live-reader .catalogue-intro h1{margin:0;font-size:clamp(38px,6vw,68px);line-height:.98;letter-spacing:-.045em;max-width:760px}
+.platform.live-reader .catalogue-intro p{max-width:660px;color:#aab8c3;font-size:17px;line-height:1.6;margin:18px 0 0}
+.platform.live-reader .catalogue-intro-actions{display:flex;flex-direction:column;gap:10px;justify-content:center;min-width:180px}
+.platform.live-reader .catalogue-intro-actions button{min-height:46px}
+.platform.live-reader .catalogue-intro-points{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:18px;border-top:1px solid #2c3741}
+.platform.live-reader .catalogue-intro-points span{color:#c8d2d9;font-size:13px}
+.platform.live-reader .catalogue-intro-points b{color:#5ce0b6;margin-right:8px;font-size:11px;letter-spacing:.08em}
+.platform.live-reader .catalogue-loading{min-height:360px}
+.platform.live-reader .catalogue-loading>span{display:block;color:#9aacb8;margin-bottom:14px}
+.platform.live-reader .catalogue-skeletons{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.platform.live-reader .catalogue-skeletons i{display:block;aspect-ratio:2/3;border-radius:8px;background:linear-gradient(90deg,#1b242c 25%,#27323b 50%,#1b242c 75%);background-size:200% 100%;animation:catalogue-shimmer 1.2s linear infinite}
+.platform.live-reader .catalogue-empty{margin-top:20px;text-align:center}
+@keyframes catalogue-shimmer{to{background-position:-200% 0}}
+@media(max-width:900px){.platform.live-reader .catalogue-skeletons{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){
+.platform.live-reader .catalogue-intro{padding:24px 20px;margin:-4px 0 26px;grid-template-columns:1fr;gap:20px}
+.platform.live-reader .catalogue-intro h1{font-size:42px}
+.platform.live-reader .catalogue-intro p{font-size:15px;margin-top:14px}
+.platform.live-reader .catalogue-intro-actions{display:grid;grid-template-columns:1fr 1fr;min-width:0}
+.platform.live-reader .catalogue-intro-points{grid-template-columns:1fr;gap:8px;padding-top:14px}
+.platform.live-reader .catalogue-skeletons{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+}
+@media(prefers-reduced-motion:reduce){.platform.live-reader .catalogue-skeletons i{animation:none}}
