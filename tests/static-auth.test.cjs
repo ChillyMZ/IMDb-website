@@ -11,7 +11,7 @@ test('API bridge handles Pages paths, reader tokens and sign-out',async()=>{
  const storage=new Map(),calls=[],handlers={},exports={};
  const location={hostname:'chillymz.github.io',origin:'https://chillymz.github.io',href:'https://chillymz.github.io/IMDb-website/',pathname:'/IMDb-website/'};
  const window={fetch:async(url,init)=>{calls.push({url:String(url),init});return Response.json({ok:true})}};
- vm.runInNewContext(js,{exports,window,location,document:{addEventListener:(event,fn)=>{handlers[event]=fn}},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},Headers,URL,Request,Response,Date,JSON});
+ vm.runInNewContext(js,{require:path=>{assert.equal(path,"../analytics-client");return {trackEvent:()=>{}}},exports,window,location,document:{addEventListener:(event,fn)=>{handlers[event]=fn}},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},Headers,URL,Request,Response,Date,JSON});
  exports.installApiProxy();exports.saveSession({access_token:'test-session',expires_in:3600});
  await window.fetch('/api/core?book=gutenberg-11');
  assert.match(calls[0].url,/\/functions\/v1\/chillymz-api\/core\?book=gutenberg-11$/);
