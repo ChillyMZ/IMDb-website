@@ -1,12 +1,20 @@
 import {scoreBands} from './score-bands';
+import {readerProgress,type Progress as ApiProgress} from '../../migration/supabase/functions/chillymz-api/progress';
 
 // Pure helpers for the post-rating comparison card and the reader stats page.
 // Kept free of React/DOM so tests can load them directly.
 export type MineRating={book:string;chapter:number;score:number;date:string};
 export type StatsBook={id:string;title:string;author:string;chapter_count:number};
 export type StatsEntry=MineRating&{title:string};
-// Mirrors the API's Progress (migration/supabase/functions/chillymz-api/progress.ts).
-export type Progress={xp:number;level:number;levelXp:number;nextXp:number;ratingsToday:number;ratingCap:number;finished:number};
+// Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
+// used until/unless the API sends its own `progress` (which includes visible reviews).
+export type Progress=ApiProgress&{partial?:boolean};
+type ProgressSource={progress?:Progress|null;mine:{book:string;date:string}[];books:{id:string;chapter_count:number;status?:string}[]};
+export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
+ if(!d)return undefined;
+ if(d.progress)return d.progress;
+ return {...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
+}
 export type XpGain={gained:number;level:number;levelUp:boolean;capped:boolean};
 export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain};
 

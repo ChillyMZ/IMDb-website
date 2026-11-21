@@ -13,7 +13,7 @@ const Score=({value}:{value:number})=>{const b=scoreBand(value);return <span cla
 const Level=({p}:{p:Progress})=><div className="rs-level">
  <div className="rs-level-top"><span className="rs-level-badge">Level {p.level}</span><b>{p.xp} XP</b><span className="rs-sub">{p.nextXp-p.xp} XP to Level {p.level+1}</span></div>
  <progress value={p.xp-p.levelXp} max={p.nextXp-p.levelXp} aria-label={`Level ${p.level} progress`}/>
- <small>Today: {p.ratingsToday} of {p.ratingCap} chapters earning XP · 10 XP per chapter, 25 per review, 50 for finishing a book</small>
+ <small>Today: {p.ratingsToday} of {p.ratingCap} chapters earning XP · 10 XP per chapter{p.partial?'':', 25 per review'}, 50 for finishing a book</small>
 </div>;
 
 export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:Props){
