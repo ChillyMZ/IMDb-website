@@ -2,14 +2,21 @@
 import {useMemo,useState} from 'react';
 import {scoreBand} from './score-bands';
 import {nextUnrated} from './reading-links';
-import {readerStats,type MineRating,type StatsBook,type StatsEntry} from './stats';
+import {readerStats,type MineRating,type Progress,type StatsBook,type StatsEntry} from './stats';
 import {shareStatsCard} from './stats-card';
 
-type Props={name:string;mine:MineRating[];books:StatsBook[];onOpen:(book:string,chapter:number)=>void;onBrowse:()=>void};
+type Props={name:string;progress?:Progress|null;mine:MineRating[];books:StatsBook[];onOpen:(book:string,chapter:number)=>void;onBrowse:()=>void};
 
 const Score=({value}:{value:number})=>{const b=scoreBand(value);return <span className="rs-score" style={{background:b?.color,color:b?.text}}>{value.toFixed(1)}</span>};
 
-export default function ReaderStats({name,mine,books,onOpen,onBrowse}:Props){
+// Level bar: progress within the current level, plus how much of today's XP allowance is used.
+const Level=({p}:{p:Progress})=><div className="rs-level">
+ <div className="rs-level-top"><span className="rs-level-badge">Level {p.level}</span><b>{p.xp} XP</b><span className="rs-sub">{p.nextXp-p.xp} XP to Level {p.level+1}</span></div>
+ <progress value={p.xp-p.levelXp} max={p.nextXp-p.levelXp} aria-label={`Level ${p.level} progress`}/>
+ <small>Today: {p.ratingsToday} of {p.ratingCap} chapters earning XP · 10 XP per chapter, 25 per review, 50 for finishing a book</small>
+</div>;
+
+export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:Props){
  const s=useMemo(()=>readerStats(mine,books),[mine,books]);
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[showAll,setShowAll]=useState(false);
  const canShare=typeof navigator!=='undefined'&&typeof navigator.share==='function';
@@ -31,6 +38,7 @@ export default function ReaderStats({name,mine,books,onOpen,onBrowse}:Props){
    </div>
   </div>
   {message&&<p role="status" className="rs-message">{message}</p>}
+  {progress&&<Level p={progress}/>}
   <div className="rs-tiles">
    <div className="rs-tile"><b>{s.total}</b><span>{s.total===1?'chapter rated':'chapters rated'}</span></div>
    <div className="rs-tile"><b>{s.books}</b><span>{s.books===1?'book':'books'}</span>{s.finished>0&&<small>{s.finished} finished</small>}</div>

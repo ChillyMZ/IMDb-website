@@ -16,6 +16,15 @@
 .rc-scale .rc-them{background:#f5f5f5}
 .rc-scale .rc-you{background:#f4c95d;box-shadow:0 0 0 3px #f4c95d55}
 .rating-compare p.rc-verdict{margin:0;font-weight:650;font-size:14px;color:#f5f5f5}
+.rating-compare p.rc-xp{margin:6px 0 0;font-size:13px;font-weight:700;color:#f4c95d}
+.rating-compare p.rc-xp.level-up{font-size:15px}
+.rs-level{background:#1b1b1b;border:1px solid #383838;border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.rs-level-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.rs-level-badge{background:#f4c95d;color:#1b1b1b;font-weight:800;border-radius:999px;padding:4px 12px;font-size:14px}
+.rs-level-top b{font-size:22px;font-variant-numeric:tabular-nums;color:#f2f2f2}
+.rs-level-top .rs-sub{margin-left:auto}
+.rs-level progress{width:100%;height:8px;accent-color:#f4c95d}
+.rs-level small{font-size:12px;color:#8f8f8f}
 .rating-compare .rc-note{display:block;margin-top:4px;font-size:12px;color:#b4b4b4}
 @keyframes rc-pop{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes rc-float{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}

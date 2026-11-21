@@ -5,7 +5,24 @@ import {scoreBands} from './score-bands';
 export type MineRating={book:string;chapter:number;score:number;date:string};
 export type StatsBook={id:string;title:string;author:string;chapter_count:number};
 export type StatsEntry=MineRating&{title:string};
-export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean};
+// Mirrors the API's Progress (migration/supabase/functions/chillymz-api/progress.ts).
+export type Progress={xp:number;level:number;levelXp:number;nextXp:number;ratingsToday:number;ratingCap:number;finished:number};
+export type XpGain={gained:number;level:number;levelUp:boolean;capped:boolean};
+export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain};
+
+// What one save earned, from progress before and after it. Re-rating a chapter earns nothing and shows nothing.
+export function xpGain(before:Progress|null|undefined,after:Progress|null|undefined,newChapter:boolean):XpGain|undefined{
+ if(!before||!after)return undefined;
+ const gained=after.xp-before.xp;
+ return {gained:Math.max(0,gained),level:after.level,levelUp:after.level>before.level,capped:newChapter&&gained<=0&&after.ratingsToday>=after.ratingCap};
+}
+export function xpLine(x?:XpGain){
+ if(!x)return '';
+ if(x.levelUp)return `+${x.gained} XP · Level up! You’re now Level ${x.level}.`;
+ if(x.gained>0)return `+${x.gained} XP`;
+ if(x.capped)return 'Daily XP limit reached. Your rating still counts; XP resumes tomorrow.';
+ return '';
+}
 
 // `total` comes from the API after the save, so it already includes this reader's score.
 // Remove it to compare against everyone else; otherwise a lone vote "agrees" with itself.

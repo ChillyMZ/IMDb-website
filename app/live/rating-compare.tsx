@@ -1,6 +1,6 @@
 "use client";
 import {scoreBand,scoreBands} from './score-bands';
-import {verdict,type Comparison} from './stats';
+import {verdict,xpLine,type Comparison} from './stats';
 
 // Score scale behind the two markers, built from the canonical bands (lowest first).
 const scale='linear-gradient(90deg,'+[...scoreBands].reverse().map((b,i,all)=>`${b.color} ${b.min*10}% ${(all[i+1]?.min??10)*10}%`).join(',')+')';
@@ -17,6 +17,7 @@ export default function RatingCompare({result,title,onClose,floating=false}:{res
   </div>
   {other!==undefined&&<div className="rc-scale" style={{background:scale}} aria-hidden="true"><i className="rc-them" style={{left:other*10+'%'}}/><i className="rc-you" style={{left:result.mine*10+'%'}}/></div>}
   <p className="rc-verdict">{verdict(result)}{result.finished?' And that’s every chapter of this book rated!':''}</p>
+  {xpLine(result.xp)&&<p className={'rc-xp'+(result.xp?.levelUp?' level-up':'')}>{xpLine(result.xp)}</p>}
   {result.othersCount>0&&<small className="rc-note">Based on {result.othersCount} other reader{result.othersCount===1?'':'s'}</small>}
  </div>;
 }

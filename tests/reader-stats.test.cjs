@@ -60,3 +60,41 @@ test('comparison card and stats page render',()=>{
  const empty=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',mine:[],books:[],onOpen(){},onBrowse(){}}));
  assert.match(empty,/Rate your first chapter/);
 });
+
+const progress=load('migration/supabase/functions/chillymz-api/progress.ts');
+const rate=(book,chapter,date)=>({book,chapter,date});
+
+test('levels start at 0, 100, 250, 450 XP',()=>{
+ assert.deepEqual([1,2,3,4,5].map(progress.levelStart),[0,100,250,450,700]);
+ assert.equal(progress.levelOf(0),1);assert.equal(progress.levelOf(99),1);assert.equal(progress.levelOf(100),2);assert.equal(progress.levelOf(449),3);assert.equal(progress.levelOf(450),4);
+});
+
+test('XP caps ratings at 20 and reviews at 5 per day, and counts finished books once',()=>{
+ const books=new Map([['big',80],['short',2]]);
+ // 30 chapters of one book in a day: only 20 earn XP. The next day's 5 all count.
+ const binge=[...Array.from({length:30},(_,i)=>rate('big',i+1,'2026-11-20T10:00:00Z')),...Array.from({length:5},(_,i)=>rate('big',31+i,'2026-11-21T09:00:00Z'))];
+ const p=progress.readerProgress(binge,[],books,'2026-11-21T12:00:00Z');
+ assert.equal(p.xp,25*10);assert.equal(p.ratingsToday,5);assert.equal(p.finished,0);
+ // Finishing the 2-chapter book adds the 50 XP bonus; ratings on unapproved/removed books earn nothing.
+ const done=progress.readerProgress([rate('short',1,'2026-11-01T00:00:00Z'),rate('short',2,'2026-11-01T00:00:00Z'),rate('gone',1,'2026-11-01T00:00:00Z')],[],books,'2026-11-21T12:00:00Z');
+ assert.equal(done.xp,2*10+50);assert.equal(done.finished,1);assert.equal(done.level,1);
+ // 7 reviews on one day: 5 count.
+ const reviews=Array.from({length:7},()=>({updated:'2026-11-21T08:00:00Z'}));
+ assert.equal(progress.readerProgress([],reviews,books).xp,5*25);
+});
+
+test('comparison card reports XP gained, level-ups and the daily limit',()=>{
+ const before={xp:90,level:1,levelXp:0,nextXp:100,ratingsToday:3,ratingCap:20,finished:0};
+ const up=stats.xpGain(before,{...before,xp:100,level:2,levelXp:100,nextXp:250,ratingsToday:4},true);
+ assert.equal(stats.xpLine(up),'+10 XP · Level up! You’re now Level 2.');
+ assert.equal(stats.xpLine(stats.xpGain(before,{...before,xp:150,level:2},true)).startsWith('+60 XP'),true);
+ assert.equal(stats.xpLine(stats.xpGain(before,before,false)),'',"re-rating shows nothing");
+ assert.match(stats.xpLine(stats.xpGain({...before,ratingsToday:20},{...before,ratingsToday:20},true)),/Daily XP limit reached/);
+ assert.equal(stats.xpGain(undefined,before,true),undefined);
+ const React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
+ const Compare=load('app/live/rating-compare.tsx').default,Stats=load('app/live/reader-stats.tsx').default;
+ const card=renderToStaticMarkup(React.createElement(Compare,{result:{...stats.compareRating(5,8.5,{average:7.85,count:3}),xp:up},onClose(){}}));
+ assert.match(card,/Level up! You’re now Level 2/);
+ const page=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',progress:{xp:320,level:3,levelXp:250,nextXp:450,ratingsToday:4,ratingCap:20,finished:1},mine:[{book:'a',chapter:1,score:9,date:'2026-11-10T10:00:00Z'}],books:[{id:'a',title:'Alpha',author:'X',chapter_count:3}],onOpen(){},onBrowse(){}}));
+ assert.match(page,/Level 3/);assert.match(page,/320 XP/);assert.match(page,/130 XP to Level 4/);assert.match(page,/4 of 20 chapters earning XP/);
+});
