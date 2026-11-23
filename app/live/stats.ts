@@ -1,5 +1,7 @@
 import {scoreBands} from './score-bands';
 import {readerProgress,type Progress as ApiProgress} from '../../migration/supabase/functions/chillymz-api/progress';
+import {readerBadges,type Badge} from '../../migration/supabase/functions/chillymz-api/badges';
+export type {Badge};
 
 // Pure helpers for the post-rating comparison card and the reader stats page.
 // Kept free of React/DOM so tests can load them directly.
@@ -15,8 +17,22 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  if(d.progress)return d.progress;
  return {...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
 }
+// Badges: the API's when it sends them; otherwise the browser works out Finisher and leaves the
+// badges that need other readers' data or reviews as `earned:null` ("coming soon").
+type BadgeSource={badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
+export function badgesOf(d:BadgeSource|null|undefined):Badge[]|undefined{
+ if(!d)return undefined;
+ if(d.badges)return d.badges;
+ const approved=d.books.filter(b=>!b.status||b.status==='approved');
+ return readerBadges({mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
+}
+// Badges earned by this save (only ones known before and after, so a fallback→API switch never "unlocks" old badges).
+export function newBadges(before?:Badge[],after?:Badge[]){
+ if(!before||!after)return [];
+ return after.filter(b=>b.earned&&before.find(x=>x.id===b.id)?.earned===false).map(b=>b.name);
+}
 export type XpGain={gained:number;level:number;levelUp:boolean;capped:boolean};
-export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain};
+export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain;badges?:string[]};
 
 // What one save earned, from progress before and after it. Re-rating a chapter earns nothing and shows nothing.
 export function xpGain(before:Progress|null|undefined,after:Progress|null|undefined,newChapter:boolean):XpGain|undefined{

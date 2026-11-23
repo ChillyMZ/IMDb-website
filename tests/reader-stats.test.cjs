@@ -110,3 +110,44 @@ test('without API progress the browser works out rating XP itself; API progress 
  const page=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',progress:p,mine:[{book:'a',chapter:1,score:9,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',title:'Alpha',author:'X',chapter_count:2}],onOpen(){},onBrowse(){}}));
  assert.match(page,/10 XP per chapter, 50 for finishing/);assert.doesNotMatch(page,/per review/);
 });
+
+const {readerBadges}=load('migration/supabase/functions/chillymz-api/badges.ts');
+const byId=list=>Object.fromEntries(list.map(b=>[b.id,b]));
+const at=d=>`2026-11-${String(d).padStart(2,'0')}T12:00:00Z`;
+
+test('Finisher needs every chapter of an approved book; untracked badges are "coming soon"',()=>{
+ const chapters=new Map([['a',3],['b',2]]),mine=[{book:'a',chapter:1,score:8,date:at(1)},{book:'a',chapter:2,score:7,date:at(1)}];
+ let b=byId(readerBadges({mine,chapters}));
+ assert.equal(b.finisher.earned,false);assert.equal(b.finisher.have,2);assert.equal(b.finisher.need,3);
+ assert.equal(b.pioneer.earned,null);assert.equal(b['hot-take'].earned,null);assert.equal(b.critic.earned,null);
+ b=byId(readerBadges({mine:[...mine,{book:'a',chapter:3,score:9,date:at(2)}],chapters}));
+ assert.equal(b.finisher.earned,true);
+ // Ratings on books that are not approved never count.
+ assert.equal(byId(readerBadges({mine:[{book:'x',chapter:1,score:8,date:at(1)}],chapters:new Map([['b',1]])})).finisher.earned,false);
+});
+
+test('Pioneer: first reader on a chapter that showed an estimate',()=>{
+ const chapters=new Map([['a',5]]),estimated=(book,ch)=>ch!==5;
+ const mine=[{book:'a',chapter:1,score:8,date:at(3)},{book:'a',chapter:5,score:8,date:at(1)}];
+ const others=[{user:'me',book:'a',chapter:1,score:8,date:at(3)},{user:'x',book:'a',chapter:1,score:6,date:at(2)}];
+ // Chapter 1: someone rated first. Chapter 5: first, but had no estimate. → no badge.
+ assert.equal(byId(readerBadges({user:'me',mine,chapters,others,estimated,reviews:[]})).pioneer.earned,false);
+ const b=byId(readerBadges({user:'me',mine,chapters,others:[...others,{user:'x',book:'a',chapter:2,score:7,date:at(9)}],estimated,reviews:[],mine:[...mine,{book:'a',chapter:2,score:9,date:at(4)}]}));
+ assert.equal(b.pioneer.earned,true);assert.match(b.pioneer.detail,/chapter 2/);
+});
+
+test('Hot Take needs a 2-point gap from at least 3 other readers; Critic needs 5 reviews',()=>{
+ const chapters=new Map([['a',2]]),mine=[{book:'a',chapter:1,score:9.5,date:at(5)}];
+ const three=[7,7.5,7.5].map((score,i)=>({user:'u'+i,book:'a',chapter:1,score,date:at(1)}));
+ assert.equal(byId(readerBadges({user:'me',mine,chapters,others:three.slice(0,2),reviews:[]}))['hot-take'].earned,false);
+ const b=byId(readerBadges({user:'me',mine,chapters,others:[...three,{user:'me',...mine[0]}],reviews:Array(4).fill({updated:at(1)})}));
+ assert.equal(b['hot-take'].earned,true);assert.match(b['hot-take'].detail,/\+2\.2/);
+ assert.equal(b.critic.earned,false);assert.equal(b.critic.have,4);
+ assert.equal(byId(readerBadges({user:'me',mine,chapters,others:[],reviews:Array(5).fill({updated:at(1)})})).critic.earned,true);
+});
+
+test('newBadges only reports badges that flipped from locked to earned',()=>{
+ const before=[{id:'finisher',name:'Finisher',earned:false},{id:'pioneer',name:'Pioneer',earned:null}];
+ const after=[{id:'finisher',name:'Finisher',earned:true},{id:'pioneer',name:'Pioneer',earned:true}];
+ assert.deepEqual(stats.newBadges(before,after),['Finisher']);
+});
