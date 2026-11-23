@@ -69,3 +69,9 @@ body:has(.live-reader) .cookie-banner button{background:#2a2620;color:#efe8dc;bo
 .p-dialog.p-dialog button.p-primary:hover{background:#f8d67c}
 .p-dialog .live-presets button{border-radius:10px}
 @media(max-width:700px){.continue-body .eyebrow{letter-spacing:.1em}}
+/* Stats lists: score chip and chapter name line up on the left (site-wide buttons centre their content) */
+.platform.live-reader .rs-chapter{justify-content:flex-start}
+/* Profile: spaced action buttons, warm form card, no stray gap above panel headings */
+.profile-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+.platform.live-reader .live-form{max-width:none;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.platform.live-reader .p-panel>h2:first-child{margin-top:0}
