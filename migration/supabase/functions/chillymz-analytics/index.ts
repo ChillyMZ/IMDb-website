@@ -1,4 +1,4 @@
-// Deployed automatically by .github/workflows/deploy-supabase-functions.yml when this folder changes on main (retry 2).
+// Deployed automatically by .github/workflows/deploy-supabase-functions.yml when this folder changes on main (retry 3).
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import {createClient} from 'npm:@supabase/supabase-js@2.117.2';
 const SUPABASE_URL=Deno.env.get('SUPABASE_URL')!,SERVICE=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
