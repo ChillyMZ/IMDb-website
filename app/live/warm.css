@@ -1,0 +1,71 @@
+/* Warm, softer layer over the editorial dark theme: rounder shapes, one gold, colour from covers and scores. */
+.platform.live-reader{--gold:#f4c95d;--surface:#221f1b;--surface-2:#2a2620;--line:#3a342c;--primary:#f4c95d;--ring:#f4c95d;background:#1a1815;color:#efe8dc}
+.platform.live-reader .p-header{background:#1a1815ee;backdrop-filter:blur(8px);border-color:var(--line)}
+
+/* Rounder, friendlier surfaces */
+.platform.live-reader .p-panel,.platform.live-reader .p-review,.platform.live-reader .rating-board,.platform.live-reader .book-statistics,.platform.live-reader .rs-tile,.platform.live-reader .rs-level{border-radius:14px;border-color:var(--line);background:var(--surface)}
+.platform.live-reader button,.platform.live-reader input,.platform.live-reader select,.p-dialog button,.p-dialog input{border-radius:10px}
+.platform.live-reader .p-primary,.p-dialog .p-primary{background:var(--gold);border-color:var(--gold);color:#241c0b;box-shadow:0 4px 14px #f4c95d26}
+.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover{background:#f8d67c;border-color:#f8d67c}
+.platform.live-reader .p-rating,.platform.live-reader .p-link,.platform.live-reader .p-welcome small{color:var(--gold)}
+
+/* Book tiles: gentle lift and warm glow */
+.platform.live-reader .p-tile{border-radius:14px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.platform.live-reader .p-tile:hover{transform:translateY(-4px);box-shadow:0 14px 30px #0006,0 0 0 1px #f4c95d55}
+.platform.live-reader .p-tile .p-jacket,.platform.live-reader .p-tile img{border-radius:8px}
+
+/* Returning readers: shorter intro so their book comes first */
+.platform.live-reader .screenscore-intro.returning{padding-top:8px;padding-bottom:8px}
+.platform.live-reader .screenscore-intro.returning h1{font-size:clamp(28px,3.4vw,40px)}
+.platform.live-reader .screenscore-intro.returning p,.platform.live-reader .screenscore-intro.returning .intro-note{display:none}
+
+/* Continue card */
+.continue-card{display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;align-items:center;margin:8px 0 28px;padding:18px;border-radius:16px;border:1px solid #f4c95d40;background:radial-gradient(120% 140% at 0% 0%,#f4c95d1f,transparent 60%),var(--surface,#221f1b)}
+.continue-cover img{width:96px;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:8px;box-shadow:0 10px 24px #0007;display:block}
+.continue-body{display:grid;gap:6px;justify-items:start}
+.continue-body .eyebrow{font-size:11px;letter-spacing:.19em;color:var(--gold,#f4c95d);font-weight:750}
+.platform.live-reader .continue-body h2{margin:0;font-size:24px;line-height:1.2}
+.platform.live-reader .continue-body p{margin:0;font-size:14px;color:#b9ae9e}
+.continue-body progress{width:min(320px,100%);height:6px;accent-color:var(--gold,#f4c95d)}
+.continue-body .p-primary{margin-top:6px}
+
+/* Book page: soft glow in the cover's own colour */
+.platform.live-reader .rating-board.tinted{background:radial-gradient(90% 70% at 0% 0%,color-mix(in srgb,var(--book-tint) 48%,transparent),transparent 70%),var(--surface);border-color:color-mix(in srgb,var(--book-tint) 35%,var(--line))}
+.platform.live-reader .rating-board.tinted .p-jacket{box-shadow:0 18px 50px color-mix(in srgb,var(--book-tint) 70%,transparent),0 8px 20px #0008;border-radius:8px;overflow:hidden}
+.platform.live-reader .board-votes{font-size:13px;color:#b9ae9e}
+
+/* Chapter map: calm unrated tiles so the score colours stand out; a dot marks chapters you rated */
+.platform.live-reader .rating-cell{position:relative;border-radius:9px;transition:transform .15s ease,box-shadow .15s ease}
+.platform.live-reader .rating-cell.unrated{background:#2c2822;color:#8a8073;box-shadow:inset 0 0 0 1px #4a4237}
+.platform.live-reader .rating-cell.unrated:hover{background:#353028;color:#d8cdbb}
+.platform.live-reader .rating-cell.mine::after{content:'';position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#1a1815;box-shadow:0 0 0 2px #fff9}
+.platform.live-reader .rating-cell.unrated.mine::after{background:var(--gold)}
+.platform.live-reader .rating-cell.just-rated{animation:cell-pop .5s cubic-bezier(.2,.9,.3,1.4);box-shadow:0 0 0 3px var(--gold),0 0 18px #f4c95d88}
+@keyframes cell-pop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:none}}
+
+/* "Be the first" note in the rating pop-up */
+.p-dialog .be-first{margin:4px 0 12px;padding:10px 12px;border-radius:10px;background:#f4c95d14;border:1px solid #f4c95d40;font-size:14px;line-height:1.5}
+.p-dialog .be-first b{color:#f4c95d}
+
+/* Badge unlock: a short warm glow */
+.rating-compare p.rc-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#f4c95d1f;animation:badge-glow 1.6s ease-out}
+@keyframes badge-glow{0%{box-shadow:0 0 0 0 #f4c95daa;transform:scale(.9)}30%{transform:scale(1.05)}100%{box-shadow:0 0 0 14px #f4c95d00;transform:none}}
+
+/* Cookie banner matches the dark site. Both choices look the same on purpose (no nudging towards consent). */
+body:has(.live-reader) .cookie-banner{background:#221f1b;color:#efe8dc;border-color:#3a342c;box-shadow:0 12px 40px #000a;border-radius:14px}
+body:has(.live-reader) .cookie-banner a{color:#f4c95d}
+body:has(.live-reader) .cookie-banner button{background:#2a2620;color:#efe8dc;border:1px solid #4a4237;border-radius:10px}
+
+@media(max-width:700px){.continue-card{grid-template-columns:72px minmax(0,1fr);gap:14px;padding:14px}.continue-cover img{width:72px}}
+@media(prefers-reduced-motion:reduce){.platform.live-reader .rating-cell.just-rated,.rating-compare p.rc-badge{animation:none}.platform.live-reader .p-tile,.platform.live-reader .p-tile:hover{transition:none;transform:none}}
+/* Gold progress bars everywhere (browsers otherwise draw their own green/grey) */
+.platform.live-reader progress,.p-dialog progress{appearance:none;-webkit-appearance:none;height:8px;border:0;border-radius:99px;background:#3a342c;overflow:hidden}
+.platform.live-reader progress::-webkit-progress-bar,.p-dialog progress::-webkit-progress-bar{background:#3a342c;border-radius:99px}
+.platform.live-reader progress::-webkit-progress-value,.p-dialog progress::-webkit-progress-value{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
+.platform.live-reader progress::-moz-progress-bar,.p-dialog progress::-moz-progress-bar{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
+/* Rating pop-up: same rounded, warm look */
+.p-dialog.p-dialog{border-radius:18px;background:#221f1b;border-color:#3a342c}
+.p-dialog.p-dialog button.p-primary{background:#f4c95d;border-color:#f4c95d;color:#241c0b}
+.p-dialog.p-dialog button.p-primary:hover{background:#f8d67c}
+.p-dialog .live-presets button{border-radius:10px}
+@media(max-width:700px){.continue-body .eyebrow{letter-spacing:.1em}}
