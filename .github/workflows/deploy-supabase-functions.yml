@@ -1,0 +1,82 @@
+name: Deploy Supabase server functions
+
+# Installs ChillyMZ server code on Supabase when it changes on main.
+# Only functions whose folder changed are deployed. JWT verification stays OFF on purpose:
+# guests browse the catalogue without an account, and each function checks sign-in itself.
+# Database structure changes (SQL files) are NOT run here; they stay a manual, approved step.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'migration/supabase/functions/**'
+  workflow_dispatch:
+    inputs:
+      functions:
+        description: 'Functions to deploy (space-separated)'
+        required: true
+        default: 'chillymz-api chillymz-analytics'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-functions
+  cancel-in-progress: false
+
+env:
+  PROJECT_REF: ysxaabrbngghbhfdfcqy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Same logic checks the website uses: badge/XP rules and analytics privacy rules.
+      - run: node --test tests/reader-stats.test.cjs tests/visit-analytics.test.cjs
+      - name: Work out which functions changed
+        id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            list="${{ github.event.inputs.functions }}"
+          else
+            before="${{ github.event.before }}"
+            if [ -z "$before" ] || ! git cat-file -e "$before" 2>/dev/null; then before="HEAD~1"; fi
+            list=$(git diff --name-only "$before" "${{ github.sha }}" -- migration/supabase/functions | cut -d/ -f4 | sort -u | tr '\n' ' ')
+          fi
+          for f in $list; do
+            case "$f" in chillymz-api|chillymz-analytics|chillymz-admin) ;; *) echo "Unknown function: $f"; exit 1;; esac
+          done
+          echo "list=$list" >> "$GITHUB_OUTPUT"
+          echo "Deploying: ${list:-nothing}"
+      - uses: supabase/setup-cli@v1
+        if: steps.pick.outputs.list != ''
+        with:
+          version: latest
+      - name: Deploy
+        if: steps.pick.outputs.list != ''
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then echo "Missing SUPABASE_ACCESS_TOKEN secret"; exit 1; fi
+          for f in ${{ steps.pick.outputs.list }}; do
+            supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-api
+          done
+      - name: Check the live server still answers
+        if: steps.pick.outputs.list != ''
+        run: |
+          base="https://$PROJECT_REF.supabase.co/functions/v1"
+          sleep 10
+          # Guests must still be able to browse (fails if JWT verification were switched on).
+          code=$(curl -s -o /tmp/c.json -w '%{http_code}' "$base/chillymz-api/catalogue?q=&sort=Title&page=1")
+          [ "$code" = "200" ] && grep -q '"books"' /tmp/c.json || { echo "Catalogue check failed: $code"; cat /tmp/c.json; exit 1; }
+          # Analytics must answer with its own owner-only message, not a gateway error.
+          code=$(curl -s -o /tmp/a.json -w '%{http_code}' "$base/chillymz-analytics")
+          [ "$code" = "403" ] && grep -q 'Owner access required' /tmp/a.json || { echo "Analytics check failed: $code"; cat /tmp/a.json; exit 1; }
+          echo "Live checks passed."
