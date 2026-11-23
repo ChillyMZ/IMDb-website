@@ -1,4 +1,4 @@
-// Deployed automatically by .github/workflows/deploy-supabase-functions.yml when this folder changes on main (retry 1).
+// Deployed automatically by .github/workflows/deploy-supabase-functions.yml when this folder changes on main (retry 2).
 import {searchRank} from './search-match.ts';
 import {readerProgress,type Progress} from './progress.ts';
 import {readerBadges,type Badge} from './badges.ts';
