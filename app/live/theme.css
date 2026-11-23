@@ -1,0 +1,124 @@
+/* ChillyMZ theme: clean, Letterboxd-like. Neutral dark slate, plain sans-serif, covers and score colours carry the page.
+   No slogans, glows or decorative bars. Gold is the single brand accent (primary buttons, level, links). */
+.platform.live-reader{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8;--primary:#f4c95d;--ring:#f4c95d;
+ background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.5}
+.platform.live-reader h1,.platform.live-reader h2,.platform.live-reader h3,.platform.live-reader h4,.p-dialog h2,.p-dialog h3{font-family:inherit;font-weight:700;letter-spacing:-.01em;color:#fff}
+.platform.live-reader h1{font-size:28px;line-height:1.2}
+.platform.live-reader h2{font-size:20px;line-height:1.3}
+.platform.live-reader h3{font-size:16px}
+.platform.live-reader p,.platform.live-reader small,.platform.live-reader label{font-family:inherit}
+.platform.live-reader p{line-height:1.55}
+.platform.live-reader .p-muted,.platform.live-reader .rs-sub{color:var(--muted)}
+.platform.live-reader .p-header{background:var(--bg);border-color:var(--line);backdrop-filter:none}
+.platform.live-reader .p-brand{font-weight:800;letter-spacing:.02em}
+
+/* Surfaces: flat, thin borders, small radius */
+.platform.live-reader .p-panel,.platform.live-reader .p-review,.platform.live-reader .rating-board,.platform.live-reader .book-statistics,.platform.live-reader .rs-tile,.platform.live-reader .rs-level,.platform.live-reader .live-form{background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:none}
+.platform.live-reader button,.platform.live-reader input,.platform.live-reader select,.platform.live-reader textarea,.p-dialog button,.p-dialog input{border-radius:4px;font-family:inherit;box-shadow:none}
+.platform.live-reader button,.p-dialog button{background:var(--surface-2);border:1px solid #384450;color:var(--text);font-size:13px;font-weight:600}
+.platform.live-reader button:hover,.p-dialog button:hover{background:#2e3842;border-color:#4a5866}
+.platform.live-reader input,.platform.live-reader select,.platform.live-reader textarea{background:#2c3440;border-color:#3a4552;color:#fff}
+.platform.live-reader .p-primary,.p-dialog .p-primary,.p-dialog.p-dialog button.p-primary{background:var(--gold);border-color:var(--gold);color:#14181c;box-shadow:none}
+.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover,.p-dialog.p-dialog button.p-primary:hover{background:#f8d67c;border-color:#f8d67c}
+.platform.live-reader .p-rating,.platform.live-reader .p-link{color:var(--gold)}
+.p-dialog.p-dialog{border-radius:8px;background:var(--surface,#1c2228);border-color:#2c3440;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+
+/* No decorative accent bars on headings */
+.platform.live-reader .screenscore-intro h1,.platform.live-reader .catalogue-heading h1,.platform.live-reader .community-heading h1{border-left:0;padding-left:0}
+
+/* Home intro for new visitors: one plain line, not a slogan */
+.home-intro{margin:4px 0 28px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.platform.live-reader .home-intro h1{margin:0 0 6px;font-size:26px}
+.platform.live-reader .home-intro p{margin:0;color:var(--muted);font-size:15px;max-width:560px}
+
+/* Book grid: bare covers like a shelf, title and score underneath */
+.platform.live-reader .p-tile{background:none;border:0;border-radius:0;box-shadow:none;padding:0;gap:4px;transition:none}
+.platform.live-reader .p-tile:hover{background:none;transform:none;box-shadow:none}
+.platform.live-reader .p-tile .p-jacket{border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #ffffff1a;margin:0 0 6px;transition:box-shadow .15s}
+.platform.live-reader .p-tile:hover .p-jacket{box-shadow:0 0 0 2px var(--gold)}
+.platform.live-reader .p-tile>b,.platform.live-reader .p-tile>small{padding-inline:0}
+.platform.live-reader .p-tile>b{font-family:inherit;font-size:14px;font-weight:600;color:#fff}
+.platform.live-reader .p-tile small{color:var(--muted)}
+
+/* Badge shelf and level: flat */
+.rs-badges li{border-radius:6px;background:var(--surface-2,#242c34);border-color:var(--line,#2c3440)}
+.rs-badges li.earned{background:#f4c95d12;border-color:#f4c95d66}
+.rs-badges li.earned .rs-badge-icon{color:var(--gold,#f4c95d)}
+.rs-badge-icon{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;border-radius:50%;background:#2c3440;color:#c8d0d8;flex:none}
+.platform.live-reader .rs-level-badge,.rs-level-badge{border-radius:4px;font-size:13px}
+.p-level-badges{display:flex;gap:4px;color:var(--gold,#f4c95d)}
+.platform.live-reader .rs-tile b{font-family:inherit;color:#fff}
+.platform.live-reader .rs-head h1{font-size:28px;margin:0}
+
+/* Continue card */
+.continue-card{display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;align-items:center;margin:8px 0 28px;padding:18px;border-radius:6px;border:1px solid var(--line,#2c3440);background:var(--surface,#1c2228)}
+.continue-cover img{width:96px;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1px #ffffff1a;display:block}
+.continue-body{display:grid;gap:6px;justify-items:start}
+.continue-label{font-size:12px;font-weight:600;color:var(--muted,#8a99a8)}
+.platform.live-reader .continue-body h2{margin:0;font-size:24px;line-height:1.2}
+.platform.live-reader .continue-body p{margin:0;font-size:14px;color:#b9ae9e}
+.continue-body progress{width:min(320px,100%);height:6px;accent-color:var(--gold,#f4c95d)}
+.continue-body .p-primary{margin-top:6px}
+
+/* Book page: soft glow in the cover's own colour */
+.platform.live-reader .rating-board.tinted{background:linear-gradient(180deg,color-mix(in srgb,var(--book-tint) 16%,transparent),transparent 220px),var(--surface);border-color:var(--line)}
+.platform.live-reader .rating-board.tinted .p-jacket{box-shadow:0 0 0 1px #ffffff1a,0 8px 24px #0006;border-radius:4px;overflow:hidden}
+.platform.live-reader .board-votes{font-size:13px;color:#b9ae9e}
+
+/* Chapter map: calm unrated tiles so the score colours stand out; a dot marks chapters you rated */
+.platform.live-reader .rating-cell{position:relative;border-radius:4px;transition:transform .15s ease,box-shadow .15s ease}
+.platform.live-reader .rating-cell.unrated{background:#242c34;color:#7b8a99;box-shadow:inset 0 0 0 1px #34404c}
+.platform.live-reader .rating-cell.unrated:hover{background:#2e3842;color:#d8e0e8}
+.platform.live-reader .rating-cell.mine::after{content:'';position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#14181c;box-shadow:0 0 0 2px #fff9}
+.platform.live-reader .rating-cell.unrated.mine::after{background:var(--gold)}
+.platform.live-reader .rating-cell.just-rated{animation:cell-pop .5s cubic-bezier(.2,.9,.3,1.4);box-shadow:0 0 0 3px var(--gold),0 0 18px #f4c95d88}
+@keyframes cell-pop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:none}}
+
+/* "Be the first" note in the rating pop-up */
+.p-dialog .be-first{margin:4px 0 12px;padding:10px 12px;border-radius:4px;background:#f4c95d10;border:1px solid #f4c95d40;font-size:14px;line-height:1.5}
+.p-dialog .be-first b{color:#f4c95d}
+
+/* Badge unlock: a short warm glow */
+.rating-compare p.rc-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#f4c95d1f;animation:badge-glow 1.6s ease-out}
+@keyframes badge-glow{0%{box-shadow:0 0 0 0 #f4c95daa;transform:scale(.9)}30%{transform:scale(1.05)}100%{box-shadow:0 0 0 14px #f4c95d00;transform:none}}
+
+/* Cookie banner matches the dark site. Both choices look the same on purpose (no nudging towards consent). */
+body:has(.live-reader) .cookie-banner{background:#1c2228;color:#d8e0e8;border-color:#2c3440;box-shadow:0 12px 40px #000a;border-radius:8px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body:has(.live-reader) .cookie-banner a{color:#f4c95d}
+body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;border:1px solid #3a4552;border-radius:4px}
+
+@media(max-width:700px){.continue-card{grid-template-columns:72px minmax(0,1fr);gap:14px;padding:14px}.continue-cover img{width:72px}}
+@media(prefers-reduced-motion:reduce){.platform.live-reader .rating-cell.just-rated,.rating-compare p.rc-badge{animation:none}.platform.live-reader .p-tile,.platform.live-reader .p-tile:hover{transition:none;transform:none}}
+/* Gold progress bars everywhere (browsers otherwise draw their own green/grey) */
+.platform.live-reader progress,.p-dialog progress{appearance:none;-webkit-appearance:none;height:8px;border:0;border-radius:99px;background:#2c3440;overflow:hidden}
+.platform.live-reader progress::-webkit-progress-bar,.p-dialog progress::-webkit-progress-bar{background:#2c3440;border-radius:99px}
+.platform.live-reader progress::-webkit-progress-value,.p-dialog progress::-webkit-progress-value{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
+.platform.live-reader progress::-moz-progress-bar,.p-dialog progress::-moz-progress-bar{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
+/* Rating pop-up: same rounded, warm look */
+.p-dialog .live-presets button{border-radius:4px}
+/* Stats lists: score chip and chapter name line up on the left (site-wide buttons centre their content) */
+.platform.live-reader .rs-chapter{justify-content:flex-start}
+/* Profile: spaced action buttons, warm form card, no stray gap above panel headings */
+.profile-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+.platform.live-reader .live-form{max-width:none}
+.platform.live-reader .p-panel>h2:first-child{margin-top:0}
+/* Owner tools: search insights */
+.search-insights{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0}
+.search-insights>div{background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.search-insights h4{margin:0 0 8px;font-size:14px}
+.search-insights ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+.search-insights li span{overflow-wrap:anywhere}.search-insights li b{float:right;color:var(--gold);font-variant-numeric:tabular-nums}
+@media(max-width:700px){.search-insights{grid-template-columns:1fr}}
+/* Rating comparison card in the same slate */
+.rating-compare{background:#1c2228;border-color:#2c3440;border-radius:6px}
+/* Shelf: every cover the same 2:3 shape */
+.platform.live-reader .p-tile .p-jacket{aspect-ratio:2/3}
+.platform.live-reader .p-tile .p-jacket img,.platform.live-reader .p-tile .p-jacket>*{width:100%;height:100%;object-fit:cover}
+/* Book score and headings in the theme font; calmer panel heading spacing */
+.platform.live-reader .board-overall{font-family:inherit;font-weight:700}
+.platform.live-reader .p-panel h2{margin:0 0 12px}
+.platform.live-reader .live-form button+button{margin-left:8px}
+/* The rating pop-up renders outside the page wrapper, so it needs its own copy of the theme values */
+.p-dialog{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8}
+.p-dialog.p-dialog h2,.p-dialog.p-dialog h3{font-family:inherit;font-weight:700;letter-spacing:-.01em}
+.p-dialog.p-dialog input{background:#2c3440;border-color:#3a4552;color:#fff;border-radius:4px}

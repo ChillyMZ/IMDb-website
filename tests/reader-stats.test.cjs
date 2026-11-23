@@ -56,7 +56,7 @@ test('comparison card and stats page render',()=>{
  const card=renderToStaticMarkup(React.createElement(Compare,{result:stats.compareRating(5,8.5,{average:7.85,count:3}),title:'Alpha',onClose(){}}));
  assert.match(card,/Chapter 5 · Alpha/);assert.match(card,/8\.5/);assert.match(card,/7\.5/);assert.match(card,/\+1\.0/);assert.match(card,/2 other readers/);
  const page=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',mine:[{book:'a',chapter:1,score:9,date:'2026-11-10T10:00:00Z'}],books:[{id:'a',title:'Alpha',author:'X',chapter_count:3}],onOpen(){},onBrowse(){}}));
- assert.match(page,/Mia’s chapter story/);assert.match(page,/Download stats card/);assert.match(page,/Continue · Chapter 2/);
+ assert.match(page,/Reading stats/);assert.match(page,/Mia/);assert.match(page,/Download stats card/);assert.match(page,/Continue · Chapter 2/);
  const empty=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',mine:[],books:[],onOpen(){},onBrowse(){}}));
  assert.match(empty,/Rate your first chapter/);
 });
@@ -150,4 +150,13 @@ test('newBadges only reports badges that flipped from locked to earned',()=>{
  const before=[{id:'finisher',name:'Finisher',earned:false},{id:'pioneer',name:'Pioneer',earned:null}];
  const after=[{id:'finisher',name:'Finisher',earned:true},{id:'pioneer',name:'Pioneer',earned:true}];
  assert.deepEqual(stats.newBadges(before,after),['Finisher']);
+});
+
+const searchSummary=load('migration/supabase/functions/chillymz-analytics/summary.ts');
+test('search insights keep only clean, non-personal words and rank unmatched searches',()=>{
+ const n=searchSummary.normalizeSearch;
+ assert.equal(n('  Mistborn!! '),'mistborn');assert.equal(n('THE   Way of Kings'),'the way of kings');
+ for(const bad of ['a','me@mail.com','https://x.com','call 5551234567',42,'x'.repeat(81)])assert.equal(n(bad),null);
+ const s=searchSummary.summarizeSearches([{query:'dune',results:0},{query:'mistborn',results:0},{query:'dune',results:0},{query:'hobbit',results:1}]);
+ assert.equal(s.total,4);assert.deepEqual(s.missing.map(x=>[x.query,x.count]),[['dune',2],['mistborn',1]]);assert.deepEqual(s.top.map(x=>x.query),['hobbit']);
 });

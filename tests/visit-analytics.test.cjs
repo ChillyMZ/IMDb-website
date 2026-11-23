@@ -19,3 +19,15 @@ test('analytics requires renewed consent, respects privacy signals and clears id
  navigator.globalPrivacyControl=true;api.trackEvent('view');assert.equal(sent.length,1);
  navigator.globalPrivacyControl=false;api.installAnalytics();document.cookie='chillymz_metrics=deny; chillymz_metrics_version=2';listeners['chillymz-consent']();assert.equal(values.size,0);
 });
+
+test('book searches need the newer notice, are sent once after a pause and carry no visit id',()=>{
+ const values=new Map(),sent=[],timers=[];
+ const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)};
+ const document={cookie:'chillymz_metrics=allow; chillymz_metrics_version=2',visibilityState:'visible',referrer:'',addEventListener:()=>{}};
+ const api=load('app/analytics-client.ts',{document,navigator:{doNotTrack:'0',globalPrivacyControl:false},localStorage:storage,sessionStorage:storage,crypto:require('node:crypto').webcrypto,performance:{now:()=>100,getEntriesByType:()=>[]},location:{pathname:'/',hostname:'chillymz.github.io'},matchMedia:()=>({matches:true}),window:{addEventListener:()=>{}},setInterval:()=>0,setTimeout:fn=>{timers.push(fn);return timers.length},clearTimeout:()=>{},fetch:(_u,o)=>{sent.push(JSON.parse(o.body));return Promise.resolve()}});
+ api.trackSearch('mistborn',0);timers.forEach(f=>f());assert.equal(sent.length,0,'older consent does not cover searches');
+ document.cookie='chillymz_metrics=allow; chillymz_metrics_version=3';timers.length=0;
+ api.trackSearch('mist',0);api.trackSearch('mistborn',0);timers.at(-1)();assert.equal(sent.length,1);
+ assert.equal(sent[0].query,'mistborn');assert.equal(sent[0].consent,3);assert.equal(sent[0].session,undefined);
+ api.trackSearch('Mistborn',0);timers.at(-1)();assert.equal(sent.length,1,'same search is sent once per visit');
+});

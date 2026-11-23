@@ -2,7 +2,7 @@ export type MetricView='books'|'book'|'chapter'|'community'|'diary'|'profile'|'s
 type Context={book?:string;chapter?:number};
 const VISITOR='chillymz.analytics.visitor',SESSION='chillymz.analytics.session';
 let current:MetricView='other',context:Context={},started=0,installed=false,lastView='',lastAt=0;
-export function analyticsAllowed(){return typeof document!=='undefined'&&document.cookie.split('; ').includes('chillymz_metrics=allow')&&document.cookie.split('; ').includes('chillymz_metrics_version=2')&&navigator.doNotTrack!=='1'&&!(navigator as any).globalPrivacyControl}
+export function analyticsAllowed(){return typeof document!=='undefined'&&document.cookie.split('; ').includes('chillymz_metrics=allow')&&['chillymz_metrics_version=2','chillymz_metrics_version=3'].some(v=>document.cookie.split('; ').includes(v))&&navigator.doNotTrack!=='1'&&!(navigator as any).globalPrivacyControl}
 function identity(){const now=Date.now();let v:any,s:any;try{v=JSON.parse(localStorage.getItem(VISITOR)||'null');s=JSON.parse(sessionStorage.getItem(SESSION)||'null')}catch{}if(!v||v.expires<now){v={id:crypto.randomUUID(),expires:now+90*86400000};localStorage.setItem(VISITOR,JSON.stringify(v))}if(!s||s.last<now-30*60000){s={id:crypto.randomUUID(),last:now}}s.last=now;sessionStorage.setItem(SESSION,JSON.stringify(s));return {visitor:v.id,session:s.id}}
 function visibleMs(){const now=performance.now(),ms=started?Math.round(now-started):0;started=document.visibilityState==='visible'?now:0;return Math.max(0,Math.min(120000,ms))}
 export function trackEvent(event:string,details:Context&{code?:string}={}){if(!analyticsAllowed())return;try{const ids=identity(),nav=performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming|undefined;let source='direct';try{if(document.referrer){const host=new URL(document.referrer).hostname;source=host===location.hostname?'internal':/instagram|facebook|tiktok|youtube|google|bing|duckduckgo/.exec(host)?.[0]||'external'}}catch{}const payload={id:crypto.randomUUID(),...ids,event,view:current,...context,...details,consent:2,durationMs:visibleMs(),device:matchMedia('(max-width:800px)').matches?'mobile':'desktop',source,loadMs:nav&&nav.loadEventEnd>0?Math.min(60000,Math.round(nav.loadEventEnd/100)*100):null};fetch('/api/analytics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch{}}
@@ -10,4 +10,19 @@ export function trackView(view:MetricView,details:Context={}){const key=JSON.str
 export function installAnalytics(){if(installed||typeof window==='undefined')return;installed=true;started=document.visibilityState==='visible'?performance.now():0;const path=location.pathname;current=path.includes('/login')?'login':path.includes('/privacy')?'privacy':path.includes('/terms')?'terms':path.includes('/cookies')?'cookies':'books';
  window.addEventListener('chillymz-consent',()=>{if(analyticsAllowed()){started=performance.now();trackView(current,context)}else{localStorage.removeItem(VISITOR);sessionStorage.removeItem(SESSION);started=0;lastView=''}});
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')trackEvent('heartbeat');else started=performance.now()});window.addEventListener('pagehide',()=>trackEvent('exit'));setInterval(()=>{if(document.visibilityState==='visible')trackEvent('heartbeat')},30000);trackView(current);
+}
+
+// Book-search insight for the owner: sent once the reader pauses typing, once per query per visit,
+// only with analytics consent. The server stores only the cleaned words and the match count.
+// Searches need the version-3 notice (which mentions them); earlier "allow" choices cover the other analytics only.
+export function searchAllowed(){return analyticsAllowed()&&document.cookie.split('; ').includes('chillymz_metrics_version=3')}
+let searchTimer:ReturnType<typeof setTimeout>|undefined;
+export function trackSearch(query:string,results:number){
+ if(searchTimer)clearTimeout(searchTimer);
+ const q=query.trim();if(q.length<2||!searchAllowed())return;
+ searchTimer=setTimeout(()=>{try{
+  const key='chillymz.analytics.searched',seen:string[]=JSON.parse(sessionStorage.getItem(key)||'[]'),norm=q.toLowerCase();
+  if(seen.includes(norm))return;sessionStorage.setItem(key,JSON.stringify([...seen,norm].slice(-50)));
+  const ids=identity();fetch('/api/analytics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:crypto.randomUUID(),visitor:ids.visitor,event:'search',query:q.slice(0,120),results,consent:3}),keepalive:true}).catch(()=>{});
+ }catch{}},1500);
 }

@@ -1,5 +1,6 @@
 "use client";
 import {useMemo,useState} from 'react';
+import {BookCheck,Compass,Flame,PenLine} from 'lucide-react';
 import {scoreBand} from './score-bands';
 import {nextUnrated} from './reading-links';
 import {readerStats,type Badge,type MineRating,type Progress,type StatsBook,type StatsEntry} from './stats';
@@ -17,9 +18,10 @@ export const Level=({p}:{p:Progress})=><div className="rs-level">
 </div>;
 
 // Badge shelf: earned badges first; locked ones show progress, untracked ones say "Coming soon".
-export const badgeIcons:Record<Badge['id'],string>={finisher:'📚',pioneer:'🧭','hot-take':'🌶️',critic:'✍️'};
+const badgeIcons={finisher:BookCheck,pioneer:Compass,'hot-take':Flame,critic:PenLine};
+export const BadgeIcon=({id,size=16}:{id:Badge['id'];size?:number})=>{const Icon=badgeIcons[id];return <Icon size={size} strokeWidth={2} aria-hidden="true"/>};
 export const Badges=({list}:{list:Badge[]})=><article className="p-panel"><h2>Badges <span className="rs-sub rs-inline">{list.filter(b=>b.earned).length} of {list.length} earned</span></h2><ul className="rs-badges">{[...list].sort((a,b)=>Number(!!b.earned)-Number(!!a.earned)).map(b=><li key={b.id} className={b.earned?'earned':b.earned===null?'soon':'locked'}>
- <span className="rs-badge-icon" aria-hidden="true">{badgeIcons[b.id]}</span>
+ <span className="rs-badge-icon" aria-hidden="true"><BadgeIcon id={b.id} size={22}/></span>
  <span><span className="rs-name">{b.name}</span><span className="rs-sub">{b.description}</span>
  {b.earned?<span className="rs-badge-detail">Earned{b.detail?' · '+b.detail:''}</span>:b.earned===null?<span className="rs-badge-detail">Coming soon</span>:b.need>1&&<><progress value={b.have} max={b.need} aria-label={`${b.name} progress`}/><span className="rs-badge-detail">{b.detail||`${b.have} of ${b.need}`}</span></>}</span>
 </li>)}</ul></article>;
@@ -35,11 +37,11 @@ export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:P
   catch(e){if(!(e instanceof DOMException&&e.name==='AbortError'))setMessage(e instanceof Error?e.message:'Could not create the image.')}
   finally{setBusy(false)}
  }
- if(!s.total)return <section className="reader-stats"><div className="rs-head"><div><span className="eyebrow">YOUR READING STATS</span><h1>Your stats</h1></div></div><div className="p-panel"><p>Rate your first chapter and your reading stats will appear here: favourite chapters, harshest takes, streaks and a card you can share.</p><button className="p-primary" onClick={onBrowse}>Find a book to rate</button></div></section>;
+ if(!s.total)return <section className="reader-stats"><div className="rs-head"><div><h1>Reading stats</h1></div></div><div className="p-panel"><p>Rate your first chapter and your reading stats will appear here: favourite chapters, harshest takes, streaks and a card you can share.</p><button className="p-primary" onClick={onBrowse}>Find a book to rate</button></div></section>;
  const recent=showAll?s.recent:s.recent.slice(0,15);
  return <section className="reader-stats">
   <div className="rs-head">
-   <div><span className="eyebrow">YOUR READING STATS</span><h1>{name||'Reader'}’s chapter story</h1></div>
+   <div><h1>Reading stats</h1><p className="rs-sub">{name||'Reader'}</p></div>
    <div className="rs-actions">
     {canShare&&<button className="p-primary" disabled={busy} onClick={()=>card(true)}>Share stats card</button>}
     <button className={canShare?'':'p-primary'} disabled={busy} onClick={()=>card(false)}>{busy?'Creating image…':'Download stats card'}</button>

@@ -12,3 +12,17 @@ export function summarizeVisits(events:any[],now=Date.now(),books:Record<string,
  const retention=[1,7,30].map(days=>{const eligible=visitors.filter(p=>Date.parse(p.first)<=now-days*86400000);return {days,eligible:eligible.length,returned:eligible.filter(p=>p.history.some((s:any)=>{const gap=(Date.parse(s.started.slice(0,10))-Date.parse(p.first.slice(0,10)))/86400000;return gap>=1&&gap<=days})).length}});
  return {totals:{visits:sessions.size,visitors:people.size,returning:visitors.filter(p=>p.visits>1).length,ratingVisits:[...sessions.values()].filter(s=>s.ratings>0).length},funnel,retention,sections:[...sections.values()].sort((a,b)=>b.views-a.views),sources:[...sources].map(([source,visits])=>({source,visits})),errors:events.filter(e=>e.event==='action_error').length,emptySearches:events.filter(e=>e.event==='search_empty').length,visitors:visitors.slice(0,200)};
 }
+
+// Search insights. Queries are cleaned before storing; anything that looks personal (emails, links, long numbers) is dropped.
+export function normalizeSearch(q:unknown){
+ if(typeof q!=='string')return null;
+ const s=q.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').replace(/^[\s"'“”‘’.,!?;:-]+|[\s"'“”‘’.,!?;:-]+$/g,'').trim();
+ if(s.length<2||s.length>80||/@|https?:|www\.|\d{5,}/.test(s))return null;
+ return s;
+}
+export function summarizeSearches(rows:{query:string;results:number}[],limit=20){
+ const all=new Map<string,{query:string;count:number;results:number}>();
+ for(const r of rows){const x=all.get(r.query)||{query:r.query,count:0,results:r.results};x.count++;x.results=r.results;all.set(r.query,x)}
+ const list=[...all.values()].sort((a,b)=>b.count-a.count||a.query.localeCompare(b.query));
+ return {total:rows.length,missing:list.filter(x=>x.results===0).slice(0,limit),top:list.filter(x=>x.results>0).slice(0,limit)};
+}
