@@ -66,7 +66,13 @@ jobs:
         run: |
           if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then echo "Missing SUPABASE_ACCESS_TOKEN secret"; exit 1; fi
           for f in ${{ steps.pick.outputs.list }}; do
-            supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-api
+            if ! supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-api > /tmp/deploy.log 2>&1; then
+              cat /tmp/deploy.log
+              # Public summary of the error (secrets are masked by GitHub), so it can be read without signing in.
+              echo "::error title=Deploy of $f failed::$(tail -n 12 /tmp/deploy.log | tr '\n' ' ' | cut -c1-900)"
+              exit 1
+            fi
+            cat /tmp/deploy.log
           done
       - name: Check the live server still answers
         if: steps.pick.outputs.list != ''
