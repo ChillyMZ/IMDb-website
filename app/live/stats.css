@@ -18,6 +18,16 @@
 .rating-compare p.rc-verdict{margin:0;font-weight:650;font-size:14px;color:#f5f5f5}
 .rating-compare p.rc-xp{margin:6px 0 0;font-size:13px;font-weight:700;color:#f4c95d}
 .rating-compare p.rc-xp.level-up{font-size:15px}
+/* Level pill: centred in the free space between the nav and the right-hand buttons (never overlaps them). */
+.platform.live-reader .p-level-pill{display:flex;align-items:center;gap:8px;flex:none;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid #f4c95d66;background:#f4c95d1a;color:inherit;white-space:nowrap;cursor:pointer;font-size:13px}
+.p-level-pill b{color:#f4c95d;font-weight:800}
+.p-level-bar{position:relative;width:64px;height:6px;border-radius:3px;background:#8884;overflow:hidden}
+.p-level-bar i{position:absolute;inset:0 auto 0 0;background:#f4c95d;border-radius:3px}
+.p-level-xp{font-variant-numeric:tabular-nums;opacity:.85}
+.live-reader .p-header:has(.p-level-pill) nav{flex:0 1 auto}
+.platform.live-reader .p-level-pill{margin-inline:auto}
+@media(max-width:700px){.p-level-xp{display:none}.p-level-bar{width:44px}.platform.live-reader .p-level-pill{padding:6px 10px}}
+.reader-stats+.rs-level,h1+.rs-level{margin:0 0 16px}
 .rs-level{background:#1b1b1b;border:1px solid #383838;border-radius:10px;padding:16px 18px;display:grid;gap:10px}
 .rs-level-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
 .rs-level-badge{background:#f4c95d;color:#1b1b1b;font-weight:800;border-radius:999px;padding:4px 12px;font-size:14px}
