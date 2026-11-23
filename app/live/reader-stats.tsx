@@ -20,11 +20,12 @@ export const Level=({p}:{p:Progress})=><div className="rs-level">
 // Badge shelf: earned badges first; locked ones show progress, untracked ones say "Coming soon".
 const badgeIcons={finisher:BookCheck,pioneer:Compass,'hot-take':Flame,critic:PenLine};
 export const BadgeIcon=({id,size=16}:{id:Badge['id'];size?:number})=>{const Icon=badgeIcons[id];return <Icon size={size} strokeWidth={2} aria-hidden="true"/>};
-export const Badges=({list}:{list:Badge[]})=><article className="p-panel"><h2>Badges <span className="rs-sub rs-inline">{list.filter(b=>b.earned).length} of {list.length} earned</span></h2><ul className="rs-badges">{[...list].sort((a,b)=>Number(!!b.earned)-Number(!!a.earned)).map(b=><li key={b.id} className={b.earned?'earned':b.earned===null?'soon':'locked'}>
+// Badges the site can't work out yet (earned:null, waiting on the server update) are hidden rather than shown as "coming soon".
+export const Badges=({list:all}:{list:Badge[]})=>{const list=all.filter(b=>b.earned!==null);return <article className="p-panel"><h2>Badges <span className="rs-sub rs-inline">{list.filter(b=>b.earned).length} of {list.length} earned</span></h2><ul className="rs-badges">{[...list].sort((a,b)=>Number(!!b.earned)-Number(!!a.earned)).map(b=><li key={b.id} className={b.earned?'earned':b.earned===null?'soon':'locked'}>
  <span className="rs-badge-icon" aria-hidden="true"><BadgeIcon id={b.id} size={22}/></span>
  <span><span className="rs-name">{b.name}</span><span className="rs-sub">{b.description}</span>
  {b.earned?<span className="rs-badge-detail">Earned{b.detail?' · '+b.detail:''}</span>:b.earned===null?<span className="rs-badge-detail">Coming soon</span>:b.need>1&&<><progress value={b.have} max={b.need} aria-label={`${b.name} progress`}/><span className="rs-badge-detail">{b.detail||`${b.have} of ${b.need}`}</span></>}</span>
-</li>)}</ul></article>;
+</li>)}</ul></article>};
 
 export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:Props){
  const s=useMemo(()=>readerStats(mine,books),[mine,books]);

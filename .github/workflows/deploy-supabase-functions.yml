@@ -4,11 +4,9 @@ name: Deploy Supabase server functions
 # Only functions whose folder changed are deployed. JWT verification stays OFF on purpose:
 # guests browse the catalogue without an account, and each function checks sign-in itself.
 # Database structure changes (SQL files) are NOT run here; they stay a manual, approved step.
+# Automatic runs are paused: Supabase refused the deploy with 403 on 2026-11-23 (cause not yet found).
+# Run it by hand from the Actions tab once that is sorted out.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'migration/supabase/functions/**'
   workflow_dispatch:
     inputs:
       functions:
