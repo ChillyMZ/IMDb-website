@@ -66,10 +66,13 @@ jobs:
         run: |
           if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then echo "Missing SUPABASE_ACCESS_TOKEN secret"; exit 1; fi
           for f in ${{ steps.pick.outputs.list }}; do
-            if ! supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-api --yes > /tmp/deploy.log 2>&1; then
+            # Bundle on the runner with Docker (the API-side bundler was refused with 403).
+            if ! supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-docker --yes > /tmp/deploy.log 2>&1; then
               cat /tmp/deploy.log
-              # Public summary of the error (secrets are masked by GitHub), so it can be read without signing in.
-              echo "::error title=Deploy of $f failed::$(tail -n 12 /tmp/deploy.log | tr '\n' ' ' | cut -c1-900)"
+              # Retry once with --debug to show which request is refused (secrets stay masked).
+              supabase functions deploy "$f" --project-ref "$PROJECT_REF" --workdir migration --no-verify-jwt --use-docker --yes --debug > /tmp/debug.log 2>&1 || true
+              echo "::error title=Deploy of $f failed::$(tail -n 8 /tmp/deploy.log | tr '\n' ' ' | cut -c1-600)"
+              echo "::error title=Debug for $f::$(grep -iE 'HTTP|POST|PATCH|PUT|GET|status|privilege|forbidden|denied|role' /tmp/debug.log | grep -viE 'token|authorization|bearer' | tail -n 15 | tr '\n' ' ' | cut -c1-1500)"
               exit 1
             fi
             cat /tmp/deploy.log
