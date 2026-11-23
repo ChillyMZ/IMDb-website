@@ -79,3 +79,5 @@
 .rs-badge-detail{display:block;margin-top:4px;font-size:12px;color:#f4c95d}
 .rs-badges li.soon .rs-badge-detail{color:#8f8f8f}
 @media(max-width:700px){.rs-badges{grid-template-columns:1fr}}
+.p-level-badges{display:flex;gap:2px;font-size:14px;line-height:1}
+h1+.rs-level+.p-panel{margin:0 0 16px}

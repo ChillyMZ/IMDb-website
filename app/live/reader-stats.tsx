@@ -5,7 +5,7 @@ import {nextUnrated} from './reading-links';
 import {readerStats,type Badge,type MineRating,type Progress,type StatsBook,type StatsEntry} from './stats';
 import {shareStatsCard} from './stats-card';
 
-type Props={name:string;progress?:Progress|null;badges?:Badge[];mine:MineRating[];books:StatsBook[];onOpen:(book:string,chapter:number)=>void;onBrowse:()=>void};
+type Props={name:string;progress?:Progress|null;mine:MineRating[];books:StatsBook[];onOpen:(book:string,chapter:number)=>void;onBrowse:()=>void};
 
 const Score=({value}:{value:number})=>{const b=scoreBand(value);return <span className="rs-score" style={{background:b?.color,color:b?.text}}>{value.toFixed(1)}</span>};
 
@@ -17,14 +17,14 @@ export const Level=({p}:{p:Progress})=><div className="rs-level">
 </div>;
 
 // Badge shelf: earned badges first; locked ones show progress, untracked ones say "Coming soon".
-const icons:Record<Badge['id'],string>={finisher:'📚',pioneer:'🧭','hot-take':'🌶️',critic:'✍️'};
+export const badgeIcons:Record<Badge['id'],string>={finisher:'📚',pioneer:'🧭','hot-take':'🌶️',critic:'✍️'};
 export const Badges=({list}:{list:Badge[]})=><article className="p-panel"><h2>Badges <span className="rs-sub rs-inline">{list.filter(b=>b.earned).length} of {list.length} earned</span></h2><ul className="rs-badges">{[...list].sort((a,b)=>Number(!!b.earned)-Number(!!a.earned)).map(b=><li key={b.id} className={b.earned?'earned':b.earned===null?'soon':'locked'}>
- <span className="rs-badge-icon" aria-hidden="true">{icons[b.id]}</span>
+ <span className="rs-badge-icon" aria-hidden="true">{badgeIcons[b.id]}</span>
  <span><span className="rs-name">{b.name}</span><span className="rs-sub">{b.description}</span>
  {b.earned?<span className="rs-badge-detail">Earned{b.detail?' · '+b.detail:''}</span>:b.earned===null?<span className="rs-badge-detail">Coming soon</span>:b.need>1&&<><progress value={b.have} max={b.need} aria-label={`${b.name} progress`}/><span className="rs-badge-detail">{b.detail||`${b.have} of ${b.need}`}</span></>}</span>
 </li>)}</ul></article>;
 
-export default function ReaderStats({name,progress,badges,mine,books,onOpen,onBrowse}:Props){
+export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:Props){
  const s=useMemo(()=>readerStats(mine,books),[mine,books]);
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[showAll,setShowAll]=useState(false);
  const canShare=typeof navigator!=='undefined'&&typeof navigator.share==='function';
@@ -47,7 +47,6 @@ export default function ReaderStats({name,progress,badges,mine,books,onOpen,onBr
   </div>
   {message&&<p role="status" className="rs-message">{message}</p>}
   {progress&&<Level p={progress}/>}
-  {badges&&<Badges list={badges}/>}
   <div className="rs-tiles">
    <div className="rs-tile"><b>{s.total}</b><span>{s.total===1?'chapter rated':'chapters rated'}</span></div>
    <div className="rs-tile"><b>{s.books}</b><span>{s.books===1?'book':'books'}</span>{s.finished>0&&<small>{s.finished} finished</small>}</div>
