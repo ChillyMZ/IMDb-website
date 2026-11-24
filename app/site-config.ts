@@ -1,4 +1,4 @@
-export const SITE_URL='https://chillymz.github.io/IMDb-website';
+export const SITE_URL='https://chillymz.github.io/ratings';
 // Public book pages are ready for search engine discovery.
 export const SITE_INDEXABLE=true;
 export const SITE_TITLE='ChillyMZ — Rate books chapter by chapter';

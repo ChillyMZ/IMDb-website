@@ -92,11 +92,11 @@
     "title": "Alice's Adventures in Wonderland",
     "author": "Lewis Carroll",
     "chapter_count": 12,
-    "cover_key": "https://chillymz.github.io/IMDb-website/covers/pg11.jpg",
+    "cover_key": "https://chillymz.github.io/ratings/covers/pg11.jpg",
     "source_url": "",
     "chapter_note": "",
     "slug": "alices-adventures-in-wonderland-lewis-carroll",
-    "cover": "https://chillymz.github.io/IMDb-website/covers/pg11.jpg"
+    "cover": "https://chillymz.github.io/ratings/covers/pg11.jpg"
   },
   {
     "id": "df169916-fbac-40e7-87b1-3a291ec690a3",
@@ -147,11 +147,11 @@
     "title": "Dracula",
     "author": "Bram Stoker",
     "chapter_count": 27,
-    "cover_key": "https://chillymz.github.io/IMDb-website/covers/pg345.jpg",
+    "cover_key": "https://chillymz.github.io/ratings/covers/pg345.jpg",
     "source_url": "",
     "chapter_note": "",
     "slug": "dracula-bram-stoker",
-    "cover": "https://chillymz.github.io/IMDb-website/covers/pg345.jpg"
+    "cover": "https://chillymz.github.io/ratings/covers/pg345.jpg"
   },
   {
     "id": "15895dda-8a99-47c7-bfba-852f14ccd64b",
@@ -367,11 +367,11 @@
     "title": "Pride and Prejudice",
     "author": "Jane Austen",
     "chapter_count": 61,
-    "cover_key": "https://chillymz.github.io/IMDb-website/covers/pg1342.jpg",
+    "cover_key": "https://chillymz.github.io/ratings/covers/pg1342.jpg",
     "source_url": "",
     "chapter_note": "",
     "slug": "pride-and-prejudice-jane-austen",
-    "cover": "https://chillymz.github.io/IMDb-website/covers/pg1342.jpg"
+    "cover": "https://chillymz.github.io/ratings/covers/pg1342.jpg"
   },
   {
     "id": "f569cf93-cb38-45ab-929e-493bdc82d632",
@@ -730,22 +730,22 @@
     "title": "Through the Looking-Glass",
     "author": "Lewis Carroll",
     "chapter_count": 12,
-    "cover_key": "https://chillymz.github.io/IMDb-website/covers/pg12.jpg",
+    "cover_key": "https://chillymz.github.io/ratings/covers/pg12.jpg",
     "source_url": "",
     "chapter_note": "",
     "slug": "through-the-looking-glass-lewis-carroll",
-    "cover": "https://chillymz.github.io/IMDb-website/covers/pg12.jpg"
+    "cover": "https://chillymz.github.io/ratings/covers/pg12.jpg"
   },
   {
     "id": "gutenberg-120",
     "title": "Treasure Island",
     "author": "Robert Louis Stevenson",
     "chapter_count": 34,
-    "cover_key": "https://chillymz.github.io/IMDb-website/covers/pg120.jpg",
+    "cover_key": "https://chillymz.github.io/ratings/covers/pg120.jpg",
     "source_url": "",
     "chapter_note": "",
     "slug": "treasure-island-robert-louis-stevenson",
-    "cover": "https://chillymz.github.io/IMDb-website/covers/pg120.jpg"
+    "cover": "https://chillymz.github.io/ratings/covers/pg120.jpg"
   },
   {
     "id": "49adfc1d-bf3f-4848-af19-98711ffd56a0",

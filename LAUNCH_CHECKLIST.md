@@ -20,6 +20,7 @@ This list is for the Supabase/GitHub Pages cutover. The product scope is frozen 
 - [x] Add the owner Auth UUID to the protected administrators table; membership verified by database query.
 - [x] Owner reports saving Site URL and allowed redirects for GitHub Pages, including `/IMDb-website/login/`; dashboard configuration has not been independently re-read.
 - [x] Owner confirms selecting GitHub Actions as the Pages source; not independently re-read.
+- [ ] Move to `chillymz.github.io/ratings`: rename this repo to `ratings`, then add `https://chillymz.github.io/ratings/` and `https://chillymz.github.io/ratings/login/` to Supabase Auth allowed redirects and set the Site URL to `https://chillymz.github.io/ratings/`.
 
 ## Current private deployment
 The newer private Sites deployment is separate from this draft Supabase cutover. It uses its existing database and private owner-only hosting; successful checks there do not complete the Supabase end-to-end checks below. The owner explicitly approved public GitHub Pages deployment on October 3, 2026. Preserve the verified static export output `out/index.html` and `out/login/index.html`.
