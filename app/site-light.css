@@ -1,0 +1,59 @@
+/* Site-wide light palette for pages outside the reader app (authors, SEO book pages, login, info pages).
+   Same tokens as app/live/brand.css. */
+:root{--cmz-bg:#f6f2ea;--cmz-surface:#fffdf8;--cmz-surface-2:#efe9dd;--cmz-line:#e4ddd0;--cmz-line-strong:#cfc6b6;--cmz-text:#2a2723;--cmz-muted:#6e675d;--cmz-ink:#1c1a17;--cmz-accent:#2f6f78;--cmz-accent-dark:#245860}
+html,html body{background:var(--cmz-bg);color:var(--cmz-text)}
+
+/* Authors */
+html .authors{--gold:var(--cmz-accent);--bg:var(--cmz-bg);--surface:var(--cmz-surface);--line:var(--cmz-line);--text:var(--cmz-text);--muted:var(--cmz-muted)}
+html body:has(.authors){background:var(--cmz-bg)}
+html .authors h1,html .authors h2,html .authors h3,html .a-brand,html .a-findings b,html .a-steps li b{color:var(--cmz-ink)}
+html .a-lead,html .a-findings li,html .a-steps li,html .a-grid p,html .a-for ul,html .a-founder p{color:var(--cmz-muted)}
+html .a-cta,html .a-cta-small{background:var(--cmz-accent);color:#fff!important}
+html .a-cta:hover,html .a-cta-small:hover{background:var(--cmz-accent-dark)}
+html .a-steps li::before{background:var(--cmz-accent);color:#fff}
+html .a-grid .a-us{border-color:var(--cmz-accent);background:#2f6f780d}
+html .authors .a-header a:not(.a-brand):not(.a-cta-small),html .authors .a-secondary{color:var(--cmz-ink)}
+html body:has(.authors) .cookie-banner{background:var(--cmz-surface);color:var(--cmz-text);border-color:var(--cmz-line);box-shadow:0 -6px 24px rgba(28,26,23,.08)}
+html body:has(.authors) .cookie-banner p{color:var(--cmz-muted)}
+html body:has(.authors) .cookie-banner a{color:var(--cmz-ink)}
+html body:has(.authors) .cookie-banner button{color:var(--cmz-ink);border-color:var(--cmz-line-strong)}
+
+/* SEO book pages */
+html .seo-books{background:var(--cmz-bg);color:var(--cmz-text)}
+html .seo-books header{background:var(--cmz-bg);border-color:var(--cmz-line)}
+html .seo-books a{color:var(--cmz-accent)}
+html .seo-books a:hover{color:var(--cmz-accent-dark)}
+html .seo-books header>a:first-child{color:var(--cmz-ink);font-family:"Newsreader",Georgia,serif;font-weight:600}
+html .seo-books header span{color:var(--cmz-muted)}
+html .seo-books h1,html .seo-books h2{font-family:"Newsreader",Georgia,serif;font-weight:500;color:var(--cmz-ink)}
+html .seo-books h1{border-left:0;padding-left:0}
+html .seo-books p{color:var(--cmz-muted)}
+html .seo-book-card{background:var(--cmz-surface);border-color:var(--cmz-line);border-radius:4px;color:var(--cmz-text)!important}
+html .seo-book-card h2{color:var(--cmz-ink)}
+html .seo-book-card small,html .seo-books .seo-kicker{color:var(--cmz-muted)}
+html .seo-books .seo-action{background:var(--cmz-accent);color:#fff;border-radius:3px}
+
+/* Login */
+html .auth-page,html .auth-brand{color:var(--cmz-ink)}
+html .auth-brand{font-family:"Newsreader",Georgia,serif;font-weight:600}
+html .auth-brand span{display:none}
+html .auth-card{background:var(--cmz-surface);border-color:var(--cmz-line);border-radius:4px;box-shadow:0 8px 28px rgba(28,26,23,.08)}
+html .auth-card h1{font-family:"Newsreader",Georgia,serif;font-weight:500;color:var(--cmz-ink)}
+html .auth-card p{color:var(--cmz-muted)}
+html .auth-form label{color:var(--cmz-ink)}
+html .auth-form input{background:#fff;border-color:var(--cmz-line-strong);color:var(--cmz-ink);border-radius:3px}
+html .auth-form input:focus{border-color:var(--cmz-accent);box-shadow:0 0 0 3px rgba(47,111,120,.15)}
+html .auth-card button{border-color:var(--cmz-line-strong);color:var(--cmz-ink);border-radius:3px}
+html .auth-card .auth-submit{background:var(--cmz-accent);border-color:var(--cmz-accent);color:#fff}
+
+/* Info pages (privacy, terms, cookies) */
+html .info-shell,html .info-header{background:var(--cmz-bg);color:var(--cmz-text)}
+html .info-header{border-color:var(--cmz-line)}
+html .info-brand{color:var(--cmz-ink);font-family:"Newsreader",Georgia,serif;font-weight:600}
+html .info-content h1,html .info-content h2{font-family:"Newsreader",Georgia,serif;font-weight:500;color:var(--cmz-ink)}
+html .info-content a,html .info-shell a{color:var(--cmz-accent)}
+html .a-header,html header.a-header{background:var(--cmz-bg);border-color:var(--cmz-line);backdrop-filter:none}
+html .auth-card a{color:var(--cmz-accent)}
+html .auth-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+html .auth-card h1{font-family:"Newsreader",Georgia,serif}
+html .seo-books header>a:first-child span{display:none}

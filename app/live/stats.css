@@ -8,21 +8,21 @@
 .rc-scores>div{display:flex;flex-direction:column;gap:4px}
 .rc-scores small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#b4b4b4;display:flex;align-items:center;gap:6px}
 .rc-scores small:before{content:'';width:8px;height:8px;border-radius:50%;background:#f5f5f5}
-.rc-scores small.rc-label-you:before{background:#f4c95d}
+.rc-scores small.rc-label-you:before{background:#f1ebdf}
 .rc-scores b{font-size:24px;font-variant-numeric:tabular-nums;padding:6px 12px;border-radius:8px;min-width:64px;text-align:center}
-.rc-diff{margin-left:auto;align-self:center;font-weight:750;font-size:18px;color:#f4c95d;font-variant-numeric:tabular-nums}
+.rc-diff{margin-left:auto;align-self:center;font-weight:750;font-size:18px;color:#f1ebdf;font-variant-numeric:tabular-nums}
 .rc-scale{position:relative;height:6px;border-radius:3px;margin:14px 7px 12px}
 .rc-scale i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #101010}
 .rc-scale .rc-them{background:#f5f5f5}
-.rc-scale .rc-you{background:#f4c95d;box-shadow:0 0 0 3px #f4c95d55}
+.rc-scale .rc-you{background:#f1ebdf;box-shadow:0 0 0 3px #f1ebdf55}
 .rating-compare p.rc-verdict{margin:0;font-weight:650;font-size:14px;color:#f5f5f5}
-.rating-compare p.rc-xp{margin:6px 0 0;font-size:13px;font-weight:700;color:#f4c95d}
+.rating-compare p.rc-xp{margin:6px 0 0;font-size:13px;font-weight:700;color:#f1ebdf}
 .rating-compare p.rc-xp.level-up{font-size:15px}
 /* Level pill: centred in the free space between the nav and the right-hand buttons (never overlaps them). */
-.platform.live-reader .p-level-pill{display:flex;align-items:center;gap:8px;flex:none;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid #f4c95d66;background:#f4c95d1a;color:inherit;white-space:nowrap;cursor:pointer;font-size:13px}
-.p-level-pill b{color:#f4c95d;font-weight:800}
+.platform.live-reader .p-level-pill{display:flex;align-items:center;gap:8px;flex:none;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid #f1ebdf66;background:#f1ebdf1a;color:inherit;white-space:nowrap;cursor:pointer;font-size:13px}
+.p-level-pill b{color:#f1ebdf;font-weight:800}
 .p-level-bar{position:relative;width:64px;height:6px;border-radius:3px;background:#8884;overflow:hidden}
-.p-level-bar i{position:absolute;inset:0 auto 0 0;background:#f4c95d;border-radius:3px}
+.p-level-bar i{position:absolute;inset:0 auto 0 0;background:#f1ebdf;border-radius:3px}
 .p-level-xp{font-variant-numeric:tabular-nums;opacity:.85}
 .live-reader .p-header:has(.p-level-pill) nav{flex:0 1 auto}
 .platform.live-reader .p-level-pill{margin-inline:auto}
@@ -30,10 +30,10 @@
 .reader-stats+.rs-level,h1+.rs-level{margin:0 0 16px}
 .rs-level{background:#1b1b1b;border:1px solid #383838;border-radius:10px;padding:16px 18px;display:grid;gap:10px}
 .rs-level-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
-.rs-level-badge{background:#f4c95d;color:#1b1b1b;font-weight:800;border-radius:999px;padding:4px 12px;font-size:14px}
+.rs-level-badge{background:#f1ebdf;color:#1b1b1b;font-weight:800;border-radius:999px;padding:4px 12px;font-size:14px}
 .rs-level-top b{font-size:22px;font-variant-numeric:tabular-nums;color:#f2f2f2}
 .rs-level-top .rs-sub{margin-left:auto}
-.rs-level progress{width:100%;height:8px;accent-color:#f4c95d}
+.rs-level progress{width:100%;height:8px;accent-color:#f1ebdf}
 .rs-level small{font-size:12px;color:#8f8f8f}
 .rating-compare .rc-note{display:block;margin-top:4px;font-size:12px;color:#b4b4b4}
 @keyframes rc-pop{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
@@ -42,13 +42,13 @@
 
 .reader-stats{display:grid;gap:16px}
 .rs-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
-.rs-head .eyebrow{font-size:11px;letter-spacing:.19em;color:#f4c95d;font-weight:750}
+.rs-head .eyebrow{font-size:11px;letter-spacing:.19em;color:#f1ebdf;font-weight:750}
 .platform.live-reader .rs-head h1{margin:6px 0 0;font-size:clamp(28px,4vw,42px);letter-spacing:-.03em}
 .rs-actions{display:flex;flex-wrap:wrap;gap:10px}
-.rs-message{margin:0;color:#f4c95d}
+.rs-message{margin:0;color:#f1ebdf}
 .rs-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .rs-tile{background:#1b1b1b;border:1px solid #383838;border-radius:10px;padding:18px}
-.rs-tile b{display:block;font-size:34px;line-height:1.1;color:#f4c95d;font-variant-numeric:tabular-nums}
+.rs-tile b{display:block;font-size:34px;line-height:1.1;color:#f1ebdf;font-variant-numeric:tabular-nums}
 .rs-tile span{display:block;margin-top:4px;font-size:13px;color:#bdbdbd}
 .rs-tile small{display:block;margin-top:2px;font-size:12px;color:#8f8f8f}
 .rs-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -61,8 +61,8 @@
 .rs-name{display:block;font-weight:600;color:#f2f2f2;overflow-wrap:anywhere}
 .rs-sub{display:block;font-size:12px;color:#b4b4b4}
 .rs-book .rs-sub{grid-column:1/-1}
-.rs-book progress{grid-column:1/-1;width:100%;height:6px;accent-color:#f4c95d}
-.rs-next{grid-row:1;grid-column:2;font-size:12px;color:#f4c95d;white-space:nowrap}
+.rs-book progress{grid-column:1/-1;width:100%;height:6px;accent-color:#f1ebdf}
+.rs-next{grid-row:1;grid-column:2;font-size:12px;color:#f1ebdf;white-space:nowrap}
 .rs-mix{display:flex;gap:2px;height:16px;border-radius:8px;overflow:hidden}
 .rs-legend{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:#bdbdbd}
 .rs-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
@@ -72,11 +72,11 @@
 .rs-inline{display:inline;margin-left:8px;font-weight:400}
 .rs-badges{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .rs-badges li{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid #383838;border-radius:10px;background:#161616}
-.rs-badges li.earned{border-color:#f4c95d88;background:#f4c95d14}
+.rs-badges li.earned{border-color:#f1ebdf88;background:#f1ebdf14}
 .rs-badges li.locked .rs-badge-icon,.rs-badges li.soon .rs-badge-icon{filter:grayscale(1);opacity:.45}
 .rs-badge-icon{font-size:28px;line-height:1}
-.rs-badges progress{display:block;width:100%;height:6px;margin-top:8px;accent-color:#f4c95d}
-.rs-badge-detail{display:block;margin-top:4px;font-size:12px;color:#f4c95d}
+.rs-badges progress{display:block;width:100%;height:6px;margin-top:8px;accent-color:#f1ebdf}
+.rs-badge-detail{display:block;margin-top:4px;font-size:12px;color:#f1ebdf}
 .rs-badges li.soon .rs-badge-detail{color:#8f8f8f}
 @media(max-width:700px){.rs-badges{grid-template-columns:1fr}}
 .p-level-badges{display:flex;gap:2px;font-size:14px;line-height:1}
