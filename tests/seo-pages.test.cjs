@@ -7,5 +7,5 @@ test('every approved book exports readable content and a canonical page',()=>{
 test('public pages allow indexing while authentication pages do not',()=>{
  assert.match(fs.readFileSync('out/index.html','utf8'),/<meta name="robots" content="index, follow"/);
  assert.match(fs.readFileSync('out/login/index.html','utf8'),/<meta name="robots" content="noindex, follow"/);
- assert.match(fs.readFileSync('out/robots.txt','utf8'),/Sitemap: https:\/\/chillymz.github.io\/IMDb-website\/sitemap.xml/);
+ assert.match(fs.readFileSync('out/robots.txt','utf8'),/Sitemap: https:\/\/chillymz.github.io\/ratings\/sitemap.xml/);
 });

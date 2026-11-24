@@ -15,7 +15,7 @@ The existing Sites deployment remains the live application. The migration is iso
 - Deployed `chillymz-analytics` with corrected aggregate counts.
 - Replaced Sites/ChatGPT sign-in code on the cutover branch with Supabase email/password auth and token refresh.
 - Added a browser API bridge so the existing UI can use the Supabase functions without rewriting every component.
-- Converted the cutover branch to a static Next.js export compatible with GitHub Pages, including the `/IMDb-website` base path.
+- Converted the cutover branch to a static Next.js export compatible with GitHub Pages, including the `/ratings` base path.
 - Removed legacy server API routes from the cutover branch only. The existing live application remains unchanged.
 - Added a CI build check. The current static export successfully builds `out/index.html` and `out/login/index.html`.
 - Added the missing `comments(post)` index reported by the Supabase performance advisor.
@@ -23,7 +23,7 @@ The existing Sites deployment remains the live application. The migration is iso
 
 ## Final steps before traffic can switch
 
-1. Configure Supabase Auth Site URL / allowed redirect URL for the final GitHub Pages URL (`https://chillymz.github.io/IMDb-website/`), or the final custom domain if one is chosen before launch.
+1. Configure Supabase Auth Site URL / allowed redirect URL for the final GitHub Pages URL (`https://chillymz.github.io/ratings/`), or the final custom domain if one is chosen before launch.
 2. Create the owner's first Supabase Auth account. After verified ownership, link that auth UUID to the existing legacy reader profile and add it to `chillymz.administrators`.
 3. Run authenticated end-to-end checks: sign up/sign in, rating writes, profile edits, submissions, chapter reviews, discussions/votes/replies, reports/blocking, admin approval/import/editing, analytics, sign out, expired/invalid tokens, and cover upload/download.
 4. Reconcile any writes made in the old live database after the initial snapshot. Take a rollback copy before changing traffic.

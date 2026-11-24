@@ -8,7 +8,7 @@ const SESSION_KEY='chillymz.supabase.session';
 
 type Session={access_token:string;refresh_token?:string;expires_at?:number;expires_in?:number;token_type?:string;user?:unknown};
 
-function basePath(){if(typeof location==='undefined')return '/IMDb-website/';return location.hostname==='chillymz.github.io'?'/IMDb-website/':'/'}
+function basePath(){if(typeof location==='undefined')return '/ratings/';return location.hostname==='chillymz.github.io'?'/ratings/':'/'}
 function readSession():Session|null{if(typeof localStorage==='undefined')return null;try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}}
 export function saveSession(s:Session){const next={...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)};localStorage.setItem(SESSION_KEY,JSON.stringify(next));return next}
 export function clearSession(){if(typeof localStorage!=='undefined')localStorage.removeItem(SESSION_KEY)}
@@ -47,13 +47,13 @@ export function installApiProxy(){
   const a=(e.target as HTMLElement)?.closest?.('a') as HTMLAnchorElement|null;if(!a)return;
   let u:URL;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin)return;
   const pages=location.hostname==='chillymz.github.io';
-  const rawPath=pages&&u.pathname.startsWith('/IMDb-website')?u.pathname.slice('/IMDb-website'.length)||'/':u.pathname;
+  const rawPath=pages&&u.pathname.startsWith('/ratings')?u.pathname.slice('/ratings'.length)||'/':u.pathname;
   if(rawPath==='/signout-with-chatgpt'){
    e.preventDefault();const s=readSession();clearSession();
    if(s?.access_token){try{await originalFetch!(SUPABASE_URL+'/auth/v1/logout',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,Authorization:'Bearer '+s.access_token}})}catch{}}
    location.href=basePath();return;
   }
-  if(pages&&!u.pathname.startsWith('/IMDb-website')){
+  if(pages&&!u.pathname.startsWith('/ratings')){
    e.preventDefault();const suffix=rawPath==='/'?'':rawPath.replace(/^\//,'');location.href=basePath()+suffix+u.search+u.hash;return;
   }
   if(rawPath==='/'){e.preventDefault();location.href=basePath();}

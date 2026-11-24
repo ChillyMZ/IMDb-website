@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const basePath = process.env.GITHUB_ACTIONS ? '/IMDb-website' : '';
+const basePath = process.env.GITHUB_ACTIONS ? '/ratings' : '';
 const nextConfig: NextConfig = {
   output: 'export',
   trailingSlash: true,

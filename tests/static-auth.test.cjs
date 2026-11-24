@@ -9,7 +9,7 @@ test('Pages export includes public and authentication pages',()=>{
 test('API bridge handles Pages paths, reader tokens and sign-out',async()=>{
  const js=ts.transpileModule(fs.readFileSync('app/live/supabase-browser.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
  const storage=new Map(),calls=[],handlers={},exports={};
- const location={hostname:'chillymz.github.io',origin:'https://chillymz.github.io',href:'https://chillymz.github.io/IMDb-website/',pathname:'/IMDb-website/'};
+ const location={hostname:'chillymz.github.io',origin:'https://chillymz.github.io',href:'https://chillymz.github.io/ratings/',pathname:'/ratings/'};
  const window={fetch:async(url,init)=>{calls.push({url:String(url),init});return Response.json({ok:true})}};
  vm.runInNewContext(js,{require:path=>{assert.equal(path,"../analytics-client");return {trackEvent:()=>{}}},exports,window,location,document:{addEventListener:(event,fn)=>{handlers[event]=fn}},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},Headers,URL,Request,Response,Date,JSON});
  exports.installApiProxy();exports.saveSession({access_token:'test-session',expires_in:3600});
@@ -17,10 +17,10 @@ test('API bridge handles Pages paths, reader tokens and sign-out',async()=>{
  assert.match(calls[0].url,/\/functions\/v1\/chillymz-api\/core\?book=gutenberg-11$/);
  assert.equal(calls[0].init.headers.get('Authorization'),'Bearer test-session');
  await exports.signOut();assert.equal(exports.currentSession(),null);
- location.href='/IMDb-website/login/?return_to=test';
- await handlers.click({defaultPrevented:true,target:{closest:()=>({href:'https://chillymz.github.io/IMDb-website/#sign-in'})},preventDefault:()=>{throw Error('Already handled click intercepted')}});
- assert.equal(location.href,'/IMDb-website/login/?return_to=test');
- location.href='https://chillymz.github.io/IMDb-website/';
+ location.href='/ratings/login/?return_to=test';
+ await handlers.click({defaultPrevented:true,target:{closest:()=>({href:'https://chillymz.github.io/ratings/#sign-in'})},preventDefault:()=>{throw Error('Already handled click intercepted')}});
+ assert.equal(location.href,'/ratings/login/?return_to=test');
+ location.href='https://chillymz.github.io/ratings/';
  let prevented=false;handlers.click({target:{closest:()=>({href:'https://chillymz.github.io/privacy'})},preventDefault:()=>{prevented=true}});
- assert.equal(location.href,'/IMDb-website/privacy');assert.equal(prevented,true);
+ assert.equal(location.href,'/ratings/privacy');assert.equal(prevented,true);
 });
