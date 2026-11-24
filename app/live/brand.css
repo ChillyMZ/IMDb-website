@@ -218,3 +218,13 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .p-chart svg circle:hover,.platform.live-reader .p-chart svg circle:focus{fill:var(--accent)}
 .platform.live-reader .live-legend>span,.platform.live-reader .live-column-title{color:var(--muted)}
 .platform.live-reader .book-source a,.platform.live-reader .p-link{color:var(--accent)}
+
+/* Signed-in views (diary, profile, level pill): older files hard-code white text */
+.platform.live-reader .p-level-pill b,.platform.live-reader .rs-level-top b,.platform.live-reader .rs-tile b,.platform.live-reader .rs-name,.platform.live-reader .rs-legend b,.platform.live-reader .rs-mix b,.platform.live-reader li b{color:var(--paper)}
+.platform.live-reader .rs-next,.platform.live-reader .rs-badge-detail{color:var(--accent)}
+.platform.live-reader .rs-tile b{font-family:var(--serif);font-weight:500}
+.platform.live-reader .p-level-bar{background:var(--line)}
+.platform.live-reader .p-level-bar i{background:var(--accent)}
+.rs-level-badge,.platform.live-reader .rs-level-badge{background:var(--surface-2);color:var(--paper)}
+.rs-badges li{background:var(--surface-2);border-color:var(--line)}
+.rs-badge-icon{background:var(--line);color:var(--muted)}
