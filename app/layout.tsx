@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import './launch.css';
+import './site-light.css';
 import CookiePreferences from './cookie-preferences';
 import SupabaseBootstrap from './supabase-bootstrap';
 import {SITE_URL,SITE_TITLE,SITE_DESCRIPTION,SITE_INDEXABLE} from './site-config';
