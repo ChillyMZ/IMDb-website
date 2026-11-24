@@ -1,12 +1,12 @@
 /* ChillyMZ for Authors: same slate + gold system as the reader app (see app/live/theme.css). */
-.authors{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8;min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
+.authors{--gold:#f1ebdf;--bg:#121110;--surface:#191816;--line:#2c2925;--text:#e8e2d6;--muted:#9a9388;min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
 .authors a{color:inherit;text-decoration:none}
 .a-header{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:1080px;margin:0 auto;padding:18px 24px;border-bottom:1px solid var(--line)}
 .a-brand{font-weight:800;font-size:18px;color:#fff}.a-brand span{color:var(--gold)}
 .a-header nav{display:flex;align-items:center;gap:18px;font-size:14px;font-weight:600}
 .a-cta,.a-cta-small{display:inline-block;background:var(--gold);color:#14181c!important;font-weight:700;border-radius:4px}
 .a-cta{padding:12px 20px;font-size:15px}.a-cta-small{padding:7px 12px;font-size:13px}
-.a-cta:hover,.a-cta-small:hover{background:#f8d67c}
+.a-cta:hover,.a-cta-small:hover{background:#ffffff}
 .authors main{max-width:1080px;margin:0 auto;padding:0 24px}
 .authors section{padding:56px 0;border-bottom:1px solid var(--line)}
 .authors h1,.authors h2,.authors h3{color:#fff;letter-spacing:-.01em;margin:0}
@@ -31,8 +31,21 @@
 .a-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .a-grid>div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px}
 .a-grid h3{font-size:16px;margin-bottom:6px}.a-grid p{margin:0;color:#c3ccd5}
-.a-grid .a-us{border-color:#f4c95d88;background:#f4c95d10}
+.a-grid .a-us{border-color:#f1ebdf88;background:#f1ebdf10}
 .a-for ul{margin:0;padding-left:20px;display:grid;gap:6px;color:#c3ccd5}
 .a-founder p{max-width:680px;color:#c3ccd5;font-size:17px;margin:0 0 22px}
 .a-footer{max-width:1080px;margin:0 auto;padding:28px 24px;display:flex;gap:20px;font-size:13px;color:var(--muted)}
 @media(max-width:760px){.a-cells{grid-template-columns:repeat(6,minmax(0,1fr))}.a-steps ol,.a-grid{grid-template-columns:1fr}.a-header nav a:not(.a-cta-small){display:none}.a-lead{font-size:17px}}
+/* Brand layer: matches app/live/brand.css */
+body:has(.authors){background:#121110}
+.authors h1,.authors h2,.a-brand{font-family:"Newsreader",Georgia,serif;font-weight:500;letter-spacing:-.01em;color:#f1ebdf}
+.authors h1{font-weight:400;letter-spacing:-.025em}
+.a-brand span{display:none}
+.a-brand{font-size:23px;font-weight:600}
+.a-cta,.a-cta-small{border-radius:3px}
+.a-steps>*,.a-compare>*,.a-findings>*,.a-grid>*{border-radius:4px}
+body:has(.authors) .cookie-banner{background:#1d1b19;color:#e8e2d6;border:1px solid #3b3732;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.5);font-size:13px;max-width:420px;padding:18px 20px}
+body:has(.authors) .cookie-banner h2{font-size:19px;margin:0 0 6px}
+body:has(.authors) .cookie-banner p{font-size:13px;color:#b5aea2}
+body:has(.authors) .cookie-banner a{color:#e8e2d6}
+body:has(.authors) .cookie-banner button{background:transparent;color:#e8e2d6;border:1px solid #3b3732;border-radius:3px;font-size:13px;padding:8px 14px}

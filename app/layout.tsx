@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
-  return <html lang="en"><body><SupabaseBootstrap/><a href="#main-content" className="skip-link">Skip to content</a>{children}<CookiePreferences/></body></html>;
+  return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap"/></head><body><SupabaseBootstrap/><a href="#main-content" className="skip-link">Skip to content</a>{children}<CookiePreferences/></body></html>;
 }

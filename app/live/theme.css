@@ -1,6 +1,6 @@
 /* ChillyMZ theme: clean, Letterboxd-like. Neutral dark slate, plain sans-serif, covers and score colours carry the page.
    No slogans, glows or decorative bars. Gold is the single brand accent (primary buttons, level, links). */
-.platform.live-reader{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8;--primary:#f4c95d;--ring:#f4c95d;
+.platform.live-reader{--gold:#f1ebdf;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8;--primary:#f1ebdf;--ring:#f1ebdf;
  background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.5}
 .platform.live-reader h1,.platform.live-reader h2,.platform.live-reader h3,.platform.live-reader h4,.p-dialog h2,.p-dialog h3{font-family:inherit;font-weight:700;letter-spacing:-.01em;color:#fff}
 .platform.live-reader h1{font-size:28px;line-height:1.2}
@@ -19,7 +19,7 @@
 .platform.live-reader button:hover,.p-dialog button:hover{background:#2e3842;border-color:#4a5866}
 .platform.live-reader input,.platform.live-reader select,.platform.live-reader textarea{background:#2c3440;border-color:#3a4552;color:#fff}
 .platform.live-reader .p-primary,.p-dialog .p-primary,.p-dialog.p-dialog button.p-primary{background:var(--gold);border-color:var(--gold);color:#14181c;box-shadow:none}
-.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover,.p-dialog.p-dialog button.p-primary:hover{background:#f8d67c;border-color:#f8d67c}
+.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover,.p-dialog.p-dialog button.p-primary:hover{background:#ffffff;border-color:#ffffff}
 .platform.live-reader .p-rating,.platform.live-reader .p-link{color:var(--gold)}
 .p-dialog.p-dialog{border-radius:8px;background:var(--surface,#1c2228);border-color:#2c3440;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 
@@ -42,11 +42,11 @@
 
 /* Badge shelf and level: flat */
 .rs-badges li{border-radius:6px;background:var(--surface-2,#242c34);border-color:var(--line,#2c3440)}
-.rs-badges li.earned{background:#f4c95d12;border-color:#f4c95d66}
-.rs-badges li.earned .rs-badge-icon{color:var(--gold,#f4c95d)}
+.rs-badges li.earned{background:#f1ebdf12;border-color:#f1ebdf66}
+.rs-badges li.earned .rs-badge-icon{color:var(--gold,#f1ebdf)}
 .rs-badge-icon{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;border-radius:50%;background:#2c3440;color:#c8d0d8;flex:none}
 .platform.live-reader .rs-level-badge,.rs-level-badge{border-radius:4px;font-size:13px}
-.p-level-badges{display:flex;gap:4px;color:var(--gold,#f4c95d)}
+.p-level-badges{display:flex;gap:4px;color:var(--gold,#f1ebdf)}
 .platform.live-reader .rs-tile b{font-family:inherit;color:#fff}
 .platform.live-reader .rs-head h1{font-size:28px;margin:0}
 
@@ -57,7 +57,7 @@
 .continue-label{font-size:12px;font-weight:600;color:var(--muted,#8a99a8)}
 .platform.live-reader .continue-body h2{margin:0;font-size:24px;line-height:1.2}
 .platform.live-reader .continue-body p{margin:0;font-size:14px;color:#b9ae9e}
-.continue-body progress{width:min(320px,100%);height:6px;accent-color:var(--gold,#f4c95d)}
+.continue-body progress{width:min(320px,100%);height:6px;accent-color:var(--gold,#f1ebdf)}
 .continue-body .p-primary{margin-top:6px}
 
 /* Book page: soft glow in the cover's own colour */
@@ -71,20 +71,20 @@
 .platform.live-reader .rating-cell.unrated:hover{background:#2e3842;color:#d8e0e8}
 .platform.live-reader .rating-cell.mine::after{content:'';position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#14181c;box-shadow:0 0 0 2px #fff9}
 .platform.live-reader .rating-cell.unrated.mine::after{background:var(--gold)}
-.platform.live-reader .rating-cell.just-rated{animation:cell-pop .5s cubic-bezier(.2,.9,.3,1.4);box-shadow:0 0 0 3px var(--gold),0 0 18px #f4c95d88}
+.platform.live-reader .rating-cell.just-rated{animation:cell-pop .5s cubic-bezier(.2,.9,.3,1.4);box-shadow:0 0 0 3px var(--gold),0 0 18px #f1ebdf88}
 @keyframes cell-pop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:none}}
 
 /* "Be the first" note in the rating pop-up */
-.p-dialog .be-first{margin:4px 0 12px;padding:10px 12px;border-radius:4px;background:#f4c95d10;border:1px solid #f4c95d40;font-size:14px;line-height:1.5}
-.p-dialog .be-first b{color:#f4c95d}
+.p-dialog .be-first{margin:4px 0 12px;padding:10px 12px;border-radius:4px;background:#f1ebdf10;border:1px solid #f1ebdf40;font-size:14px;line-height:1.5}
+.p-dialog .be-first b{color:#f1ebdf}
 
 /* Badge unlock: a short warm glow */
-.rating-compare p.rc-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#f4c95d1f;animation:badge-glow 1.6s ease-out}
-@keyframes badge-glow{0%{box-shadow:0 0 0 0 #f4c95daa;transform:scale(.9)}30%{transform:scale(1.05)}100%{box-shadow:0 0 0 14px #f4c95d00;transform:none}}
+.rating-compare p.rc-badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#f1ebdf1f;animation:badge-glow 1.6s ease-out}
+@keyframes badge-glow{0%{box-shadow:0 0 0 0 #f1ebdfaa;transform:scale(.9)}30%{transform:scale(1.05)}100%{box-shadow:0 0 0 14px #f1ebdf00;transform:none}}
 
 /* Cookie banner matches the dark site. Both choices look the same on purpose (no nudging towards consent). */
 body:has(.live-reader) .cookie-banner{background:#1c2228;color:#d8e0e8;border-color:#2c3440;box-shadow:0 12px 40px #000a;border-radius:8px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-body:has(.live-reader) .cookie-banner a{color:#f4c95d}
+body:has(.live-reader) .cookie-banner a{color:#f1ebdf}
 body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;border:1px solid #3a4552;border-radius:4px}
 
 @media(max-width:700px){.continue-card{grid-template-columns:72px minmax(0,1fr);gap:14px;padding:14px}.continue-cover img{width:72px}}
@@ -92,8 +92,8 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 /* Gold progress bars everywhere (browsers otherwise draw their own green/grey) */
 .platform.live-reader progress,.p-dialog progress{appearance:none;-webkit-appearance:none;height:8px;border:0;border-radius:99px;background:#2c3440;overflow:hidden}
 .platform.live-reader progress::-webkit-progress-bar,.p-dialog progress::-webkit-progress-bar{background:#2c3440;border-radius:99px}
-.platform.live-reader progress::-webkit-progress-value,.p-dialog progress::-webkit-progress-value{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
-.platform.live-reader progress::-moz-progress-bar,.p-dialog progress::-moz-progress-bar{background:linear-gradient(90deg,#e0a93a,#f4c95d);border-radius:99px}
+.platform.live-reader progress::-webkit-progress-value,.p-dialog progress::-webkit-progress-value{background:linear-gradient(90deg,#cfc6b6,#f1ebdf);border-radius:99px}
+.platform.live-reader progress::-moz-progress-bar,.p-dialog progress::-moz-progress-bar{background:linear-gradient(90deg,#cfc6b6,#f1ebdf);border-radius:99px}
 /* Rating pop-up: same rounded, warm look */
 .p-dialog .live-presets button{border-radius:4px}
 /* Stats lists: score chip and chapter name line up on the left (site-wide buttons centre their content) */
@@ -119,7 +119,7 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 .platform.live-reader .p-panel h2{margin:0 0 12px}
 .platform.live-reader .live-form button+button{margin-left:8px}
 /* The rating pop-up renders outside the page wrapper, so it needs its own copy of the theme values */
-.p-dialog{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8}
+.p-dialog{--gold:#f1ebdf;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8}
 .p-dialog.p-dialog h2,.p-dialog.p-dialog h3{font-family:inherit;font-weight:700;letter-spacing:-.01em}
 .p-dialog.p-dialog input{background:#2c3440;border-color:#3a4552;color:#fff;border-radius:4px}
 /* Front page: "Can't find your book?" bar, the first thing on the books tab */
@@ -136,7 +136,7 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 .hh-head span{font-size:13px;color:var(--muted,#8a99a8)}
 .hh-chapters{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .platform.live-reader .hh-chapters button{display:grid;grid-template-columns:28px 36px minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;text-align:left;padding:8px 12px;background:var(--surface,#1c2228);border:1px solid var(--line,#2c3440);border-radius:6px;min-height:64px}
-.platform.live-reader .hh-chapters button:hover{border-color:var(--gold,#f4c95d)}
+.platform.live-reader .hh-chapters button:hover{border-color:var(--gold,#f1ebdf)}
 .hh-rank{font-size:18px;font-weight:800;color:var(--muted,#8a99a8);text-align:center;font-variant-numeric:tabular-nums}
 .hh-cover img,.hh-cover>*{width:36px;height:54px;object-fit:cover;border-radius:3px;display:block}
 .hh-text{display:grid;min-width:0}.hh-text b{color:#fff;font-size:14px}.hh-text small{color:var(--muted,#8a99a8);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -145,6 +145,6 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 .platform.live-reader .hh-books button{display:grid;gap:4px;align-content:start;text-align:left;background:none;border:0;padding:0;min-width:0}
 .hh-book-cover{display:block;aspect-ratio:2/3;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #ffffff1a;transition:box-shadow .15s}
 .hh-book-cover img,.hh-book-cover>*{width:100%;height:100%;object-fit:cover}
-.platform.live-reader .hh-books button:hover .hh-book-cover{box-shadow:0 0 0 2px var(--gold,#f4c95d)}
-.hh-books b{color:#fff;font-size:13px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.hh-books small{color:var(--gold,#f4c95d);font-size:12px}
+.platform.live-reader .hh-books button:hover .hh-book-cover{box-shadow:0 0 0 2px var(--gold,#f1ebdf)}
+.hh-books b{color:#fff;font-size:13px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.hh-books small{color:var(--gold,#f1ebdf);font-size:12px}
 @media(max-width:800px){.hh-chapters{grid-template-columns:1fr}.hh-books{grid-template-columns:repeat(3,minmax(0,1fr))}}

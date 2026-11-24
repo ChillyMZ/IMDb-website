@@ -1,0 +1,168 @@
+/* ChillyMZ brand layer — loaded last, wins over the older theme files.
+   Direction: an editorial book site. Warm ink background, paper-white type,
+   a serif for titles, plain system sans for interface text. No bright yellow,
+   no pills, no glows. Colour comes from book covers and score chips only. */
+
+.platform.live-reader,.p-dialog{
+  --ink:#121110;--bg:#121110;--surface:#191816;--surface-2:#211f1c;--line:#2c2925;--line-strong:#3b3732;
+  --text:#e8e2d6;--muted:#9a9388;--paper:#f1ebdf;
+  --gold:#e8e2d6;--primary:#f1ebdf;--ring:#f1ebdf;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+body:has(.live-reader){background:#121110}
+.platform.live-reader{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+/* Type */
+.platform.live-reader h1,.platform.live-reader h2,.p-dialog.p-dialog h2{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;color:var(--paper)}
+.platform.live-reader h3,.platform.live-reader h4{font-family:var(--sans);color:var(--paper)}
+.platform.live-reader h1{font-size:34px;line-height:1.15}
+.platform.live-reader h2{font-size:24px;line-height:1.25}
+
+/* Header: wordmark left, quiet text nav, one outlined action */
+.platform.live-reader .p-header{background:rgba(18,17,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:none;height:64px}
+.platform.live-reader .p-brand{font-family:var(--serif);font-size:24px!important;font-weight:600;letter-spacing:-.01em;color:var(--paper);text-decoration:none}
+.platform.live-reader .p-header nav{gap:28px;margin-left:28px}
+.platform.live-reader .p-header nav button{background:none!important;border:0;border-radius:0;padding:22px 0 20px;color:var(--muted);font-size:14px;font-weight:500;box-shadow:none}
+.platform.live-reader .p-header nav button:hover{color:var(--paper)}
+.platform.live-reader .p-header nav button.selected{color:var(--paper);background:none;box-shadow:inset 0 -2px 0 var(--paper)}
+.platform.live-reader .p-header .p-primary{background:transparent;color:var(--paper);border:1px solid var(--line-strong);margin-left:auto}
+.platform.live-reader .p-header .p-primary:hover{background:var(--surface-2);border-color:var(--muted)}
+.platform.live-reader .p-header a:not(.p-brand),.platform.live-reader .p-header>button:not(.p-primary):not(.p-avatar):not(.p-level-pill){background:none;border:0;color:var(--text);font-size:14px;font-weight:500}
+.platform.live-reader .p-avatar{background:var(--surface-2);color:var(--paper);border:1px solid var(--line-strong);border-radius:50%}
+.private-badge{display:none}
+
+/* Buttons: square-ish, calm. Primary is paper on ink. */
+.platform.live-reader button,.p-dialog button{border-radius:3px;font-family:var(--sans);font-weight:500;letter-spacing:0}
+.platform.live-reader button,.p-dialog button{background:transparent;border:1px solid var(--line-strong);color:var(--text)}
+.platform.live-reader button:hover,.p-dialog button:hover{background:var(--surface-2);border-color:var(--muted)}
+.platform.live-reader .p-primary,.p-dialog .p-primary,.p-dialog.p-dialog button.p-primary{background:var(--paper);border-color:var(--paper);color:#151412;font-weight:600}
+.platform.live-reader .p-primary:hover,.p-dialog .p-primary:hover,.p-dialog.p-dialog button.p-primary:hover{background:#fff;border-color:#fff}
+.platform.live-reader .p-link,.platform.live-reader a{color:inherit}
+.platform.live-reader .p-rating{color:var(--paper)}
+
+/* Inputs */
+.platform.live-reader input,.platform.live-reader select,.platform.live-reader textarea,.p-dialog.p-dialog input,.p-dialog textarea{background:var(--surface);border:1px solid var(--line-strong);color:var(--paper);border-radius:3px}
+.platform.live-reader input:focus,.platform.live-reader select:focus,.platform.live-reader textarea:focus{outline:none;border-color:var(--muted);box-shadow:0 0 0 3px rgba(241,235,223,.08)}
+.platform.live-reader input::placeholder{color:#77716a}
+
+/* Panels: barely there */
+.platform.live-reader .p-panel,.platform.live-reader .p-review,.platform.live-reader .rating-board,.platform.live-reader .book-statistics,.platform.live-reader .rs-tile,.platform.live-reader .rs-level,.platform.live-reader .live-form,.platform.live-reader .continue-card{background:var(--surface);border:1px solid var(--line);border-radius:4px}
+
+/* Home intro: an editorial opening, not a banner */
+.platform.live-reader .home-intro{margin:28px 0 56px;padding:0 0 48px;border-bottom:1px solid var(--line);max-width:none}
+.platform.live-reader .home-intro .home-kicker{margin:0 0 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.platform.live-reader .home-intro h1{margin:0 0 18px;font-size:clamp(40px,6vw,72px);line-height:1.02;font-weight:400;letter-spacing:-.025em;max-width:13em}
+.platform.live-reader .home-intro h1 em{font-style:italic;color:#c9c1b2}
+.platform.live-reader .home-intro p:last-child{margin:0;font-size:18px;line-height:1.6;color:var(--muted);max-width:34em}
+
+/* Section headings */
+.platform.live-reader .hh-head,.platform.live-reader .catalogue-heading{align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
+.platform.live-reader .hh-head h2,.platform.live-reader .catalogue-heading h1{font-size:28px;font-weight:500;margin:0}
+.platform.live-reader .hh-head span,.platform.live-reader .catalogue-heading .p-muted,.platform.live-reader .catalogue-heading span{font-size:13px;color:var(--muted)}
+
+/* Top chapters: a ranked list, not three boxed widgets */
+.platform.live-reader .home-highlights{margin:0 0 64px}
+.platform.live-reader .hh-chapters{gap:0 32px}
+.platform.live-reader .hh-chapters button{background:none;border:0;border-radius:0;padding:10px 0;min-height:76px;grid-template-columns:34px 44px minmax(0,1fr) auto}
+.platform.live-reader .hh-chapters button:hover{background:none;border:0}
+.platform.live-reader .hh-chapters button:hover .hh-text b{text-decoration:underline;text-underline-offset:3px}
+.platform.live-reader .hh-rank{font-family:var(--serif);font-size:30px;font-weight:400;color:#6f6960;text-align:left}
+.platform.live-reader .hh-cover{width:44px;height:66px;overflow:hidden;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.platform.live-reader .hh-cover img,.platform.live-reader .hh-cover>*{width:44px;height:66px}
+.platform.live-reader .hh-text b{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--paper)}
+.platform.live-reader .hh-text small{font-size:13px}
+.platform.live-reader .hh-score b{border-radius:3px}
+
+/* Book shelf */
+.platform.live-reader .p-tile .p-jacket{border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 10px 24px rgba(0,0,0,.35);transition:transform .2s ease,box-shadow .2s ease}
+.platform.live-reader .p-tile:hover .p-jacket{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 16px 32px rgba(0,0,0,.45)}
+.platform.live-reader .p-tile>b{font-family:var(--serif);font-size:17px;font-weight:500;line-height:1.25;color:var(--paper);margin-top:6px}
+.platform.live-reader .p-tile small{font-size:13px;color:var(--muted)}
+.platform.live-reader .hh-books small,.platform.live-reader .p-tile small:last-child{color:var(--text)}
+.platform.live-reader .catalogue-pagination{gap:12px}
+
+/* "Can't find your book?" now sits under the shelf as a quiet footer note */
+.platform.live-reader .add-book-bar{margin:56px 0 0;padding:28px 0 0;background:none;border:0;border-top:1px solid var(--line);border-radius:0}
+.platform.live-reader .add-book-bar b{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--paper)}
+.platform.live-reader .add-book-bar span{font-size:14px;color:var(--muted)}
+
+/* Book page */
+.platform.live-reader .rating-board.tinted{background:linear-gradient(180deg,color-mix(in srgb,var(--book-tint) 10%,transparent),transparent 260px),var(--surface)}
+.platform.live-reader .rating-board h1{font-size:36px;font-weight:500}
+.platform.live-reader .board-overall{font-family:var(--serif);font-weight:500;font-size:32px;color:var(--paper)}
+.platform.live-reader .board-votes,.platform.live-reader .continue-body p{color:var(--muted)}
+.platform.live-reader .rating-cell{border-radius:2px}
+.platform.live-reader .rating-cell.unrated{background:var(--surface-2);color:#7c766d;box-shadow:inset 0 0 0 1px var(--line)}
+.platform.live-reader .rating-cell.unrated:hover{background:#2a2723;color:var(--paper)}
+.platform.live-reader .rating-cell.mine::after{background:var(--ink)}
+.platform.live-reader .rating-cell.just-rated{box-shadow:0 0 0 2px var(--paper)}
+
+/* Progress bars: thin paper line */
+.platform.live-reader progress,.p-dialog progress{height:4px;background:var(--line)}
+.platform.live-reader progress::-webkit-progress-bar,.p-dialog progress::-webkit-progress-bar{background:var(--line)}
+.platform.live-reader progress::-webkit-progress-value,.p-dialog progress::-webkit-progress-value{background:var(--paper)}
+.platform.live-reader progress::-moz-progress-bar,.p-dialog progress::-moz-progress-bar{background:var(--paper)}
+
+/* Level pill and badges in neutral tones */
+.platform.live-reader .p-level-pill{background:none;border:1px solid var(--line-strong);border-radius:3px;color:var(--text)}
+.p-level-badges,.rs-badges li.earned .rs-badge-icon{color:var(--paper)}
+.rs-badges li.earned{background:var(--surface-2);border-color:var(--line-strong)}
+.rs-badges li{border-radius:3px}
+
+/* Dialogs */
+.p-dialog.p-dialog{background:var(--surface);border:1px solid var(--line-strong);border-radius:4px;font-family:var(--sans);color:var(--text)}
+.p-dialog .be-first{background:var(--surface-2);border:1px solid var(--line);border-radius:3px}
+.p-dialog .be-first b{color:var(--paper)}
+.rating-compare{background:var(--surface-2);border-color:var(--line);border-radius:4px}
+.rating-compare p.rc-badge{background:var(--surface);border-radius:3px;animation:none}
+
+/* Footer */
+.platform.live-reader .live-footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:32px 0 40px}
+.platform.live-reader .live-footer a{color:var(--muted);text-decoration:none}
+.platform.live-reader .live-footer a:hover{color:var(--paper)}
+.platform.live-reader .live-footer button{border:0;padding:0;background:none;color:var(--muted);font-size:13px}
+.platform.live-reader .live-footer button:hover{color:var(--paper);background:none}
+.platform.live-reader .live-footer>span:first-child{font-family:var(--serif);font-size:16px;color:var(--text)}
+
+/* Mobile tab bar */
+.platform.live-reader .live-bottom{background:rgba(18,17,16,.96);border-top:1px solid var(--line)}
+.platform.live-reader .live-bottom button{border:0;background:none;color:var(--muted)}
+.platform.live-reader .live-bottom button.selected{color:var(--paper)!important;box-shadow:inset 0 2px var(--paper)}
+
+/* Cookie notice: a small bar in the corner, not a wall of text over the shelf */
+body:has(.live-reader) .cookie-banner{background:#1d1b19;color:var(--text,#e8e2d6);border:1px solid #3b3732;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.5);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:13px;line-height:1.5;max-width:420px;padding:18px 20px}
+body:has(.live-reader) .cookie-banner h2{font-family:"Newsreader",Georgia,serif;font-size:19px;font-weight:500;margin:0 0 6px;color:#f1ebdf}
+body:has(.live-reader) .cookie-banner p{font-size:13px;margin:0 0 12px;color:#b5aea2}
+body:has(.live-reader) .cookie-banner a{color:#e8e2d6;text-decoration:underline;text-underline-offset:2px}
+body:has(.live-reader) .cookie-banner button{background:transparent;color:#e8e2d6;border:1px solid #3b3732;border-radius:3px;font-size:13px;padding:8px 14px}
+body:has(.live-reader) .cookie-banner button:hover{background:#2a2723}
+
+@media(max-width:800px){
+  .platform.live-reader .home-intro{margin:8px 0 36px;padding-bottom:32px}
+  .platform.live-reader .home-intro p:last-child{font-size:16px}
+  .platform.live-reader .hh-chapters{gap:0}
+  .platform.live-reader .hh-chapters li+li button{border-top:1px solid var(--line)}
+  .platform.live-reader .p-brand{font-size:21px!important}
+}
+
+/* Missing-cover fallback: a plain typographic jacket */
+.platform.live-reader .book-type-card,.platform.live-reader .p-tile:nth-child(n) .book-type-card{background:#24211d;border:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);color:var(--paper);justify-content:center;text-align:center;padding:18px}
+.platform.live-reader .book-type-card small{display:none}
+.platform.live-reader .book-type-card strong{font-family:var(--serif);font-weight:500;color:var(--paper)}
+.platform.live-reader .book-type-card span{color:var(--muted);font-size:13px}
+.platform.live-reader .hh-cover .book-type-card{padding:0;background:#24211d}
+.platform.live-reader .hh-cover .book-type-card>*{display:none}
+
+/* Footer lines up with the page content */
+.platform.live-reader .live-footer{max-width:1132px;margin-inline:auto;flex-wrap:wrap;gap:12px 24px}
+@media(max-width:1180px){.platform.live-reader .live-footer{margin-inline:24px}}
+
+/* Community */
+.platform.live-reader .talk-sidebar{background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.platform.live-reader .talk-sidebar h2,.platform.live-reader .talk-sidebar h3,.platform.live-reader .talk-sidebar b{color:var(--paper)}
+.platform.live-reader .talk-sidebar p{color:var(--muted)}
+.platform.live-reader .talk-topics button,.platform.live-reader .catalogue-shortcuts button{color:var(--muted);border:0;background:none}
+.platform.live-reader .talk-topics button[aria-pressed=true],.platform.live-reader .catalogue-shortcuts button[aria-pressed=true]{color:var(--paper);box-shadow:inset 0 -2px var(--paper)}
+.platform.live-reader .book-statistics>summary{color:var(--paper)}
+.platform.live-reader .p-header nav button.selected{background:none!important}
