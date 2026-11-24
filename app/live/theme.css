@@ -129,3 +129,22 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 .add-book-bar span{color:var(--muted,#8a99a8);font-size:14px}
 .add-book-actions{display:flex;flex-wrap:wrap;gap:8px}
 @media(max-width:600px){.add-book-actions,.add-book-actions button{width:100%}.add-book-actions button{flex:1}}
+/* Front page highlights: top chapters + most-rated books (real ratings only) */
+.home-highlights{display:grid;gap:32px;margin:0 0 36px}
+.hh-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 0 12px}
+.platform.live-reader .hh-head h2{margin:0;font-size:20px}
+.hh-head span{font-size:13px;color:var(--muted,#8a99a8)}
+.hh-chapters{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.platform.live-reader .hh-chapters button{display:grid;grid-template-columns:28px 36px minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;text-align:left;padding:8px 12px;background:var(--surface,#1c2228);border:1px solid var(--line,#2c3440);border-radius:6px;min-height:64px}
+.platform.live-reader .hh-chapters button:hover{border-color:var(--gold,#f4c95d)}
+.hh-rank{font-size:18px;font-weight:800;color:var(--muted,#8a99a8);text-align:center;font-variant-numeric:tabular-nums}
+.hh-cover img,.hh-cover>*{width:36px;height:54px;object-fit:cover;border-radius:3px;display:block}
+.hh-text{display:grid;min-width:0}.hh-text b{color:#fff;font-size:14px}.hh-text small{color:var(--muted,#8a99a8);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hh-score{display:grid;justify-items:end;gap:2px}.hh-score b{min-width:44px;text-align:center;padding:4px 6px;border-radius:4px;font-size:14px;font-variant-numeric:tabular-nums}.hh-score small{font-size:11px;color:var(--muted,#8a99a8)}
+.hh-books{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.platform.live-reader .hh-books button{display:grid;gap:4px;align-content:start;text-align:left;background:none;border:0;padding:0;min-width:0}
+.hh-book-cover{display:block;aspect-ratio:2/3;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #ffffff1a;transition:box-shadow .15s}
+.hh-book-cover img,.hh-book-cover>*{width:100%;height:100%;object-fit:cover}
+.platform.live-reader .hh-books button:hover .hh-book-cover{box-shadow:0 0 0 2px var(--gold,#f4c95d)}
+.hh-books b{color:#fff;font-size:13px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.hh-books small{color:var(--gold,#f4c95d);font-size:12px}
+@media(max-width:800px){.hh-chapters{grid-template-columns:1fr}.hh-books{grid-template-columns:repeat(3,minmax(0,1fr))}}

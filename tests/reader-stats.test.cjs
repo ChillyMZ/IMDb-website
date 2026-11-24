@@ -160,3 +160,10 @@ test('search insights keep only clean, non-personal words and rank unmatched sea
  const s=searchSummary.summarizeSearches([{query:'dune',results:0},{query:'mistborn',results:0},{query:'dune',results:0},{query:'hobbit',results:1}]);
  assert.equal(s.total,4);assert.deepEqual(s.missing.map(x=>[x.query,x.count]),[['dune',2],['mistborn',1]]);assert.deepEqual(s.top.map(x=>x.query),['hobbit']);
 });
+
+test('top chapters use an IMDb-style weighted score so one vote cannot top the list',()=>{
+ const {rankChapters}=load('app/live/highlights.ts');
+ const r=rankChapters([{book:'a',chapter:1,average:10,count:1},{book:'a',chapter:2,average:9.2,count:12},{book:'b',chapter:3,average:6,count:5},{book:'b',chapter:4,average:8,count:0}],8);
+ assert.deepEqual(r.map(x=>x.chapter),[2,1,3]);
+ assert.ok(r[0].weighted<9.2&&r[0].weighted>8.5);assert.equal(rankChapters([]).length,0);
+});
