@@ -122,3 +122,10 @@ body:has(.live-reader) .cookie-banner button{background:#2c3440;color:#d8e0e8;bo
 .p-dialog{--gold:#f4c95d;--bg:#14181c;--surface:#1c2228;--surface-2:#242c34;--line:#2c3440;--text:#d8e0e8;--muted:#8a99a8}
 .p-dialog.p-dialog h2,.p-dialog.p-dialog h3{font-family:inherit;font-weight:700;letter-spacing:-.01em}
 .p-dialog.p-dialog input{background:#2c3440;border-color:#3a4552;color:#fff;border-radius:4px}
+/* Front page: "Can't find your book?" bar, the first thing on the books tab */
+.add-book-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin:0 0 24px;padding:14px 16px;background:var(--surface,#1c2228);border:1px solid var(--line,#2c3440);border-radius:6px}
+.add-book-bar>div:first-child{display:grid;gap:2px;min-width:0}
+.platform.live-reader .add-book-bar b{color:#fff;font-size:16px}
+.add-book-bar span{color:var(--muted,#8a99a8);font-size:14px}
+.add-book-actions{display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:600px){.add-book-actions,.add-book-actions button{width:100%}.add-book-actions button{flex:1}}
