@@ -54,7 +54,7 @@ body:has(.live-reader){background:#121110}
 .platform.live-reader .home-intro .home-kicker{margin:0 0 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .platform.live-reader .home-intro h1{margin:0 0 18px;font-size:clamp(40px,6vw,72px);line-height:1.02;font-weight:400;letter-spacing:-.025em;max-width:13em}
 .platform.live-reader .home-intro h1 em{font-style:italic;color:#c9c1b2}
-.platform.live-reader .home-intro p:last-child{margin:0;font-size:18px;line-height:1.6;color:var(--muted);max-width:34em}
+.platform.live-reader .home-intro h1+p{margin:0;font-size:18px;line-height:1.6;color:var(--muted);max-width:34em}
 
 /* Section headings */
 .platform.live-reader .hh-head,.platform.live-reader .catalogue-heading{align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
@@ -140,7 +140,7 @@ body:has(.live-reader) .cookie-banner button:hover{background:#2a2723}
 
 @media(max-width:800px){
   .platform.live-reader .home-intro{margin:8px 0 36px;padding-bottom:32px}
-  .platform.live-reader .home-intro p:last-child{font-size:16px}
+  .platform.live-reader .home-intro h1+p{font-size:16px}
   .platform.live-reader .hh-chapters{gap:0}
   .platform.live-reader .hh-chapters li+li button{border-top:1px solid var(--line)}
   .platform.live-reader .p-brand{font-size:21px!important}
@@ -166,3 +166,30 @@ body:has(.live-reader) .cookie-banner button:hover{background:#2a2723}
 .platform.live-reader .talk-topics button[aria-pressed=true],.platform.live-reader .catalogue-shortcuts button[aria-pressed=true]{color:var(--paper);box-shadow:inset 0 -2px var(--paper)}
 .platform.live-reader .book-statistics>summary{color:var(--paper)}
 .platform.live-reader .p-header nav button.selected{background:none!important}
+
+/* Social proof under the intro: the creator's real audience */
+.platform.live-reader .home-intro .home-proof{margin:22px 0 0;font-size:14px;color:var(--muted)}
+.platform.live-reader .home-intro .home-proof a{color:var(--paper);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-strong)}
+.platform.live-reader .home-intro .home-proof a:hover{text-decoration-color:var(--paper)}
+
+/* Shelf: every cover the same size and baseline */
+.platform.live-reader .p-books{align-items:start}
+.platform.live-reader .p-tile{align-content:start;align-self:start}
+.platform.live-reader .p-tile .p-jacket{display:block;width:100%;height:auto;aspect-ratio:2/3;margin:0 0 6px;padding:0;border:0}
+.platform.live-reader .p-tile .p-jacket img{display:block;width:100%;height:100%;object-fit:cover;margin:0;border:0}
+.platform.live-reader .p-tile .p-tile-score{color:var(--text)}
+
+/* Mobile: Rate sits in the middle of the bottom bar, in thumb reach */
+.platform.live-reader .live-bottom button[aria-label=rate]{color:#151412!important;background:var(--paper);border-radius:3px;margin:8px 4px;box-shadow:none!important;font-weight:600}
+
+/* Cookie notice: a slim bar along the bottom instead of a box over the shelf */
+body:has(.live-reader) .cookie-banner,body:has(.authors) .cookie-banner{left:0;right:0;bottom:0;max-width:none;border-radius:0;border-width:1px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:12px max(16px,calc((100vw - 1132px)/2))}
+body:has(.live-reader) .cookie-banner h2,body:has(.authors) .cookie-banner h2{display:none}
+body:has(.live-reader) .cookie-banner p,body:has(.authors) .cookie-banner p{flex:1 1 420px;margin:0;font-size:12.5px;line-height:1.45}
+body:has(.live-reader) .cookie-banner .cookie-actions,body:has(.authors) .cookie-banner .cookie-actions{display:flex;gap:8px;margin:0}
+body:has(.live-reader) .cookie-banner>:last-child,body:has(.authors) .cookie-banner>:last-child{font-size:12px}
+@media(max-width:700px){body:has(.live-reader) .cookie-banner{bottom:64px;max-height:none;padding:10px 14px}body:has(.live-reader) .cookie-banner p{flex-basis:100%;font-size:12px}}
+body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-banner>p:last-child{flex:0 0 auto}
+.platform.live-reader .live-bottom button[aria-label=rate]{background:var(--paper)!important;color:#151412!important;flex:1 1 0!important;min-height:40px;margin:4px 6px!important;font-size:13px!important}
+.platform.live-reader .live-bottom button{border-radius:0}
+@media(max-width:700px){body:has(.live-reader) .cookie-banner button{padding:6px 12px;min-height:0}body:has(.live-reader) .cookie-banner p{font-size:11.5px}}

@@ -3,12 +3,12 @@ import {useEffect,useState} from 'react';
 import {apiResponse} from './api-response';
 import BookArt from './book-art';
 import {scoreBand} from './score-bands';
-import {rankChapters,type ChapterTotal,type RankedChapter} from './highlights';
+import {rankChapters,MIN_WEIGHT_VOTES,type ChapterTotal,type RankedChapter} from './highlights';
 
 type HomeBook={id:string;title:string;author:string;chapter_count:number;status:string;cover:string;average?:number;votes?:number};
 type Props={onOpen:(book:HomeBook,chapter?:number)=>void};
 
-// Top 3 chapters from live reader ratings (books come from the Popular sort). Hidden until there is real data.
+// Top 3 chapters from live reader ratings, only chapters with at least MIN_WEIGHT_VOTES votes (books come from the Popular sort). Hidden until there is real data.
 export default function HomeHighlights({onOpen}:Props){
  const [books,setBooks]=useState<HomeBook[]>([]),[chapters,setChapters]=useState<RankedChapter[]>([]);
  useEffect(()=>{const abort=new AbortController();(async()=>{try{
@@ -16,7 +16,7 @@ export default function HomeHighlights({onOpen}:Props){
   const rated=d.books.filter(b=>(b.votes||0)>0);setBooks(rated.slice(0,6));
   // Chapter scores for the most-rated books (each request is the same public data a book page loads).
   const totals=(await Promise.all(rated.slice(0,5).map(async b=>{try{const c=await fetch('/api/core?book='+encodeURIComponent(b.id),{signal:abort.signal,cache:'no-store'}),j=await apiResponse<{totals:ChapterTotal[]}>(c);return c.ok?j.totals:[]}catch{return []}}))).flat();
-  setChapters(rankChapters(totals,3));
+  setChapters(rankChapters(totals.filter(t=>t.count>=MIN_WEIGHT_VOTES),3));
  }catch{/* highlights are optional; the catalogue below still works */}})();return()=>abort.abort()},[]);
  if(!books.length||!chapters.length)return null;
  const byId=new Map(books.map(b=>[b.id,b]));
