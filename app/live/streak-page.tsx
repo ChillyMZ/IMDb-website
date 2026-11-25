@@ -14,12 +14,12 @@ function useUntilMidnight(){
 
 const STREAK_BADGES=[{name:'Warming Up',days:BADGE_RULES.warmingUp,xp:300},{name:'On a Roll',days:BADGE_RULES.streak,xp:2000},{name:'Unstoppable',days:BADGE_RULES.unstoppable,xp:5000},{name:'Legend',days:BADGE_RULES.legend,xp:10000}];
 
-export default function StreakPage({dates,onRate,onBack}:{dates:string[];onRate:()=>void;onBack:()=>void}){
+export default function StreakPage({dates,onRate,onBack,onPreview}:{dates:string[];onRate:()=>void;onBack:()=>void;onPreview?:()=>void}){
  const s=streakStatus(dates),tier=flameTier(s.current),next=nextFlameTier(s.current),left=useUntilMidnight(),month=monthDays(dates);
  const nextBadge=STREAK_BADGES.find(b=>b.days>s.current);
  const todayXp=streakDayXp(s.ratedToday?s.current:s.current+1),tomorrowXp=streakDayXp((s.ratedToday?s.current:s.current+1)+1);
  return <div className="streak-page">
-  <button type="button" className="shop-back" onClick={onBack}>← Back</button>
+  <div className="streak-top"><button type="button" className="shop-back" onClick={onBack}>← Back</button>{onPreview&&<button type="button" className="streak-preview" onClick={onPreview}>Preview animation (owner only)</button>}</div>
   <section className={'p-panel streak-hero flame-'+(s.current?tier.id:'none')}>
    <span className="streak-flame" aria-hidden="true"><Flame size={64} strokeWidth={1.75}/></span>
    <div><h1>{s.current}-day streak</h1><p className="p-muted">{s.current?tier.name:'No streak yet'} · Best: {s.best} {s.best===1?'day':'days'}</p></div>

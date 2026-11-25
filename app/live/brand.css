@@ -493,3 +493,5 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 @keyframes cmz-count-in{to{transform:none}}
 @keyframes cmz-bump{50%{transform:scale(1.35)}}
 @media(prefers-reduced-motion:reduce){.platform.live-reader .sc-card,.platform.live-reader .sc-flame,.platform.live-reader .sc-flame svg,.platform.live-reader .sc-burst i,.platform.live-reader .avatar-flame.bump{animation:none}.platform.live-reader .sc-old{display:none}.platform.live-reader .sc-new{transform:none;animation:none}}
+.platform.live-reader .streak-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.platform.live-reader .streak-preview{font-size:13px;padding:6px 12px}
