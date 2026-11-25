@@ -10,7 +10,17 @@ type Session={access_token:string;refresh_token?:string;expires_at?:number;expir
 
 function basePath(){if(typeof location==='undefined')return '/IMDb-website/';return location.hostname==='chillymz.github.io'?'/IMDb-website/':'/'}
 function readSession():Session|null{if(typeof localStorage==='undefined')return null;try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}}
-export function saveSession(s:Session){const next={...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)};localStorage.setItem(SESSION_KEY,JSON.stringify(next));return next}
+function claims(s:Session|null):{sub?:string;is_anonymous?:boolean}{try{return JSON.parse(atob(String(s?.access_token||'').split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}catch{return {}}}
+export function isAnonymousSession(s=readSession()){return !!claims(s).is_anonymous}
+const LEFTOVER_KEY='chillymz.anonymous.leftover';
+export function saveSession(s:Session){const prev=readSession(),next={...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)};
+ // Signing in over an anonymous session: keep the old one so its ratings can be moved into the real account.
+ const was=claims(prev),now=claims(next);if(was.is_anonymous&&!now.is_anonymous&&was.sub!==now.sub&&prev?.refresh_token){try{localStorage.setItem(LEFTOVER_KEY,prev.refresh_token)}catch{}}
+ localStorage.setItem(SESSION_KEY,JSON.stringify(next));return next}
+// A silent account made on a visitor's first rating, so their scores count for everyone. Null if it can't be made.
+export async function startAnonymousSession(){const f=originalFetch||window.fetch.bind(window);try{const r=await f(SUPABASE_URL+'/auth/v1/signup',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json'},body:'{}'});if(!r.ok)return null;const d=await r.json();return d.access_token?saveSession(d):null}catch{return null}}
+// Access token for the anonymous session left behind by signing in (fresh, via its refresh token). Cleared once read.
+export async function takeAnonymousLeftover(){let rt='';try{rt=localStorage.getItem(LEFTOVER_KEY)||'';localStorage.removeItem(LEFTOVER_KEY)}catch{}if(!rt)return '';const f=originalFetch||window.fetch.bind(window);try{const r=await f(SUPABASE_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return '';return String((await r.json()).access_token||'')}catch{return ''}}
 export function clearSession(){if(typeof localStorage!=='undefined')localStorage.removeItem(SESSION_KEY)}
 export function currentSession(){return readSession()}
 export async function signOut(){
