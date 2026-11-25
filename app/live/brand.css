@@ -680,3 +680,19 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .p-dialog .rate-slider input[type=range]{background:linear-gradient(90deg,#800080 0 49.5%,#FF0000 49.5% 69.7%,#FFD700 69.7% 79.8%,#90EE90 79.8% 89.9%,#006400 89.9% 96.97%,#00E5FF 96.97% 100%)}
 .p-dialog .rs-ticks{position:relative;display:block;height:16px;margin:0 17px;padding:0}
 .p-dialog .rs-ticks span{position:absolute;transform:translateX(-50%)}
+
+/* Invite friends */
+.platform.live-reader .invite-card{border:2px solid #2f6f78!important;background:linear-gradient(180deg,rgba(47,111,120,.06),transparent 60%),var(--surface)!important}
+.platform.live-reader .invite-head{display:flex;gap:14px;align-items:flex-start}
+.platform.live-reader .invite-head h2{margin:0 0 4px}
+.platform.live-reader .invite-head p{margin:0}
+.platform.live-reader .invite-head b{color:#2f6f78}
+.platform.live-reader .invite-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;background:#2f6f78;color:#fff}
+.platform.live-reader .invite-link{display:flex;gap:6px;margin:14px 0 8px}
+.platform.live-reader .invite-link input{flex:1;min-width:0;height:42px;margin:0;font-size:13px;color:var(--muted)}
+.platform.live-reader .invite-link button{flex:none;width:44px;height:42px;padding:0!important}
+.platform.live-reader .invite-share{width:100%;justify-content:center;gap:8px;min-height:46px}
+.platform.live-reader .invite-stats{margin:12px 0 4px;font-size:14px;color:var(--muted)!important}
+.platform.live-reader .invite-stats b{color:var(--paper)}
+.platform.live-reader .invite-next{margin:4px 0;font-size:13px}
+.platform.live-reader .invite-card progress{width:100%}
