@@ -167,3 +167,10 @@ test('top chapters use an IMDb-style weighted score so one vote cannot top the l
  assert.deepEqual(r.map(x=>x.chapter),[2,1,3]);
  assert.ok(r[0].weighted<9.2&&r[0].weighted>8.5);assert.equal(rankChapters([]).length,0);
 });
+
+test('the site owner gets 30,000 bonus XP on top of earned XP; readers do not',()=>{
+ const books=[{id:'a',chapter_count:5,status:'approved'}],mine=[{book:'a',chapter:1,score:8,date:'2026-11-20T10:00:00Z'}];
+ assert.equal(stats.progressOf({user:{admin:false},mine,books}).xp,100);
+ const owner=stats.progressOf({user:{admin:true},mine,books});
+ assert.equal(owner.xp,30100);assert.ok(owner.levelXp<=owner.xp&&owner.xp<owner.nextXp);
+});
