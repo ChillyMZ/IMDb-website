@@ -1,5 +1,5 @@
 import {scoreBands} from './score-bands';
-import {readerProgress,type Progress as ApiProgress} from '../../migration/supabase/functions/chillymz-api/progress';
+import {readerProgress,levelOf,levelStart,type Progress as ApiProgress} from '../../migration/supabase/functions/chillymz-api/progress';
 import {readerBadges,type Badge} from '../../migration/supabase/functions/chillymz-api/badges';
 export type {Badge};
 
@@ -11,11 +11,15 @@ export type StatsEntry=MineRating&{title:string};
 // Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
 // used until/unless the API sends its own `progress` (which includes visible reviews).
 export type Progress=ApiProgress&{partial?:boolean};
-type ProgressSource={progress?:Progress|null;mine:{book:string;date:string}[];books:{id:string;chapter_count:number;status?:string}[]};
+type ProgressSource={user?:{admin?:boolean};progress?:Progress|null;mine:{book:string;date:string}[];books:{id:string;chapter_count:number;status?:string}[]};
+// Site owner's bonus XP, added on top of what their ratings earn.
+export const OWNER_BONUS_XP=30000;
 export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  if(!d)return undefined;
- if(d.progress)return d.progress;
- return {...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
+ const base:Progress=d.progress?d.progress:{...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
+ if(!d.user?.admin)return base;
+ const xp=base.xp+OWNER_BONUS_XP,level=levelOf(xp);
+ return {...base,xp,level,levelXp:levelStart(level),nextXp:levelStart(level+1)};
 }
 // Badges: the API's when it sends them; otherwise the browser works out Finisher and leaves the
 // badges that need other readers' data or reviews as `earned:null` ("coming soon").
