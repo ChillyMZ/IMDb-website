@@ -458,3 +458,10 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .streak-weekdays{list-style:none;margin:0 0 6px;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;text-align:center;font-size:12px;font-weight:600;color:var(--muted)}
 .platform.live-reader .streak-calendar li.blank{background:none}
 .platform.live-reader .streak-calendar li.future{background:transparent;border:1px dashed var(--line);color:#b8b0a4}
+
+/* Submit a book sits next to search */
+.platform.live-reader .catalogue-search{grid-template-columns:minmax(0,1fr) 150px auto}
+.platform.live-reader .catalogue-add{height:44px;min-height:44px;white-space:nowrap;padding:0 16px;background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important;font-weight:600}
+.platform.live-reader .catalogue-add:hover{background:var(--accent-dark)!important}
+.platform.live-reader .catalogue-add span{font-size:18px;line-height:1;margin-right:2px}
+@media(max-width:600px){.platform.live-reader .catalogue-search{grid-template-columns:minmax(0,1fr) 112px}.platform.live-reader .catalogue-add{grid-column:1/-1;width:100%}}
