@@ -114,6 +114,18 @@ export function streakStatus(dates:string[],today=new Date()){
  return {current,best,ratedToday,atRisk:current>0&&!ratedToday};
 }
 
+// Flame colour by streak length: shown in the header and on the streak page.
+export type FlameTier={id:'orange'|'blue'|'purple'|'gold';name:string;min:number};
+export const FLAME_TIERS:FlameTier[]=[{id:'orange',name:'Orange flame',min:1},{id:'blue',name:'Blue flame',min:7},{id:'purple',name:'Purple flame',min:30},{id:'gold',name:'Gold flame',min:100}];
+export const flameTier=(days:number)=>[...FLAME_TIERS].reverse().find(t=>days>=t.min)||FLAME_TIERS[0];
+export const nextFlameTier=(days:number)=>FLAME_TIERS.find(t=>t.min>days);
+export const streakDayXp=(day:number)=>STREAK_XP*Math.min(Math.max(day,1),STREAK_XP_CAP_DAYS);
+// Last `count` local days, oldest first, marking the days with a rating.
+export function recentDays(dates:string[],count=30,today=new Date()){
+ const rated=new Set(dates.map(s=>new Date(s)).filter(d=>!isNaN(d.getTime())).map(dayKey));
+ return Array.from({length:count},(_,i)=>{const d=shift(today,i-count+1);return {key:dayKey(d),day:d.getDate(),rated:rated.has(dayKey(d)),today:i===count-1}});
+}
+
 export function readerStats(mine:MineRating[],books:StatsBook[],today=new Date()){
  const byId=new Map(books.map(b=>[b.id,b]));
  const rated:StatsEntry[]=mine.filter(r=>byId.has(r.book)&&Number.isFinite(r.score)).map(r=>({...r,title:byId.get(r.book)!.title}));

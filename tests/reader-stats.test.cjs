@@ -217,3 +217,11 @@ test('daily streak: 50 XP per day in a row, capped at 500 a day; status warns wh
  const t=stats.streakStatus([local(2026,11,9),local(2026,11,10)],today);
  assert.deepEqual([t.current,t.ratedToday,t.atRisk],[2,true,false]);
 });
+
+test('flame colour follows streak length; recent days mark rated days and today',()=>{
+ assert.deepEqual([1,6,7,29,30,99,100,365].map(n=>stats.flameTier(n).id),['orange','orange','blue','blue','purple','purple','gold','gold']);
+ assert.equal(stats.nextFlameTier(5).id,'blue');assert.equal(stats.nextFlameTier(100),undefined);
+ assert.deepEqual([1,5,10,20].map(stats.streakDayXp),[50,250,500,500]);
+ const today=new Date(2026,10,10,15),days=stats.recentDays([new Date(2026,10,9,9).toISOString(),new Date(2026,10,10,9).toISOString()],7,today);
+ assert.equal(days.length,7);assert.equal(days[6].today,true);assert.deepEqual(days.map(d=>d.rated),[false,false,false,false,false,true,true]);
+});
