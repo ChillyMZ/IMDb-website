@@ -244,11 +244,14 @@ test('other interactions count as streak days for streak XP and streak badges',(
  assert.equal(stats.badgesOf({mine,books,activity}).find(b=>b.id==='warming-up').earned,true);
 });
 
-test('invite a friend: +1000 XP per qualified friend, +500 for the invited reader, invite badges',()=>{
+test('invite a friend: +10 XP per chapter rated by invited friends, plus invite badges',()=>{
  const books=[{id:'a',chapter_count:50,status:'approved',title:'A'}],mine=[{book:'a',chapter:1,score:8,date:'2026-11-20T10:00:00Z'}];
  const base=stats.progressOf({mine,books}).xp;
- assert.equal(stats.progressOf({mine,books,invites:{friends:2,invited:false}}).xp-base,2*1000+500); // 2 friends + Recruiter badge (500)
- assert.equal(stats.progressOf({mine,books,invites:{friends:0,invited:true}}).xp-base,500);
- const b=Object.fromEntries(stats.badgesOf({mine,books,invites:{friends:5,invited:false}}).map(x=>[x.id,x]));
- assert.equal(b.recruiter.earned,true);assert.equal(b['book-club'].earned,true);assert.equal(b.ambassador.earned,false);assert.equal(b.ambassador.have,5);
+ // 10 friends rated 1 chapter each: 100 XP; none reached 3 chapters, so no badge yet
+ assert.equal(stats.progressOf({mine,books,invites:{friends:0,pending:10,chapters:10,invited:false}}).xp-base,100);
+ // 2 qualified friends with 40 chapters between them: 400 XP + Recruiter (500)
+ assert.equal(stats.progressOf({mine,books,invites:{friends:2,chapters:40,invited:false}}).xp-base,400+500);
+ assert.equal(stats.progressOf({mine,books,invites:{friends:0,chapters:0,invited:true}}).xp-base,0);
+ const b=Object.fromEntries(stats.badgesOf({mine,books,invites:{friends:5,chapters:15,invited:false}}).map(x=>[x.id,x]));
+ assert.equal(b.recruiter.earned,true);assert.equal(b['book-club'].earned,true);assert.equal(b.ambassador.earned,false);
 });

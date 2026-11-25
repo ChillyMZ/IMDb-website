@@ -13,11 +13,11 @@ export function streakXp(dates:string[]){const days=[...new Set(dates.map(day))]
 export function currentStreak(dates:string[],now=new Date().toISOString()){const days=new Set(dates.map(day));let d=day(now);if(!days.has(d))d=prevDay(d);let n=0;while(days.has(d)){n++;d=prevDay(d)}return n}
 
 type Rating={user:string;book:string;chapter:number;score:number;date:string};
-export function readerLook(user:string,ratings:Rating[],activity:string[],chapters:Map<string,number>,admin:boolean,others:Rating[]=[],reviews:{updated:string}[]=[],friends=0,invited=false){
+export function readerLook(user:string,ratings:Rating[],activity:string[],chapters:Map<string,number>,admin:boolean,others:Rating[]=[],reviews:{updated:string}[]=[],friends=0,friendChapters=0){
  const mine=ratings.filter(r=>chapters.has(r.book)).map(r=>({...r,score:r.score/10}));
  const base=readerProgress(mine,[],chapters).xp;
  const badgeXp=readerBadges({user,mine,chapters,activity,reviews,friends,others:others.map(r=>({...r,score:r.score/10})),estimated:(b:string,c:number)=>(starterScores as any)[b]?.[c]!==undefined}).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
  const dates=[...mine.map(r=>r.date),...activity];
- const xp=base+badgeXp+streakXp(dates)+(admin?OWNER_BONUS_XP:0)+friends*INVITE.inviterXp+(invited?INVITE.inviteeXp:0);
+ const xp=base+badgeXp+streakXp(dates)+(admin?OWNER_BONUS_XP:0)+friendChapters*INVITE.perChapterXp;
  return {level:levelOf(xp),streak:currentStreak(dates)};
 }
