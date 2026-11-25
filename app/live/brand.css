@@ -343,3 +343,18 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .frame-list li.unlocked:not(.wearing):hover{border-color:var(--accent)}
 .platform.live-reader .frame-list li.wearing{border:2px solid var(--accent);background:rgba(47,111,120,.06)}
 .platform.live-reader .frame-list li.unlocked:not(.wearing) small{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+
+/* Profile: compact collection card linking to the shop */
+.platform.live-reader .profile-collection{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.platform.live-reader .collection-preview{display:flex;align-items:center;gap:16px}
+.platform.live-reader .collection-preview h2{margin:0 0 2px}
+.platform.live-reader .collection-preview p{margin:0;font-size:14px}
+/* Shop page */
+.platform.live-reader .shop-page{display:grid;gap:24px;max-width:960px}
+.platform.live-reader .shop-head h1{margin:6px 0 4px;font-size:40px}
+.platform.live-reader .shop-head p{margin:0}
+.platform.live-reader .shop-back{border:0!important;background:none!important;padding:4px 0;color:var(--accent);font-weight:600}
+.platform.live-reader .shop-page>.p-panel,.platform.live-reader .shop-page>article{margin:0;padding:22px 24px}
+.platform.live-reader .shop-page h2{font-size:24px;margin:0 0 10px}
+.platform.live-reader .shop-section .frame-sample{width:64px;height:64px;font-size:26px}
+.platform.live-reader .collection-preview .frame-sample,.platform.live-reader .profile-avatar{flex:none}
