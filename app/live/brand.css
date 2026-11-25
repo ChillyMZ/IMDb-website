@@ -769,3 +769,6 @@ html body .consent-banner .consent-actions{width:100%;max-width:420px;margin:4px
  html body .cookie-banner.consent-banner>h2,html body .cookie-banner.consent-banner>p{grid-column:1}
  html body .consent-banner .consent-actions{grid-column:2;grid-row:1/span 3;margin:0!important}
 }
+/* "No ads, ever." selling point: highlighter-pen mark */
+html body .consent-banner .consent-noads{background:linear-gradient(transparent 52%,#f4c95d 52%,#f4c95d 92%,transparent 92%);color:#1c1a17;font-weight:700;padding:0 2px;white-space:nowrap}
+html body .consent-banner .consent-noads{display:inline-block;margin:6px 0 2px;font-size:17px;line-height:1.5;padding:0 4px}
