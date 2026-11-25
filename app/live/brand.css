@@ -656,3 +656,9 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .rating-compare .rc-cmz-line{margin:8px 0 0;font-weight:700;color:#2f6f78!important}
 .rating-compare .rc-cmz small:before{background:#2f6f78!important}
 .rating-compare .rc-share{width:100%;margin:10px 0 4px}
+/* Faster rating */
+.p-dialog .quick-toggle{display:flex;align-items:center;gap:8px;margin:2px 0 6px;font-size:13px;color:#6e675d!important;cursor:pointer}
+.p-dialog .quick-toggle input{width:18px;height:18px;margin:0;accent-color:#2f6f78}
+.p-dialog .live-chapter-nav span{display:grid;justify-items:center;line-height:1.2}
+.p-dialog .swipe-hint{font-size:11px;color:#9a9388}
+.p-dialog .live-presets button{min-height:52px;font-size:18px;font-weight:700}
