@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useState} from 'react';
 import {Flame,Check} from 'lucide-react';
-import {streakStatus,flameTier,nextFlameTier,FLAME_TIERS,streakDayXp,recentDays} from './stats';
+import {streakStatus,flameTier,nextFlameTier,FLAME_TIERS,streakDayXp,monthDays} from './stats';
 import {BADGE_RULES} from '../../migration/supabase/functions/chillymz-api/badges';
 
 // Time left until local midnight, refreshed every minute.
@@ -15,7 +15,7 @@ function useUntilMidnight(){
 const STREAK_BADGES=[{name:'Warming Up',days:BADGE_RULES.warmingUp,xp:300},{name:'On a Roll',days:BADGE_RULES.streak,xp:2000},{name:'Unstoppable',days:BADGE_RULES.unstoppable,xp:5000},{name:'Legend',days:BADGE_RULES.legend,xp:10000}];
 
 export default function StreakPage({dates,onRate,onBack}:{dates:string[];onRate:()=>void;onBack:()=>void}){
- const s=streakStatus(dates),tier=flameTier(s.current),next=nextFlameTier(s.current),left=useUntilMidnight(),days=recentDays(dates,35);
+ const s=streakStatus(dates),tier=flameTier(s.current),next=nextFlameTier(s.current),left=useUntilMidnight(),month=monthDays(dates);
  const nextBadge=STREAK_BADGES.find(b=>b.days>s.current);
  const todayXp=streakDayXp(s.ratedToday?s.current:s.current+1),tomorrowXp=streakDayXp((s.ratedToday?s.current:s.current+1)+1);
  return <div className="streak-page">
@@ -29,8 +29,9 @@ export default function StreakPage({dates,onRate,onBack}:{dates:string[];onRate:
   </section>
 
   <section className="p-panel">
-   <h2>Last 5 weeks</h2>
-   <ol className="streak-calendar" aria-label="Days with a rating in the last 35 days">{days.map(d=><li key={d.key} className={(d.rated?'rated':'')+(d.today?' today':'')} title={d.key+(d.rated?' · rated':'')}>{d.rated?<Flame size={14} aria-hidden="true"/>:d.day}<span className="sr-only">{d.key}{d.rated?' rated':''}</span></li>)}</ol>
+   <h2>{month.label} <span className="rs-sub rs-inline">{month.ratedCount} {month.ratedCount===1?'day':'days'} rated</span></h2>
+   <ol className="streak-weekdays" aria-hidden="true">{['M','T','W','T','F','S','S'].map((d,i)=><li key={i}>{d}</li>)}</ol>
+   <ol className="streak-calendar" aria-label={`Days with a rating in ${month.label}`}>{month.cells.map((d,i)=>d?<li key={d.key} className={(d.rated?'rated':'')+(d.today?' today':'')+(d.future?' future':'')} title={d.key+(d.rated?' · rated':'')}>{d.rated?<Flame size={14} aria-hidden="true"/>:d.day}<span className="sr-only">{d.key}{d.rated?' rated':''}</span></li>:<li key={'b'+i} className="blank" aria-hidden="true"/>)}</ol>
   </section>
 
   <section className="p-panel">

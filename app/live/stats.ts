@@ -126,6 +126,15 @@ export function recentDays(dates:string[],count=30,today=new Date()){
  return Array.from({length:count},(_,i)=>{const d=shift(today,i-count+1);return {key:dayKey(d),day:d.getDate(),rated:rated.has(dayKey(d)),today:i===count-1}});
 }
 
+// The current calendar month as a Monday-first grid: null for leading blanks.
+export function monthDays(dates:string[],today=new Date()){
+ const rated=new Set(dates.map(s=>new Date(s)).filter(d=>!isNaN(d.getTime())).map(dayKey));
+ const first=new Date(today.getFullYear(),today.getMonth(),1),count=new Date(today.getFullYear(),today.getMonth()+1,0).getDate(),lead=(first.getDay()+6)%7;
+ const cells:({key:string;day:number;rated:boolean;today:boolean;future:boolean}|null)[]=Array.from({length:lead},()=>null);
+ for(let d=1;d<=count;d++){const date=new Date(today.getFullYear(),today.getMonth(),d);cells.push({key:dayKey(date),day:d,rated:rated.has(dayKey(date)),today:d===today.getDate(),future:d>today.getDate()})}
+ return {label:today.toLocaleDateString(undefined,{month:'long',year:'numeric'}),cells,ratedCount:cells.filter(c=>c?.rated).length};
+}
+
 export function readerStats(mine:MineRating[],books:StatsBook[],today=new Date()){
  const byId=new Map(books.map(b=>[b.id,b]));
  const rated:StatsEntry[]=mine.filter(r=>byId.has(r.book)&&Number.isFinite(r.score)).map(r=>({...r,title:byId.get(r.book)!.title}));

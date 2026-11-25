@@ -225,3 +225,11 @@ test('flame colour follows streak length; recent days mark rated days and today'
  const today=new Date(2026,10,10,15),days=stats.recentDays([new Date(2026,10,9,9).toISOString(),new Date(2026,10,10,9).toISOString()],7,today);
  assert.equal(days.length,7);assert.equal(days[6].today,true);assert.deepEqual(days.map(d=>d.rated),[false,false,false,false,false,true,true]);
 });
+
+test('month calendar: Monday-first blanks, every day of the month, rated/today/future flags',()=>{
+ const today=new Date(2026,10,10,15); // November 2026 starts on a Sunday -> 6 blanks
+ const m=stats.monthDays([new Date(2026,10,9,9).toISOString(),new Date(2026,9,31,9).toISOString()],today);
+ assert.equal(m.cells.filter(c=>c===null).length,6);
+ const days=m.cells.filter(Boolean);assert.equal(days.length,30);
+ assert.equal(days[8].rated,true);assert.equal(days[9].today,true);assert.equal(days[10].future,true);assert.equal(m.ratedCount,1);
+});

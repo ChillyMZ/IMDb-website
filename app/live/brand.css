@@ -443,3 +443,18 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .streak-today.done svg{flex:none;margin-top:3px}
 @media(max-width:600px){.platform.live-reader .streak-flame svg{width:44px!important;height:44px!important}.platform.live-reader .streak-today.pending .p-primary{width:100%}}
 .platform.live-reader .streak-today.pending{display:grid;gap:4px}
+
+/* Streak on the profile picture (Snapchat-style) */
+.platform.live-reader .avatar-wrap{position:relative;display:inline-flex;flex:none}
+.platform.live-reader .avatar-flame{position:absolute;right:-12px;bottom:-6px;display:inline-flex;align-items:center;gap:2px;height:20px;min-height:0!important;padding:0 6px!important;border-radius:999px!important;border:2px solid var(--bg,#f6f2ea)!important;background:var(--flame-bg,#fff4ea)!important;color:var(--flame,#e86a1c)!important;font-size:11px!important;font-weight:800!important;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:1}
+.platform.live-reader .avatar-flame svg{width:12px;height:12px;color:var(--flame,#e86a1c)}
+.platform.live-reader .avatar-wrap-lg .avatar-flame{right:-14px;bottom:-4px;height:28px;padding:0 9px!important;font-size:14px!important;gap:3px;border-width:3px!important}
+.platform.live-reader .avatar-wrap-lg .avatar-flame svg{width:16px;height:16px}
+.platform.live-reader .avatar-flame.flame-gold svg{animation:cmz-flicker 1.6s ease-in-out infinite}
+.platform.live-reader .avatar-flame.at-risk{background:#f3eee6!important;color:#9a9388!important;border-style:solid!important}
+.platform.live-reader .avatar-flame.at-risk svg{color:#b8ab9b;animation:none}
+.platform.live-reader .profile-hero .avatar-wrap{margin-right:6px}
+/* Month calendar */
+.platform.live-reader .streak-weekdays{list-style:none;margin:0 0 6px;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;text-align:center;font-size:12px;font-weight:600;color:var(--muted)}
+.platform.live-reader .streak-calendar li.blank{background:none}
+.platform.live-reader .streak-calendar li.future{background:transparent;border:1px dashed var(--line);color:#b8b0a4}
