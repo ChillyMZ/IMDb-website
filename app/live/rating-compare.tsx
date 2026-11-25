@@ -5,7 +5,7 @@ import {verdict,xpLine,chillymzLine,type Comparison} from './stats';
 // Score scale behind the two markers, built from the canonical bands (lowest first).
 const scale='linear-gradient(90deg,'+[...scoreBands].reverse().map((b,i,all)=>`${b.color} ${b.min*10}% ${(all[i+1]?.min??10)*10}%`).join(',')+')';
 
-export default function RatingCompare({result,title,onClose,floating=false,onShare}:{result:Comparison;title?:string;onClose:()=>void;floating?:boolean;onShare?:()=>void}){
+export default function RatingCompare({result,title,onClose,floating=false,onShare,onTake}:{result:Comparison;title?:string;onClose:()=>void;floating?:boolean;onShare?:()=>void;onTake?:()=>void}){
  const other=result.others??result.estimate,you=scoreBand(result.mine),them=scoreBand(other);
  const diff=result.others===undefined?undefined:result.mine-result.others;
  return <div className={'rating-compare'+(floating?' floating':'')} role="status" aria-live="polite">
@@ -21,6 +21,7 @@ export default function RatingCompare({result,title,onClose,floating=false,onSha
   <p className="rc-verdict">{verdict(result)}{result.finished?' And that’s every chapter of this book rated!':''}</p>
   {xpLine(result.xp)&&<p className={'rc-xp'+(result.xp?.levelUp?' level-up':'')}>{xpLine(result.xp)}</p>}
   {!!result.streak&&<p className="rc-xp rc-streak">🔥 {result.streak}-day streak! +{50*Math.min(result.streak,10)} XP</p>}{!!result.badges?.length&&<p className="rc-xp rc-badge">Badge unlocked: {result.badges.join(', ')}</p>}
+  {onTake&&<button type="button" className="rc-take" onClick={onTake}>Share this take to your story</button>}
   {result.finished&&onShare&&<button type="button" className="p-primary rc-share" onClick={onShare}>Share my grid to Instagram</button>}
   {result.othersCount>0&&<small className="rc-note">Based on {result.othersCount} other reader{result.othersCount===1?'':'s'}</small>}
  </div>;
