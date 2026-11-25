@@ -16,10 +16,10 @@ type ProgressSource={user?:{admin?:boolean};activity?:string[];progress?:Progres
 export const OWNER_BONUS_XP=30000;
 export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  if(!d)return undefined;
- const base:Progress=d.progress?d.progress:{...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
- // Earned badges add their bonus XP (browser-side figure; the API's own progress is used as-is).
- const badgeXp=d.progress?0:(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
- const streakXp=d.progress?0:streakBonusXp([...d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date),...(d.activity||[])]);
+// Always worked out in the browser so badge, streak and owner XP are included; the API's own figure only knows ratings.
+ const base:Progress={...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
+ const badgeXp=(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
+ const streakXp=streakBonusXp([...d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date),...(d.activity||[])]);
  const bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0);
  if(!bonus)return base;
  const xp=base.xp+bonus,level=levelOf(xp);
@@ -30,9 +30,12 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
 type BadgeSource={activity?:string[];badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 export function badgesOf(d:BadgeSource|null|undefined):Badge[]|undefined{
  if(!d)return undefined;
- if(d.badges)return d.badges;
  const approved=d.books.filter(b=>!b.status||b.status==='approved');
- return readerBadges({activity:d.activity,mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
+ const local=readerBadges({activity:d.activity,mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
+ if(!d.badges)return local;
+ // Pioneer, Hot Take and Critic need other readers' data, so the API's version of those wins.
+ const api=new Map(d.badges.map(b=>[b.id,b]));
+ return local.map(b=>(b.id==='pioneer'||b.id==='hot-take'||b.id==='critic')&&api.get(b.id)?.earned!==null&&api.get(b.id)?{...api.get(b.id)!,xp:b.xp}:b);
 }
 // Badges earned by this save (only ones known before and after, so a fallback→API switch never "unlocks" old badges).
 export function newBadgeList(before?:Badge[],after?:Badge[]):Badge[]{
