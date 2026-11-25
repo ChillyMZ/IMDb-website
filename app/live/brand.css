@@ -465,3 +465,6 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .catalogue-add:hover{background:var(--accent-dark)!important}
 .platform.live-reader .catalogue-add span{font-size:18px;line-height:1;margin-right:2px}
 @media(max-width:600px){.platform.live-reader .catalogue-search{grid-template-columns:minmax(0,1fr) 112px}.platform.live-reader .catalogue-add{grid-column:1/-1;width:100%}}
+/* "Can't find your book?" back at the top of the books page, as a compact card */
+.platform.live-reader .add-book-bar{margin:0 0 24px;padding:14px 18px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+.platform.live-reader .add-book-bar b{font-size:19px}
