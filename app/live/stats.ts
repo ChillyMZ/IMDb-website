@@ -11,7 +11,7 @@ export type StatsEntry=MineRating&{title:string};
 // Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
 // used until/unless the API sends its own `progress` (which includes visible reviews).
 export type Progress=ApiProgress&{partial?:boolean};
-type ProgressSource={user?:{admin?:boolean};progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
+type ProgressSource={user?:{admin?:boolean};activity?:string[];progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 // Site owner's bonus XP, added on top of what their ratings earn.
 export const OWNER_BONUS_XP=30000;
 export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
@@ -19,7 +19,7 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  const base:Progress=d.progress?d.progress:{...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
  // Earned badges add their bonus XP (browser-side figure; the API's own progress is used as-is).
  const badgeXp=d.progress?0:(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
- const streakXp=d.progress?0:streakBonusXp(d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date));
+ const streakXp=d.progress?0:streakBonusXp([...d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date),...(d.activity||[])]);
  const bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0);
  if(!bonus)return base;
  const xp=base.xp+bonus,level=levelOf(xp);
@@ -27,12 +27,12 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
 }
 // Badges: the API's when it sends them; otherwise the browser works out Finisher and leaves the
 // badges that need other readers' data or reviews as `earned:null` ("coming soon").
-type BadgeSource={badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
+type BadgeSource={activity?:string[];badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 export function badgesOf(d:BadgeSource|null|undefined):Badge[]|undefined{
  if(!d)return undefined;
  if(d.badges)return d.badges;
  const approved=d.books.filter(b=>!b.status||b.status==='approved');
- return readerBadges({mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
+ return readerBadges({activity:d.activity,mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
 }
 // Badges earned by this save (only ones known before and after, so a fallback→API switch never "unlocks" old badges).
 export function newBadgeList(before?:Badge[],after?:Badge[]):Badge[]{

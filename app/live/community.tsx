@@ -1,4 +1,5 @@
 "use client";
+import {logActivity} from './activity';
 import {apiResponse} from './api-response';
 import {signIn,SignInLink} from './sign-in';
 import {useEffect,useState} from 'react';
@@ -17,7 +18,7 @@ export default function Community({bookFilter='',bookTitle='',embedded=false}:{b
 const [feed,setFeed]=useState<Feed|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[compose,setCompose]=useState(false),[selected,setSelected]=useState(''),[filter,setFilter]=useState('All topics'),[sort,setSort]=useState('Newest'),[query,setQuery]=useState(''),[title,setTitle]=useState(''),[body,setBody]=useState(''),[topic,setTopic]=useState('Book talk'),[book,setBook]=useState(bookFilter),[spoiler,setSpoiler]=useState(false),[revealed,setRevealed]=useState<string[]>([]),[comment,setComment]=useState(''),[remove,setRemove]=useState(''),[notice,setNotice]=useState('');
 async function refresh(){const r=await fetch('/api/community?book='+encodeURIComponent(bookFilter),{cache:'no-store'}),d=await apiResponse<Feed>(r);if(!r.ok)throw Error(d.error);setFeed(d)}
 useEffect(()=>{refresh().catch(e=>setError(e.message))},[bookFilter]);
-async function save(data:unknown){if(!feed?.user.id){signIn();return false}setBusy(true);setError('');try{const r=await fetch('/api/community',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}),d=await apiResponse<Feed>(r);if(!r.ok)throw Error(d.error);await refresh();setNotice(d.held?'Held for review. Check Safety for the decision or to appeal.':'Saved.');return true}catch(e){setError(e instanceof Error?e.message:'Please retry.');return false}finally{setBusy(false)}}
+async function save(data:unknown){if(!feed?.user.id){signIn();return false}setBusy(true);setError('');try{const r=await fetch('/api/community',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}),d=await apiResponse<Feed>(r);if(!r.ok)throw Error(d.error);if((data as {action?:string})?.action!=='delete')logActivity();await refresh();setNotice(d.held?'Held for review. Check Safety for the decision or to appeal.':'Saved.');return true}catch(e){setError(e instanceof Error?e.message:'Please retry.');return false}finally{setBusy(false)}}
 const posts=(feed?.posts||[]).filter(p=>(filter==='All topics'||p.topic===filter)&&(!query||(p.title+' '+(p.spoiler?'':p.body)+' '+p.name).toLowerCase().includes(query.toLowerCase()))).sort((a,b)=>sort==='Top'?b.votes-a.votes:sort==='Most discussed'?b.replies-a.replies:b.created.localeCompare(a.created));
 const current=feed?.posts.find(p=>p.id===selected);
 const canDelete=(p:Post)=>!!feed?.user.id&&(feed.user.admin||feed.user.id===p.user);
