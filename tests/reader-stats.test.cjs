@@ -174,3 +174,18 @@ test('the site owner gets 30,000 bonus XP on top of earned XP; readers do not',(
  const owner=stats.progressOf({user:{admin:true},mine,books});
  assert.equal(owner.xp,30100);assert.ok(owner.levelXp<=owner.xp&&owner.xp<owner.nextXp);
 });
+
+test('milestone badges count chapters, books, finished books, best day, streak and perfect tens',()=>{
+ const day=d=>`2026-11-${String(d).padStart(2,'0')}T10:00:00Z`;
+ const chapters=new Map([['a',3],['b',40]]);
+ const mine=[{book:'a',chapter:1,score:10,date:day(1)},{book:'a',chapter:2,score:8,date:day(2)},{book:'a',chapter:3,score:8,date:day(3)},...Array.from({length:22},(_,i)=>({book:'b',chapter:i+1,score:7,date:day(5)}))];
+ const b=Object.fromEntries(readerBadges({mine,chapters}).map(x=>[x.id,x]));
+ assert.equal(b['first-page'].earned,true);
+ assert.equal(b.regular.earned,true);assert.equal(b.regular.have,25);
+ assert.equal(b.century.earned,false);assert.equal(b.century.have,25);
+ assert.equal(b.explorer.have,2);
+ assert.equal(b.bookworm.have,1);
+ assert.equal(b.marathon.earned,true);
+ assert.equal(b['on-a-roll'].have,3);assert.equal(b['on-a-roll'].earned,false);
+ assert.equal(b['perfect-ten'].earned,true);
+});

@@ -358,3 +358,10 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .shop-page h2{font-size:24px;margin:0 0 10px}
 .platform.live-reader .shop-section .frame-sample{width:64px;height:64px;font-size:26px}
 .platform.live-reader .collection-preview .frame-sample,.platform.live-reader .profile-avatar{flex:none}
+/* Badges: earned ones stand out, locked ones recede */
+.rs-badges li{background:var(--surface,#fffdf8)!important;border:1px solid var(--line,#e4ddd0)!important}
+.rs-badges li.locked{opacity:.7}
+.rs-badges li.locked .rs-badge-icon{background:var(--surface-2,#efe9dd);color:#9a9388}
+.rs-badges li.earned{border:2px solid #2f6f78!important;background:rgba(47,111,120,.06)!important;opacity:1}
+.rs-badges li.earned .rs-badge-icon{background:#2f6f78!important;color:#fff!important}
+.rs-badges li.earned .rs-badge-detail{font-weight:600}
