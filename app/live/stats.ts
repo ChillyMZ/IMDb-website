@@ -1,6 +1,7 @@
 import {scoreBands} from './score-bands';
 import {readerProgress,levelOf,levelStart,type Progress as ApiProgress} from '../../migration/supabase/functions/chillymz-api/progress';
-import {readerBadges,type Badge} from '../../migration/supabase/functions/chillymz-api/badges';
+import {readerBadges,INVITE,type Badge} from '../../migration/supabase/functions/chillymz-api/badges';
+export {INVITE};
 export type {Badge};
 
 // Pure helpers for the post-rating comparison card and the reader stats page.
@@ -11,7 +12,8 @@ export type StatsEntry=MineRating&{title:string};
 // Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
 // used until/unless the API sends its own `progress` (which includes visible reviews).
 export type Progress=ApiProgress&{partial?:boolean};
-type ProgressSource={user?:{admin?:boolean};activity?:string[];progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
+type Invites={friends:number;pending?:number;invited:boolean};
+type ProgressSource={user?:{admin?:boolean};invites?:Invites|null;activity?:string[];progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 // Site owner's bonus XP, added on top of what their ratings earn.
 export const OWNER_BONUS_XP=30000;
 export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
@@ -20,18 +22,18 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  const base:Progress={...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
  const badgeXp=(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
  const streakXp=streakBonusXp([...d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date),...(d.activity||[])]);
- const bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0);
+ const inv=d.invites,bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0)+(inv?inv.friends*INVITE.inviterXp+(inv.invited?INVITE.inviteeXp:0):0);
  if(!bonus)return base;
  const xp=base.xp+bonus,level=levelOf(xp);
  return {...base,xp,level,levelXp:levelStart(level),nextXp:levelStart(level+1)};
 }
 // Badges: the API's when it sends them; otherwise the browser works out Finisher and leaves the
 // badges that need other readers' data or reviews as `earned:null` ("coming soon").
-type BadgeSource={activity?:string[];badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
+type BadgeSource={invites?:Invites|null;activity?:string[];badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 export function badgesOf(d:BadgeSource|null|undefined):Badge[]|undefined{
  if(!d)return undefined;
  const approved=d.books.filter(b=>!b.status||b.status==='approved');
- const local=readerBadges({activity:d.activity,mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
+ const local=readerBadges({friends:d.invites?d.invites.friends:undefined,activity:d.activity,mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
  if(!d.badges)return local;
  // Pioneer, Hot Take and Critic need other readers' data, so the API's version of those wins.
  const api=new Map(d.badges.map(b=>[b.id,b]));

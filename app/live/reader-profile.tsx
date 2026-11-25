@@ -9,7 +9,7 @@ import {badgesOf,progressOf,streakStatus,flameTier} from './stats';
 import {frameFor} from './frames';
 
 type Book={id:string;title:string;author:string;chapter_count:number;status?:string;cover?:string};
-type ReaderData={reader:{id:string;name:string;bio:string};ratings:{book:string;chapter:number;score:number;date:string}[];books:Book[];top:string[];followers:number;following:number;followed:boolean;me:boolean;admin?:boolean;badges?:any[]};
+type ReaderData={reader:{id:string;name:string;bio:string};ratings:{book:string;chapter:number;score:number;date:string}[];books:Book[];top:string[];followers:number;following:number;followed:boolean;me:boolean;admin?:boolean;badges?:any[];invites?:{friends:number;pending?:number;invited:boolean}};
 
 export function useReader(id:string,revision=0){
  const [data,setData]=useState<ReaderData|null>(null),[error,setError]=useState('');
@@ -22,7 +22,7 @@ export default function ReaderProfile({id,signedIn,onBack,onOpenBook,onSignIn}:{
  const {data,error}=useReader(id,rev);
  if(error)return <div className="reader-page"><button type="button" className="shop-back" onClick={onBack}>← Back</button><div className="p-panel"><p>{error}</p></div></div>;
  if(!data)return <div className="reader-page"><p role="status">Loading reader…</p></div>;
- const src={user:{admin:!!data.admin},badges:data.badges||null,mine:data.ratings,books:data.books.map(b=>({...b,status:'approved'}))};
+ const src={user:{admin:!!data.admin},invites:data.invites||null,badges:data.badges||null,mine:data.ratings,books:data.books.map(b=>({...b,status:'approved'}))};
  const p=progressOf(src)!,badges=(badgesOf(src)||[]).filter(b=>b.earned),dates=data.ratings.map(r=>r.date),streak=dates.length?streakStatus(dates):null;
  const frame=frameFor(p.level),initial=(data.reader.name||'R').charAt(0).toUpperCase();
  const top=data.top.map(t=>data.books.find(b=>b.id===t)).filter((b):b is Book=>!!b);

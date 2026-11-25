@@ -2,11 +2,11 @@
 // Kept free of Deno/Supabase imports so the website and tests can load it directly.
 // Scores are on the 0–10 scale. `others` = every reader's ratings on the books this reader rated;
 // leave it (or `reviews`) undefined when unknown and those badges come back as `earned:null`.
-export type Badge={id:'warming-up'|'unstoppable'|'legend'|'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string;xp?:number};
+export type Badge={id:'recruiter'|'book-club'|'ambassador'|'warming-up'|'unstoppable'|'legend'|'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string;xp?:number};
 // Bonus XP for earning each badge, by difficulty.
-export const BADGE_XP:Record<Badge['id'],number>={'warming-up':300,unstoppable:5000,legend:10000,'first-page':100,'perfect-ten':200,'hot-take':500,regular:500,explorer:1000,finisher:1000,pioneer:1000,marathon:1500,critic:1500,'on-a-roll':2000,century:2500,bookworm:5000};
+export const BADGE_XP:Record<Badge['id'],number>={recruiter:500,'book-club':2500,ambassador:10000,'warming-up':300,unstoppable:5000,legend:10000,'first-page':100,'perfect-ten':200,'hot-take':500,regular:500,explorer:1000,finisher:1000,pioneer:1000,marathon:1500,critic:1500,'on-a-roll':2000,century:2500,bookworm:5000};
 type Rating={book:string;chapter:number;score:number;date:string};
-type Input={user?:string;activity?:string[];mine:Rating[];chapters:Map<string,number>;titles?:Map<string,string>;reviews?:{updated:string}[];others?:(Rating&{user:string})[];estimated?:(book:string,chapter:number)=>boolean};
+type Input={user?:string;activity?:string[];friends?:number;mine:Rating[];chapters:Map<string,number>;titles?:Map<string,string>;reviews?:{updated:string}[];others?:(Rating&{user:string})[];estimated?:(book:string,chapter:number)=>boolean};
 export const BADGE_RULES={hotTakeGap:2,hotTakeReaders:3,critic:5,regular:25,century:100,explorer:10,bookworm:5,marathon:20,streak:7,warmingUp:3,unstoppable:30,legend:100};
 
 // Milestones that only need this reader's own ratings, so the browser can always work them out.
@@ -34,7 +34,13 @@ function milestones(valid:Rating[],done:number,activity:string[]=[]):Badge[]{
  ];
 }
 
-export function readerBadges(input:Input):Badge[]{return badgeList(input).map(b=>({...b,xp:BADGE_XP[b.id]}))}
+// Invite-a-friend achievements: friends who joined from the reader's link and rated 3+ chapters.
+export const INVITE={qualifyRatings:3,inviterXp:1000,inviteeXp:500,recruiter:1,bookClub:5,ambassador:25};
+function inviteBadges(n:number):Badge[]{const c=(need:number)=>({earned:n>=need,have:Math.min(n,need),need});return [
+ {id:'recruiter',name:'Recruiter',description:'Invite a friend who rates 3 chapters.',...c(INVITE.recruiter)},
+ {id:'book-club',name:'Book Club',description:`Invite ${INVITE.bookClub} friends who each rate 3 chapters.`,...c(INVITE.bookClub)},
+ {id:'ambassador',name:'Ambassador',description:`Invite ${INVITE.ambassador} friends who each rate 3 chapters.`,...c(INVITE.ambassador)}]}
+export function readerBadges(input:Input):Badge[]{const list=badgeList(input);if(input.friends!==undefined)list.push(...inviteBadges(input.friends));return list.map(b=>({...b,xp:BADGE_XP[b.id]}))}
 function badgeList({user,mine,chapters,titles,reviews,others,estimated,activity}:Input):Badge[]{
  const valid=mine.filter(r=>chapters.has(r.book)),name=(b:string)=>titles?.get(b)||'a book',key=(b:string,c:number)=>b+'#'+c;
  const perBook=new Map<string,number>();for(const r of valid)perBook.set(r.book,(perBook.get(r.book)||0)+1);
