@@ -750,3 +750,22 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .streak-banner.restore p{flex:1}
 .platform.live-reader .streak-banner.restore b{color:#245860}
 .platform.live-reader .streak-restore{border:2px solid #2f6f78!important}
+/* Cookie consent: Allow cookies? No / Yes */
+html body .consent-banner{max-width:420px}
+html body .consent-banner h2{margin:0 0 6px}
+html body .consent-banner p{margin:0 0 8px}
+html body .consent-banner .consent-links{font-size:.9rem;margin-bottom:12px}
+html body .consent-actions{display:flex!important;gap:10px!important}
+html body .consent-actions button{flex:1 1 0!important;min-height:44px!important;border-radius:8px!important;font-weight:700!important;font-size:16px!important;cursor:pointer;padding:10px 16px!important}
+html body .consent-actions .consent-no{background:#fffdf8!important;color:#2a2723!important;border:1.5px solid #8c8478!important}
+html body .consent-actions .consent-yes{background:#1f7a3f!important;color:#fff!important;border:1.5px solid #1f7a3f!important}
+html body .consent-actions .consent-yes:hover{background:#196634!important}
+html body .consent-actions .consent-no:hover{background:#f1ece2!important}
+html body .cookie-banner.consent-banner{display:grid!important;grid-template-columns:1fr;gap:0!important;font-size:14px}
+html body .cookie-banner.consent-banner h2{display:block!important;font-family:"Newsreader",Georgia,serif;font-size:22px;font-weight:600;color:#1c1a17;margin:0 0 4px}
+html body .consent-banner .consent-actions{width:100%;max-width:420px;margin:4px 0 0!important}
+@media (min-width:700px){
+ html body .cookie-banner.consent-banner{grid-template-columns:minmax(0,1fr) 300px;column-gap:28px!important;align-items:center}
+ html body .cookie-banner.consent-banner>h2,html body .cookie-banner.consent-banner>p{grid-column:1}
+ html body .consent-banner .consent-actions{grid-column:2;grid-row:1/span 3;margin:0!important}
+}
