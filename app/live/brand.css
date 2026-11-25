@@ -648,3 +648,33 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .p-dialog .thread-who .talk-author .av-pic{width:26px;height:26px;font-size:12px;border-width:2px}
 .platform.live-reader .people-label{margin:4px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)!important}
 .platform.live-reader .profile-top3 .reader-counts{margin:0 0 22px}
+/* ChillyMZ's own score in the rating result */
+.rating-compare .rc-cmz{display:grid;gap:4px}
+.rating-compare .rc-cmz small{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2f6f78;font-weight:700}
+.rating-compare .rc-cmz small:before{content:'';width:8px;height:8px;border-radius:50%;background:#2f6f78}
+.rating-compare .rc-cmz b{display:grid;place-items:center;min-width:64px;height:48px;padding:0 12px;border-radius:6px;font-size:22px;box-shadow:0 0 0 2px #2f6f78}
+.rating-compare .rc-cmz-line{margin:8px 0 0;font-weight:700;color:#2f6f78!important}
+.rating-compare .rc-cmz small:before{background:#2f6f78!important}
+.rating-compare .rc-share{width:100%;margin:10px 0 4px}
+/* Faster rating */
+.p-dialog .quick-toggle{display:flex;align-items:center;gap:8px;margin:2px 0 6px;font-size:13px;color:#6e675d!important;cursor:pointer}
+.p-dialog .quick-toggle input{width:18px;height:18px;margin:0;accent-color:#2f6f78}
+.p-dialog .live-chapter-nav span{display:grid;justify-items:center;line-height:1.2}
+.p-dialog .swipe-hint{font-size:11px;color:#9a9388}
+.p-dialog .live-presets button{min-height:52px;font-size:18px;font-weight:700}
+
+/* Book of the week */
+.platform.live-reader .botw{display:grid;grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:center;margin:0 0 40px;padding:22px;border-radius:14px;background:linear-gradient(135deg,#2f6f78,#245860);color:#fff;box-shadow:0 14px 36px rgba(36,88,96,.25)}
+.platform.live-reader .botw-cover{padding:0!important;border:0!important;background:none!important;border-radius:6px!important;overflow:hidden;aspect-ratio:2/3;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.platform.live-reader .botw-cover img,.platform.live-reader .botw-cover>*{width:100%;height:100%;object-fit:cover;display:block}
+.platform.live-reader .botw-kicker{margin:0 0 6px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#f6d48b!important}
+.platform.live-reader .botw h2{margin:0;color:#fff!important;font-size:clamp(26px,4vw,38px);line-height:1.1}
+.platform.live-reader .botw-author{margin:6px 0 0;color:#d9ecee!important}
+.platform.live-reader .botw-note{margin:12px 0 0;font-family:var(--serif);font-style:italic;font-size:19px;color:#fff!important}
+.platform.live-reader .botw-note span{font-style:normal;font-family:var(--sans);font-size:13px;color:#d9ecee}
+.platform.live-reader .botw-stats{margin:10px 0 0;font-size:13px;color:#d9ecee!important}
+.platform.live-reader .botw-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.platform.live-reader .botw-actions .p-primary{background:#fff!important;border-color:#fff!important;color:#245860!important}
+.platform.live-reader .botw-actions button:not(.p-primary){background:transparent!important;border-color:rgba(255,255,255,.6)!important;color:#fff!important}
+@media(max-width:600px){.platform.live-reader .botw{grid-template-columns:96px minmax(0,1fr);gap:16px;padding:16px}.platform.live-reader .botw-note{font-size:16px}.platform.live-reader .botw-actions{grid-column:1/-1}.platform.live-reader .botw-actions button{flex:1}}
+.platform.live-reader .feature-btn{width:100%;margin:6px 0;font-size:13px}

@@ -47,7 +47,7 @@ export function newBadges(before?:Badge[],after?:Badge[]){
  return after.filter(b=>b.earned&&before.find(x=>x.id===b.id)?.earned===false).map(b=>b.name);
 }
 export type XpGain={gained:number;level:number;levelUp:boolean;capped:boolean};
-export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain;badges?:string[];streak?:number};
+export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain;badges?:string[];streak?:number;chillymz?:number};
 
 // What one save earned, from progress before and after it. Re-rating a chapter earns nothing and shows nothing.
 export function xpGain(before:Progress|null|undefined,after:Progress|null|undefined,newChapter:boolean):XpGain|undefined{
@@ -72,6 +72,13 @@ export function compareRating(chapter:number,mine:number,total?:{average:number;
  return {chapter,mine:score,others:Math.min(10,Math.max(0,others)),othersCount:total.count-1};
 }
 
+// One line comparing the reader with ChillyMZ's own score.
+export function chillymzLine(c:Comparison){
+ if(c.chillymz===undefined)return '';
+ const d=Math.round((c.mine-c.chillymz)*10)/10;
+ if(Math.abs(d)<.05)return 'Exactly what ChillyMZ gave it.';
+ return d>0?`${d.toFixed(1)} higher than ChillyMZ.`:`${Math.abs(d).toFixed(1)} lower than ChillyMZ.`;
+}
 export function verdict(c:Comparison){
  if(c.others===undefined)return 'You’re the first reader to rate this chapter.';
  const d=c.mine-c.others;
