@@ -69,7 +69,7 @@ test('levels start at 0, 100, 250, 450 XP',()=>{
  assert.equal(progress.levelOf(0),1);assert.equal(progress.levelOf(99),1);assert.equal(progress.levelOf(100),2);assert.equal(progress.levelOf(449),3);assert.equal(progress.levelOf(450),4);
 });
 
-test('XP caps ratings at 20 and reviews at 5 per day, and counts finished books once',()=>{
+test('XP caps ratings at 20 per day, gives reviews no XP, and counts finished books once',()=>{
  const books=new Map([['big',80],['short',2]]);
  // 30 chapters of one book in a day: only 20 earn XP. The next day's 5 all count.
  const binge=[...Array.from({length:30},(_,i)=>rate('big',i+1,'2026-11-20T10:00:00Z')),...Array.from({length:5},(_,i)=>rate('big',31+i,'2026-11-21T09:00:00Z'))];
@@ -80,7 +80,7 @@ test('XP caps ratings at 20 and reviews at 5 per day, and counts finished books 
  assert.equal(done.xp,2*10+50);assert.equal(done.finished,1);assert.equal(done.level,1);
  // 7 reviews on one day: 5 count.
  const reviews=Array.from({length:7},()=>({updated:'2026-11-21T08:00:00Z'}));
- assert.equal(progress.readerProgress([],reviews,books).xp,5*25);
+ assert.equal(progress.readerProgress([],reviews,books).xp,0); // reviews earn no XP
 });
 
 test('comparison card reports XP gained, level-ups and the daily limit',()=>{

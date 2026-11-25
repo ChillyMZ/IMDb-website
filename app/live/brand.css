@@ -228,3 +228,9 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .rs-level-badge,.platform.live-reader .rs-level-badge{background:var(--surface-2);color:var(--paper)}
 .rs-badges li{background:var(--surface-2);border-color:var(--line)}
 .rs-badge-icon{background:var(--line);color:var(--muted)}
+
+/* XP feedback after rating: teal "+10 XP", and a solid banner on level up */
+.rating-compare p.rc-xp{color:#2f6f78;font-weight:600}
+.rating-compare p.rc-xp.level-up{display:inline-block;background:#2f6f78;color:#fff;padding:8px 12px;border-radius:3px;animation:cmz-levelup .5s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes cmz-levelup{0%{transform:scale(.92);opacity:0}100%{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.rating-compare p.rc-xp.level-up{animation:none}}
