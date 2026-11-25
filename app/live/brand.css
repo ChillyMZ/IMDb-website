@@ -60,7 +60,7 @@ body:has(.live-reader){background:#f6f2ea}
 
 /* Section headings */
 .platform.live-reader .hh-head,.platform.live-reader .catalogue-heading{align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
-.platform.live-reader .hh-head h2,.platform.live-reader .catalogue-heading h1{font-size:28px;font-weight:500;margin:0}
+.platform.live-reader .hh-head h2,.platform.live-reader .catalogue-heading h1,.platform.live-reader .catalogue-heading h2{font-size:28px;font-weight:500;margin:0}
 .platform.live-reader .hh-head span,.platform.live-reader .catalogue-heading .p-muted,.platform.live-reader .catalogue-heading span{font-size:13px;color:var(--muted)}
 
 /* Top chapters: a ranked list, not three boxed widgets */
@@ -234,3 +234,81 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .rating-compare p.rc-xp.level-up{display:inline-block;background:#2f6f78;color:#fff;padding:8px 12px;border-radius:3px;animation:cmz-levelup .5s cubic-bezier(.2,.9,.3,1.3)}
 @keyframes cmz-levelup{0%{transform:scale(.92);opacity:0}100%{transform:none;opacity:1}}
 @media(prefers-reduced-motion:reduce){.rating-compare p.rc-xp.level-up{animation:none}}
+
+/* Diary: summary strip, then reading + log on the left, highlights on the right */
+.platform.live-reader .rs-layout .rs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:0 0 20px}
+.platform.live-reader .rs-layout .rs-head h1{margin:0}
+.platform.live-reader .rs-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 28px;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.platform.live-reader .rs-summary>div{padding:16px 20px;border-left:1px solid var(--line)}
+.platform.live-reader .rs-summary>div:first-child{border-left:0}
+.platform.live-reader .rs-summary dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.platform.live-reader .rs-summary dd{margin:0;font-family:var(--serif);font-size:30px;line-height:1.1;color:var(--paper)}
+.platform.live-reader .rs-summary dd small{font-family:var(--sans);font-size:13px;color:var(--muted)}
+.platform.live-reader .rs-columns{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:24px;align-items:start}
+.platform.live-reader .rs-main,.platform.live-reader .rs-side{display:grid;gap:24px;min-width:0}
+.platform.live-reader .rs-columns .p-panel{margin:0;padding:22px 24px}
+.platform.live-reader .rs-columns .p-panel h2{font-size:22px;margin:0 0 14px}
+.platform.live-reader .rs-subhead{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+.platform.live-reader .rs-list{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.platform.live-reader .rs-chapter{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:6px 0;text-align:left}
+.platform.live-reader .rs-chapter:hover{background:none}
+.platform.live-reader .rs-chapter:hover .rs-name{text-decoration:underline;text-underline-offset:3px}
+.platform.live-reader .rs-chapter>span:last-child{display:grid}
+.platform.live-reader .rs-book{display:grid;grid-template-columns:1fr auto;gap:2px 12px;width:100%;background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 0;text-align:left}
+.platform.live-reader .rs-book:first-of-type{border-top:0;padding-top:0}
+.platform.live-reader .rs-book:hover{background:none}
+.platform.live-reader .rs-book .rs-sub{grid-column:1}
+.platform.live-reader .rs-book progress{grid-column:1/-1;width:100%;margin-top:6px}
+.platform.live-reader .rs-book .rs-next{grid-column:2;grid-row:1/3;align-self:center;font-weight:600}
+@media(max-width:900px){.platform.live-reader .rs-columns{grid-template-columns:1fr}.platform.live-reader .rs-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.platform.live-reader .rs-summary>div:nth-child(3){border-left:0}.platform.live-reader .rs-summary>div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* Profile: identity card with level, badges, then settings and account */
+.platform.live-reader .profile-page{display:grid;gap:24px;max-width:860px}
+.platform.live-reader .profile-hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 20px;align-items:center;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.platform.live-reader .profile-avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-family:var(--serif);font-size:30px}
+.platform.live-reader .profile-id h1{margin:0 0 4px;font-size:34px}
+.platform.live-reader .profile-id p{margin:0}
+.platform.live-reader .profile-hero .rs-level{grid-column:1/-1;margin:4px 0 0;padding:16px 0 0;background:none;border:0;border-top:1px solid var(--line);border-radius:0}
+.platform.live-reader .profile-page>.p-panel,.platform.live-reader .profile-page>article{margin:0;padding:22px 24px}
+.platform.live-reader .profile-page h2{font-size:22px;margin:0 0 14px}
+.platform.live-reader .profile-settings .live-form{background:none;border:0;padding:0;display:grid;gap:14px}
+.platform.live-reader .profile-settings .live-form .p-primary{justify-self:start}
+.platform.live-reader .profile-links{list-style:none;margin:0;padding:0}
+.platform.live-reader .profile-links li+li{border-top:1px solid var(--line)}
+.platform.live-reader .profile-links button{width:100%;justify-content:space-between;background:none;border:0;padding:12px 0;font-size:15px;color:var(--paper)}
+.platform.live-reader .profile-links button::after{content:'→';color:var(--muted)}
+.platform.live-reader .profile-links button:hover{background:none;color:var(--accent)}
+.platform.live-reader .profile-signout{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.platform.live-reader .profile-signout .account-note{margin:0;font-size:13px}
+@media(max-width:600px){.platform.live-reader .profile-hero{padding:18px}.platform.live-reader .profile-avatar{width:52px;height:52px;font-size:24px}}
+.platform.live-reader .rs-level-panel .rs-level{margin:0;padding:0;background:none;border:0}
+.platform.live-reader .rs-level-panel .rs-level-top{flex-wrap:wrap;gap:6px 10px}
+.platform.live-reader .profile-page>*{width:100%;max-width:none;justify-self:stretch;box-sizing:border-box}
+
+/* Community: phones get a shrinkable single column (no sideways scrolling) */
+.platform.live-reader .talk-layout{grid-template-columns:minmax(0,1fr) 260px}
+@media(max-width:800px){.platform.live-reader .talk-layout{grid-template-columns:minmax(0,1fr)}}
+.platform.live-reader .catalogue-heading h2{margin:0;font-size:28px;font-weight:500;border:0;padding:0}
+/* Community posts: neutral topic tag, plain serif titles, quiet reply link */
+.platform.live-reader .talk-post{border-color:var(--line)}
+.platform.live-reader .talk-meta{color:var(--muted)}
+.platform.live-reader .talk-meta>span:first-child{color:var(--accent);background:rgba(47,111,120,.08);padding:2px 8px;border-radius:3px;font-weight:600}
+.platform.live-reader .talk-avatar{background:var(--surface-2);color:var(--paper)}
+.platform.live-reader .talk-title{border:0!important;background:none!important;padding:6px 0;font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.3;color:var(--paper)}
+.platform.live-reader .talk-title:hover{text-decoration:underline;text-underline-offset:3px}
+.platform.live-reader .talk-excerpt{color:var(--muted)}
+.platform.live-reader .talk-replies{border:0!important;background:none!important;padding:6px 0;color:var(--accent);font-weight:600}
+.platform.live-reader .talk-replies:hover{text-decoration:underline}
+.platform.live-reader .talk-vote button{border:1px solid var(--line-strong);background:none}
+.platform.live-reader .talk-vote button[aria-pressed=true]{background:rgba(47,111,120,.1);color:var(--accent);border-color:var(--accent)}
+/* Footer links: comfortable tap size on phones */
+@media(max-width:700px){.platform.live-reader .live-footer a,.platform.live-reader .live-footer button{display:inline-flex;align-items:center;min-height:40px;margin-right:16px}}
+/* Guest rating: nudge to save ratings into a free account */
+.p-dialog .guest-save{margin:14px 0 4px;padding:14px 16px;background:rgba(47,111,120,.07);border:1px solid rgba(47,111,120,.35);border-radius:4px}
+.p-dialog .guest-save p{margin:0 0 10px;color:#2a2723!important;font-size:14px;line-height:1.5}
+.p-dialog .guest-save .p-primary{width:100%}
+.rating-compare .rc-diff{color:#1c1a17;font-family:"Newsreader",Georgia,serif;font-size:24px;font-weight:500}
+.rating-compare .rc-head span,.rating-compare .rc-scores small{color:#6e675d}
+.rating-compare .rc-scores small:before{background:#cfc6b6!important;border-color:#cfc6b6!important}
+.rating-compare .rc-scores small.rc-label-you:before{background:#2f6f78!important;border-color:#2f6f78!important}
+.rating-compare .rc-scale .rc-you{border-color:#2f6f78!important}

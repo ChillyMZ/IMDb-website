@@ -57,3 +57,9 @@ html .auth-card a{color:var(--cmz-accent)}
 html .auth-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 html .auth-card h1{font-family:"Newsreader",Georgia,serif}
 html .seo-books header>a:first-child span{display:none}
+/* SEO book pages: chapter links, related books and source box in the light palette */
+html .seo-chapters a,html .seo-related a{background:var(--cmz-surface);border-color:var(--cmz-line);color:var(--cmz-ink);border-radius:3px}
+html .seo-chapters a:hover,html .seo-related a:hover{border-color:var(--cmz-accent);color:var(--cmz-accent);text-decoration:none}
+html .seo-books details{background:var(--cmz-surface);border-color:var(--cmz-line);border-radius:4px;color:var(--cmz-text)}
+html .seo-books summary{color:var(--cmz-ink)}
+html .seo-books{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
