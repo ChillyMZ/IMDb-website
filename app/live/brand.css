@@ -648,3 +648,10 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .p-dialog .thread-who .talk-author .av-pic{width:26px;height:26px;font-size:12px;border-width:2px}
 .platform.live-reader .people-label{margin:4px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)!important}
 .platform.live-reader .profile-top3 .reader-counts{margin:0 0 22px}
+/* ChillyMZ's own score in the rating result */
+.rating-compare .rc-cmz{display:grid;gap:4px}
+.rating-compare .rc-cmz small{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2f6f78;font-weight:700}
+.rating-compare .rc-cmz small:before{content:'';width:8px;height:8px;border-radius:50%;background:#2f6f78}
+.rating-compare .rc-cmz b{display:grid;place-items:center;min-width:64px;height:48px;padding:0 12px;border-radius:6px;font-size:22px;box-shadow:0 0 0 2px #2f6f78}
+.rating-compare .rc-cmz-line{margin:8px 0 0;font-weight:700;color:#2f6f78!important}
+.rating-compare .rc-cmz small:before{background:#2f6f78!important}
