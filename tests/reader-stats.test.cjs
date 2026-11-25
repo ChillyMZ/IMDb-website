@@ -99,12 +99,12 @@ test('comparison card reports XP gained, level-ups and the daily limit',()=>{
  assert.match(page,/Level 3/);assert.match(page,/320 XP/);assert.match(page,/130 XP to Level 4/);assert.match(page,/4 of 20 chapters earning XP/);
 });
 
-test('without API progress the browser works out rating XP itself; API progress wins when present',()=>{
+test('without API progress the browser works out rating XP itself; the API figure is ignored',()=>{
  const d={mine:[{book:'a',chapter:1,date:'2026-11-20T10:00:00Z'},{book:'a',chapter:2,date:'2026-11-20T10:00:00Z'},{book:'p',chapter:1,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',chapter_count:2,status:'approved'},{id:'p',chapter_count:5,status:'pending'}]};
  const p=stats.progressOf(d);
  assert.equal(p.xp,2*100+500+100+1000+50); // + First Page, Finisher, 1-day streakassert.equal(p.finished,1);assert.equal(p.partial,true); // + First Page and Finisher badge XP
  const server={xp:999,level:6,levelXp:900,nextXp:1300,ratingsToday:0,ratingCap:20,finished:3};
- assert.equal(stats.progressOf({...d,progress:server}),server);
+ assert.equal(stats.progressOf({...d,progress:server}).xp,p.xp); // the browser figure is always used
  assert.equal(stats.progressOf(null),undefined);
  const React=require('react'),{renderToStaticMarkup}=require('react-dom/server'),Stats=load('app/live/reader-stats.tsx').default;
  const page=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',progress:p,mine:[{book:'a',chapter:1,score:9,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',title:'Alpha',author:'X',chapter_count:2}],onOpen(){},onBrowse(){}}));

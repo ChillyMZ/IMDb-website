@@ -495,3 +495,58 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 @media(prefers-reduced-motion:reduce){.platform.live-reader .sc-card,.platform.live-reader .sc-flame,.platform.live-reader .sc-flame svg,.platform.live-reader .sc-burst i,.platform.live-reader .avatar-flame.bump{animation:none}.platform.live-reader .sc-old{display:none}.platform.live-reader .sc-new{transform:none;animation:none}}
 .platform.live-reader .streak-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .platform.live-reader .streak-preview{font-size:13px;padding:6px 12px}
+
+/* Books | People search switch */
+.platform.live-reader .search-mode{display:inline-flex;gap:2px;padding:3px;margin:0 0 12px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface)}
+.platform.live-reader .search-mode button{border:0!important;border-radius:999px!important;padding:6px 18px;background:none!important;color:var(--muted);font-weight:600;min-height:0}
+.platform.live-reader .search-mode button.on{background:var(--accent)!important;color:#fff}
+.platform.live-reader .people-search input{width:100%;height:44px;margin:0 0 12px}
+.platform.live-reader .people-list{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:8px}
+.platform.live-reader .people-list button{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;width:100%;padding:10px 14px;text-align:left;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:4px}
+.platform.live-reader .people-list button:hover{border-color:var(--accent)!important}
+.platform.live-reader .people-list b{color:var(--paper);font-size:16px}
+.platform.live-reader .people-list small{color:var(--muted)}
+.platform.live-reader .talk-avatar{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--surface-2);color:var(--paper);font-weight:700}
+/* Discussion author names link to profiles */
+.platform.live-reader .talk-author-link{border:0!important;background:none!important;padding:0;min-height:0}
+.platform.live-reader .talk-author-link:hover b{text-decoration:underline;text-underline-offset:2px}
+/* Public reader profile */
+.platform.live-reader .reader-page{display:grid;gap:24px;max-width:860px}
+.platform.live-reader .reader-page .shop-back{justify-self:start}
+.platform.live-reader .reader-page>.p-panel{margin:0;padding:24px}
+.platform.live-reader .reader-page h2{font-size:24px;margin:0 0 12px}
+.platform.live-reader .reader-hero{display:grid;grid-template-columns:auto 1fr auto;gap:16px 22px;align-items:center}
+.platform.live-reader .reader-hero h1{margin:0 0 4px;font-size:34px}
+.platform.live-reader .reader-hero .profile-id p{margin:0 0 4px}
+.platform.live-reader .reader-meta b{color:var(--accent)}
+.platform.live-reader .reader-counts{display:flex;flex-wrap:wrap;gap:4px 16px;margin:4px 0 0;color:var(--muted);font-size:14px}
+.platform.live-reader .reader-counts b{color:var(--paper)}
+.platform.live-reader .reader-follow{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.platform.live-reader .reader-follow.following{border-color:var(--accent)!important;color:var(--accent)!important}
+@media(max-width:640px){.platform.live-reader .reader-hero{grid-template-columns:auto 1fr}.platform.live-reader .reader-follow{grid-column:1/-1;width:100%;justify-content:center}}
+.platform.live-reader .reader-badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.platform.live-reader .reader-badges li{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:600;font-size:14px;color:var(--paper)}
+.platform.live-reader .reader-badges .rs-badge-icon{width:28px;height:28px;background:#2f6f78;color:#fff}
+/* Top 3 */
+.platform.live-reader .top3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.platform.live-reader .top3 li{display:grid;gap:6px;min-width:0}
+.platform.live-reader .top3 button:not(.top3-remove){position:relative;display:grid;gap:4px;width:100%;padding:0;border:0!important;background:none!important;text-align:left;min-height:0}
+.platform.live-reader .top3-rank{position:absolute;top:-8px;left:-8px;z-index:1;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:14px}
+.platform.live-reader .top3-cover{display:block;aspect-ratio:2/3;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(28,26,23,.08),0 8px 20px rgba(28,26,23,.16)}
+.platform.live-reader .top3-cover img,.platform.live-reader .top3-cover>*{width:100%;height:100%;object-fit:cover}
+.platform.live-reader .top3 b{font-family:var(--serif);font-size:16px;font-weight:500;color:var(--paper);line-height:1.25}
+.platform.live-reader .top3 small{color:var(--muted);font-size:13px}
+.platform.live-reader .top3-empty{display:grid;place-items:center;height:100%;background:var(--surface-2);border:2px dashed var(--line-strong);color:var(--muted);font-size:34px}
+.platform.live-reader .top3-edit button.picking .top3-cover{outline:3px solid var(--accent);outline-offset:2px}
+.platform.live-reader .top3-remove{font-size:12px;padding:4px 8px;min-height:0;justify-self:start}
+.platform.live-reader .top3-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.platform.live-reader .top3-search{margin-top:16px}
+.platform.live-reader .top3-search input{width:100%;height:44px}
+.platform.live-reader .top3-search ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.platform.live-reader .top3-search li button{display:flex;align-items:center;gap:12px;width:100%;padding:6px 10px;text-align:left;justify-content:flex-start;background:var(--surface)!important;border:1px solid var(--line)!important}
+.platform.live-reader .top3-search li span:last-child{display:grid}
+.platform.live-reader .top3-mini{display:block;width:34px;height:51px;flex:none;overflow:hidden;border-radius:2px}
+.platform.live-reader .top3-mini img,.platform.live-reader .top3-mini>*{width:100%;height:100%;object-fit:cover}
+.platform.live-reader .top3-mini .book-type-card>*{display:none}
+.platform.live-reader .reader-hero .avatar-wrap{justify-self:start;align-self:center;width:max-content}
+@media(max-width:640px){.platform.live-reader .reader-hero{grid-template-columns:84px minmax(0,1fr);gap:14px 16px}.platform.live-reader .reader-hero .profile-avatar.frame{width:72px;height:72px}.platform.live-reader .reader-hero h1{font-size:28px}}
