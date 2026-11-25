@@ -741,3 +741,12 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .pulse-top ol{margin:0;padding-left:1.2em}
 .pulse-top li{display:grid;grid-template-columns:1fr auto;column-gap:10px;padding:4px 0}
 .pulse-top li small{grid-column:1/-1;opacity:.65;font-size:.75rem}
+/* Streak reminders */
+.push-reminders .pr-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.push-reminders .pr-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:rgba(47,111,120,.1);color:#2f6f78;flex:none}
+.push-reminders h2{margin:0 0 2px}
+.push-reminders .pr-msg{margin:8px 0 0;font-size:.9rem}
+.platform.live-reader .streak-banner.restore{cursor:default;border-color:#2f6f78;background:rgba(47,111,120,.07)}
+.platform.live-reader .streak-banner.restore p{flex:1}
+.platform.live-reader .streak-banner.restore b{color:#245860}
+.platform.live-reader .streak-restore{border:2px solid #2f6f78!important}

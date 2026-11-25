@@ -171,3 +171,14 @@ export function readerStats(mine:MineRating[],books:StatsBook[],today=new Date()
  };
 }
 export type ReaderStatsResult=ReturnType<typeof readerStats>;
+
+// A streak that broke only because yesterday was missed, and can be restored with the free
+// monthly restore. `restores` are YYYY-MM-DD days already restored (any month).
+export function restorableStreak(dates:string[],restores:string[],today=new Date()){
+ const days=new Set([...dates.map(s=>new Date(s)).filter(d=>!isNaN(d.getTime())).map(dayKey),...restores]);
+ const y=shift(today,-1);if(days.has(dayKey(y)))return null;
+ let n=0,cur=shift(today,-2);while(days.has(dayKey(cur))){n++;cur=shift(cur,-1)}
+ if(n<2)return null;
+ const month=dayKey(today).slice(0,7);if(restores.some(r=>r.slice(0,7)===month))return null;
+ return {lost:n,day:dayKey(y)};
+}
