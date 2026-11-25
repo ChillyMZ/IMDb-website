@@ -655,3 +655,4 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .rating-compare .rc-cmz b{display:grid;place-items:center;min-width:64px;height:48px;padding:0 12px;border-radius:6px;font-size:22px;box-shadow:0 0 0 2px #2f6f78}
 .rating-compare .rc-cmz-line{margin:8px 0 0;font-weight:700;color:#2f6f78!important}
 .rating-compare .rc-cmz small:before{background:#2f6f78!important}
+.rating-compare .rc-share{width:100%;margin:10px 0 4px}
