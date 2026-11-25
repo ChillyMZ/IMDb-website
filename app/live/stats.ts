@@ -12,7 +12,7 @@ export type StatsEntry=MineRating&{title:string};
 // Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
 // used until/unless the API sends its own `progress` (which includes visible reviews).
 export type Progress=ApiProgress&{partial?:boolean};
-type Invites={friends:number;pending?:number;invited:boolean};
+type Invites={friends:number;pending?:number;invited:boolean;chapters?:number};
 type ProgressSource={user?:{admin?:boolean};invites?:Invites|null;activity?:string[];progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 // Site owner's bonus XP, added on top of what their ratings earn.
 export const OWNER_BONUS_XP=30000;
@@ -22,7 +22,7 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  const base:Progress={...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
  const badgeXp=(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
  const streakXp=streakBonusXp([...d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date),...(d.activity||[])]);
- const inv=d.invites,bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0)+(inv?inv.friends*INVITE.inviterXp+(inv.invited?INVITE.inviteeXp:0):0);
+ const inv=d.invites,bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0)+(inv?(inv.chapters||0)*INVITE.perChapterXp:0);
  if(!bonus)return base;
  const xp=base.xp+bonus,level=levelOf(xp);
  return {...base,xp,level,levelXp:levelStart(level),nextXp:levelStart(level+1)};

@@ -35,7 +35,8 @@ function milestones(valid:Rating[],done:number,activity:string[]=[]):Badge[]{
 }
 
 // Invite-a-friend achievements: friends who joined from the reader's link and rated 3+ chapters.
-export const INVITE={qualifyRatings:3,inviterXp:1000,inviteeXp:500,recruiter:1,bookClub:5,ambassador:25};
+// Passive XP: the inviter earns perChapterXp for every chapter their invited friends rate.
+export const INVITE={qualifyRatings:3,perChapterXp:10,recruiter:1,bookClub:5,ambassador:25};
 function inviteBadges(n:number):Badge[]{const c=(need:number)=>({earned:n>=need,have:Math.min(n,need),need});return [
  {id:'recruiter',name:'Recruiter',description:'Invite a friend who rates 3 chapters.',...c(INVITE.recruiter)},
  {id:'book-club',name:'Book Club',description:`Invite ${INVITE.bookClub} friends who each rate 3 chapters.`,...c(INVITE.bookClub)},
