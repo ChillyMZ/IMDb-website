@@ -26,3 +26,19 @@ export function summarizeSearches(rows:{query:string;results:number}[],limit=20)
  const list=[...all.values()].sort((a,b)=>b.count-a.count||a.query.localeCompare(b.query));
  return {total:rows.length,missing:list.filter(x=>x.results===0).slice(0,limit),top:list.filter(x=>x.results>0).slice(0,limit)};
 }
+
+// Site pulse from the site's own tables (not consent-based visit logs): ratings and sign-ups per day,
+// active readers, top books. Real accounts and silent guest accounts are counted separately; the owner is left out.
+type PulseRating={user:string;book:string;date:string};type PulseUser={reader:string;created:string;anonymous:boolean};
+export function sitePulse(o:{ratings:PulseRating[];users:PulseUser[];owners:string[];titles:Record<string,string>;invites:number;now?:number;days?:number}){
+ const now=o.now??Date.now(),days=o.days??30,owners=new Set(o.owners),guest=new Set(o.users.filter(u=>u.anonymous).map(u=>u.reader));
+ const key=(t:number)=>new Date(t).toISOString().slice(0,10),from=now-days*86400000;
+ const dayList=Array.from({length:days},(_,i)=>key(now-(days-1-i)*86400000));
+ const ratings=o.ratings.filter(r=>!owners.has(r.user)&&Date.parse(r.date)>=from),users=o.users.filter(u=>!owners.has(u.reader));
+ const per=(rows:{t:string;g:boolean}[])=>{const m=new Map(dayList.map(d=>[d,{day:d,real:0,guest:0}]));for(const r of rows){const x=m.get(r.t.slice(0,10));if(x)r.g?x.guest++:x.real++}return [...m.values()]};
+ const active=(ms:number)=>{const ids=new Set(ratings.filter(r=>Date.parse(r.date)>=now-ms).map(r=>r.user));let real=0,g=0;for(const id of ids)guest.has(id)?g++:real++;return {real,guest:g}};
+ const top=(ms:number)=>{const m=new Map<string,{book:string;title:string;ratings:number;readers:Set<string>}>();for(const r of ratings){if(Date.parse(r.date)<now-ms)continue;const x=m.get(r.book)||{book:r.book,title:o.titles[r.book]||'Unknown book',ratings:0,readers:new Set<string>()};x.ratings++;x.readers.add(r.user);m.set(r.book,x)}return [...m.values()].sort((a,b)=>b.ratings-a.ratings).slice(0,8).map(x=>({book:x.book,title:x.title,ratings:x.ratings,readers:x.readers.size}))};
+ return {days,ratingsByDay:per(ratings.map(r=>({t:r.date,g:guest.has(r.user)}))),signupsByDay:per(users.filter(u=>Date.parse(u.created)>=from).map(u=>({t:u.created,g:u.anonymous}))),
+  active:{day:active(86400000),week:active(7*86400000),month:active(days*86400000)},topWeek:top(7*86400000),topMonth:top(days*86400000),
+  totals:{realAccounts:users.filter(u=>!u.anonymous).length,guestAccounts:users.filter(u=>u.anonymous).length,ratings:ratings.length,invites:o.invites}};
+}
