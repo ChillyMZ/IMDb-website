@@ -336,3 +336,10 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .p-avatar.frame{background-image:linear-gradient(var(--accent),var(--accent)),var(--ring);color:#fff!important}
 .platform.live-reader .frame-list li.locked{opacity:.6;filter:none}
 .platform.live-reader .frame-list li.locked .frame-sample{background-image:linear-gradient(#b9b2a6,#b9b2a6),var(--ring)}
+/* Frame picker: each unlocked frame is a button */
+.platform.live-reader .frame-list li{padding:0}
+.platform.live-reader .frame-list li button{display:grid;justify-items:center;gap:4px;width:100%;height:100%;padding:14px 6px;background:none;border:0;border-radius:4px;cursor:pointer}
+.platform.live-reader .frame-list li button:disabled{cursor:default;opacity:1}
+.platform.live-reader .frame-list li.unlocked:not(.wearing):hover{border-color:var(--accent)}
+.platform.live-reader .frame-list li.wearing{border:2px solid var(--accent);background:rgba(47,111,120,.06)}
+.platform.live-reader .frame-list li.unlocked:not(.wearing) small{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
