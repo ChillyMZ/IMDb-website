@@ -678,3 +678,7 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .botw-actions button:not(.p-primary){background:transparent!important;border-color:rgba(255,255,255,.6)!important;color:#fff!important}
 @media(max-width:600px){.platform.live-reader .botw{grid-template-columns:96px minmax(0,1fr);gap:16px;padding:16px}.platform.live-reader .botw-note{font-size:16px}.platform.live-reader .botw-actions{grid-column:1/-1}.platform.live-reader .botw-actions button{flex:1}}
 .platform.live-reader .feature-btn{width:100%;margin:6px 0;font-size:13px}
+.platform.live-reader .streak-banner.restore{cursor:default;border-color:#2f6f78;background:rgba(47,111,120,.07)}
+.platform.live-reader .streak-banner.restore p{flex:1}
+.platform.live-reader .streak-banner.restore b{color:#245860}
+.platform.live-reader .streak-restore{border:2px solid #2f6f78!important}

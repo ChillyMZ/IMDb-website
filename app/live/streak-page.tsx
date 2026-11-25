@@ -1,4 +1,5 @@
 "use client";
+import type React from 'react';
 import {useEffect,useState} from 'react';
 import {Flame,Check} from 'lucide-react';
 import {streakStatus,flameTier,nextFlameTier,FLAME_TIERS,streakDayXp,monthDays} from './stats';
@@ -14,7 +15,7 @@ function useUntilMidnight(){
 
 const STREAK_BADGES=[{name:'Warming Up',days:BADGE_RULES.warmingUp,xp:300},{name:'On a Roll',days:BADGE_RULES.streak,xp:2000},{name:'Unstoppable',days:BADGE_RULES.unstoppable,xp:5000},{name:'Legend',days:BADGE_RULES.legend,xp:10000}];
 
-export default function StreakPage({dates,onRate,onBack,onPreview}:{dates:string[];onRate:()=>void;onBack:()=>void;onPreview?:()=>void}){
+export default function StreakPage({dates,onRate,onBack,onPreview,restore,onRestore,push}:{dates:string[];onRate:()=>void;onBack:()=>void;onPreview?:()=>void;restore?:{lost:number;day:string}|null;onRestore?:()=>void;push?:React.ReactNode}){
  const s=streakStatus(dates),tier=flameTier(s.current),next=nextFlameTier(s.current),left=useUntilMidnight(),month=monthDays(dates);
  const nextBadge=STREAK_BADGES.find(b=>b.days>s.current);
  const todayXp=streakDayXp(s.ratedToday?s.current:s.current+1),tomorrowXp=streakDayXp((s.ratedToday?s.current:s.current+1)+1);
@@ -28,6 +29,8 @@ export default function StreakPage({dates,onRate,onBack,onPreview}:{dates:string
     :<div className="streak-today pending"><p>{s.current?<><b>Rate a chapter in the next {left}</b> to keep your streak.</>:<><b>Rate a chapter today</b> to start your streak.</>} Today is worth <b>+{todayXp} XP</b>.</p>{s.current>1&&<p className="streak-loss">Miss today and your streak resets to 0, your daily bonus drops back to +{streakDayXp(1)} XP{s.current>=7?` and you lose the ${tier.name.toLowerCase()}`:''}.</p>}<button className="p-primary" onClick={onRate}>Rate a chapter</button></div>}
   </section>
 
+  {restore&&onRestore&&<section className="p-panel streak-restore"><h2>Restore your {restore.lost}-day streak</h2><p className="p-muted">You missed yesterday. Use your free restore for this month to fill in that day and keep the streak alive.</p><button className="p-primary" onClick={onRestore}>Restore streak (free)</button></section>}
+  {push}
   <section className="p-panel">
    <h2>{month.label} <span className="rs-sub rs-inline">{month.ratedCount} {month.ratedCount===1?'day':'days'} rated</span></h2>
    <ol className="streak-weekdays" aria-hidden="true">{['M','T','W','T','F','S','S'].map((d,i)=><li key={i}>{d}</li>)}</ol>
