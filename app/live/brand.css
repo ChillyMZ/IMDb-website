@@ -646,3 +646,5 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .people-who{display:grid;gap:2px}
 .p-dialog .thread-replies .talk-comment{display:block}
 .p-dialog .thread-who .talk-author .av-pic{width:26px;height:26px;font-size:12px;border-width:2px}
+.platform.live-reader .people-label{margin:4px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)!important}
+.platform.live-reader .profile-top3 .reader-counts{margin:0 0 22px}
