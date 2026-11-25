@@ -699,3 +699,18 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 /* Share-this-take button on the rating comparison */
 .rating-compare .rc-take{display:block;width:100%;margin:10px 0 4px;padding:10px 12px;border-radius:8px;border:1px solid var(--accent,#2f6f78);background:transparent;color:var(--accent,#2f6f78);font-weight:600;cursor:pointer}
 .rating-compare .rc-take:hover{background:rgba(47,111,120,.08)}
+/* Weekly recap */
+.week-recap{margin:0 0 16px}
+.week-recap .wr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.week-recap .wr-kicker{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,#2f6f78);font-weight:700}
+.week-recap h2{margin:2px 0 12px}
+.week-recap .wr-close{background:none;border:0;font-size:1.4rem;line-height:1;cursor:pointer;color:inherit;padding:4px 8px}
+.week-recap .wr-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.week-recap .wr-stats div{background:rgba(47,111,120,.07);border-radius:10px;padding:10px 8px;text-align:center;display:flex;flex-direction:column}
+.week-recap .wr-stats b{font-size:1.35rem;line-height:1.1}
+.week-recap .wr-stats span{font-size:.75rem;opacity:.75}
+.week-recap .wr-best{margin:0 0 12px}
+.week-recap .wr-best i{font-style:normal;font-weight:700;padding:1px 7px;border-radius:5px}
+.week-recap .wr-share{width:100%}
+.week-recap .wr-msg{margin:8px 0 0;font-size:.85rem}
+@media (max-width:420px){.week-recap .wr-stats b{font-size:1.1rem}}
