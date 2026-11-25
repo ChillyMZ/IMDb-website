@@ -1,6 +1,6 @@
 "use client";
 import {useMemo,useState} from 'react';
-import {BookCheck,Compass,Flame,PenLine,BookOpen,BookMarked,Trophy,Footprints,Library,Zap,CalendarCheck,Star} from 'lucide-react';
+import {BookCheck,Compass,Flame,PenLine,Sunrise,Rocket,Crown,BookOpen,BookMarked,Trophy,Footprints,Library,Zap,CalendarCheck,Star} from 'lucide-react';
 import {scoreBand} from './score-bands';
 import {nextUnrated} from './reading-links';
 import {readerStats,type Badge,type MineRating,type Progress,type StatsBook,type StatsEntry} from './stats';
@@ -18,7 +18,7 @@ export const Level=({p}:{p:Progress})=><div className="rs-level">
 </div>;
 
 // Badge shelf: earned badges first; locked ones show progress, untracked ones say "Coming soon".
-const badgeIcons={'first-page':BookOpen,regular:BookMarked,century:Trophy,explorer:Footprints,bookworm:Library,marathon:Zap,'on-a-roll':CalendarCheck,'perfect-ten':Star,finisher:BookCheck,pioneer:Compass,'hot-take':Flame,critic:PenLine};
+const badgeIcons={'warming-up':Sunrise,unstoppable:Rocket,legend:Crown,'first-page':BookOpen,regular:BookMarked,century:Trophy,explorer:Footprints,bookworm:Library,marathon:Zap,'on-a-roll':CalendarCheck,'perfect-ten':Star,finisher:BookCheck,pioneer:Compass,'hot-take':Flame,critic:PenLine};
 export const BadgeIcon=({id,size=16}:{id:Badge['id'];size?:number})=>{const Icon=badgeIcons[id];return <Icon size={size} strokeWidth={2} aria-hidden="true"/>};
 // Badges the site can't work out yet (earned:null, waiting on the server update) are hidden rather than shown as "coming soon".
 export const Badges=({list:all}:{list:Badge[]})=>{const list=all.filter(b=>b.earned!==null);return <article className="p-panel"><h2>Badges <span className="rs-sub rs-inline">{list.filter(b=>b.earned).length} of {list.length} earned</span></h2><ul className="rs-badges">{[...list].sort((a,b)=>Number(!!b.earned)-Number(!!a.earned)).map(b=><li key={b.id} className={b.earned?'earned':b.earned===null?'soon':'locked'}>

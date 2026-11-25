@@ -19,7 +19,8 @@ export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  const base:Progress=d.progress?d.progress:{...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
  // Earned badges add their bonus XP (browser-side figure; the API's own progress is used as-is).
  const badgeXp=d.progress?0:(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
- const bonus=badgeXp+(d.user?.admin?OWNER_BONUS_XP:0);
+ const streakXp=d.progress?0:streakBonusXp(d.mine.filter(r=>d.books.some(b=>b.id===r.book&&(!b.status||b.status==='approved'))).map(r=>r.date));
+ const bonus=badgeXp+streakXp+(d.user?.admin?OWNER_BONUS_XP:0);
  if(!bonus)return base;
  const xp=base.xp+bonus,level=levelOf(xp);
  return {...base,xp,level,levelXp:levelStart(level),nextXp:levelStart(level+1)};
@@ -43,7 +44,7 @@ export function newBadges(before?:Badge[],after?:Badge[]){
  return after.filter(b=>b.earned&&before.find(x=>x.id===b.id)?.earned===false).map(b=>b.name);
 }
 export type XpGain={gained:number;level:number;levelUp:boolean;capped:boolean};
-export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain;badges?:string[]};
+export type Comparison={chapter:number;mine:number;others?:number;othersCount:number;estimate?:number;finished?:boolean;xp?:XpGain;badges?:string[];streak?:number};
 
 // What one save earned, from progress before and after it. Re-rating a chapter earns nothing and shows nothing.
 export function xpGain(before:Progress|null|undefined,after:Progress|null|undefined,newChapter:boolean):XpGain|undefined{
@@ -97,6 +98,20 @@ export function streaks(dates:string[],today=new Date()){
  if(!days.has(dayKey(cursor)))cursor=shift(cursor,-1);
  while(days.has(dayKey(cursor))){current++;cursor=shift(cursor,-1)}
  return {current,best};
+}
+
+// Daily streak XP: the Nth day in a row earns 50×N XP, up to 500 a day from day 10 on.
+export const STREAK_XP=50,STREAK_XP_CAP_DAYS=10;
+export function streakBonusXp(dates:string[]){
+ const days=[...new Set(dates.map(s=>new Date(s)).filter(d=>!isNaN(d.getTime())).map(dayKey))].sort();
+ let total=0,run=0,prev='';
+ for(const key of days){const [y,m,d]=key.split('-').map(Number);run=prev&&dayKey(shift(new Date(y,m-1,d),-1))===prev?run+1:1;total+=STREAK_XP*Math.min(run,STREAK_XP_CAP_DAYS);prev=key}
+ return total;
+}
+// Current streak plus whether today already counts (so the site can warn before it breaks).
+export function streakStatus(dates:string[],today=new Date()){
+ const {current,best}=streaks(dates,today),ratedToday=dates.some(s=>{const d=new Date(s);return !isNaN(d.getTime())&&dayKey(d)===dayKey(today)});
+ return {current,best,ratedToday,atRisk:current>0&&!ratedToday};
 }
 
 export function readerStats(mine:MineRating[],books:StatsBook[],today=new Date()){

@@ -18,7 +18,7 @@ export default function RatingCompare({result,title,onClose,floating=false}:{res
   {other!==undefined&&<div className="rc-scale" style={{background:scale}} aria-hidden="true"><i className="rc-them" style={{left:other*10+'%'}}/><i className="rc-you" style={{left:result.mine*10+'%'}}/></div>}
   <p className="rc-verdict">{verdict(result)}{result.finished?' And that’s every chapter of this book rated!':''}</p>
   {xpLine(result.xp)&&<p className={'rc-xp'+(result.xp?.levelUp?' level-up':'')}>{xpLine(result.xp)}</p>}
-  {!!result.badges?.length&&<p className="rc-xp rc-badge">Badge unlocked: {result.badges.join(', ')}</p>}
+  {!!result.streak&&<p className="rc-xp rc-streak">🔥 {result.streak}-day streak! +{50*Math.min(result.streak,10)} XP</p>}{!!result.badges?.length&&<p className="rc-xp rc-badge">Badge unlocked: {result.badges.join(', ')}</p>}
   {result.othersCount>0&&<small className="rc-note">Based on {result.othersCount} other reader{result.othersCount===1?'':'s'}</small>}
  </div>;
 }
