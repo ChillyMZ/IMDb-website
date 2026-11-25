@@ -66,7 +66,7 @@ export function WeekRecap({recap,name,label,onDismiss,compact=false}:{recap:Reca
  </section>;
 }
 
-// Home banner: last week's recap, Monday to Wednesday, until dismissed.
+// Diary: last week's recap, Monday to Wednesday, until dismissed.
 export function LastWeekBanner({src,activity,name}:{src:Source;activity:string[];name:string}){
  const now=new Date(),thisWeek=weekStart(now),key='cmz-recap-'+thisWeek.toISOString().slice(0,10);
  const [hidden,setHidden]=useState(()=>{try{return !!localStorage.getItem(key)}catch{return false}});
