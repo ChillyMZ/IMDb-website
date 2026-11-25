@@ -15,3 +15,5 @@ create or replace function chillymz.prune_visit_events() returns void language s
 $$;
 revoke all on function chillymz.prune_visit_events() from public,anon,authenticated;
 grant execute on function chillymz.prune_visit_events() to service_role;
+-- Notice version 4: searches are linked to the visit-analytics browser ID (and account, if signed in).
+alter table chillymz.search_queries add column if not exists visitor uuid, add column if not exists reader text;
