@@ -2,12 +2,12 @@
 // Kept free of Deno/Supabase imports so the website and tests can load it directly.
 // Scores are on the 0–10 scale. `others` = every reader's ratings on the books this reader rated;
 // leave it (or `reviews`) undefined when unknown and those badges come back as `earned:null`.
-export type Badge={id:'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string;xp?:number};
+export type Badge={id:'warming-up'|'unstoppable'|'legend'|'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string;xp?:number};
 // Bonus XP for earning each badge, by difficulty.
-export const BADGE_XP:Record<Badge['id'],number>={'first-page':100,'perfect-ten':200,'hot-take':500,regular:500,explorer:1000,finisher:1000,pioneer:1000,marathon:1500,critic:1500,'on-a-roll':2000,century:2500,bookworm:5000};
+export const BADGE_XP:Record<Badge['id'],number>={'warming-up':300,unstoppable:5000,legend:10000,'first-page':100,'perfect-ten':200,'hot-take':500,regular:500,explorer:1000,finisher:1000,pioneer:1000,marathon:1500,critic:1500,'on-a-roll':2000,century:2500,bookworm:5000};
 type Rating={book:string;chapter:number;score:number;date:string};
 type Input={user?:string;mine:Rating[];chapters:Map<string,number>;titles?:Map<string,string>;reviews?:{updated:string}[];others?:(Rating&{user:string})[];estimated?:(book:string,chapter:number)=>boolean};
-export const BADGE_RULES={hotTakeGap:2,hotTakeReaders:3,critic:5,regular:25,century:100,explorer:10,bookworm:5,marathon:20,streak:7};
+export const BADGE_RULES={hotTakeGap:2,hotTakeReaders:3,critic:5,regular:25,century:100,explorer:10,bookworm:5,marathon:20,streak:7,warmingUp:3,unstoppable:30,legend:100};
 
 // Milestones that only need this reader's own ratings, so the browser can always work them out.
 function milestones(valid:Rating[],done:number):Badge[]{
@@ -25,7 +25,10 @@ function milestones(valid:Rating[],done:number):Badge[]{
   {id:'explorer',name:'Explorer',description:`Rate chapters in ${R.explorer} different books.`,...count(R.explorer,books)},
   {id:'bookworm',name:'Bookworm',description:`Rate every chapter of ${R.bookworm} books.`,...count(R.bookworm,done)},
   {id:'marathon',name:'Marathon',description:`Rate ${R.marathon} chapters in one day.`,...count(R.marathon,bestDay)},
+  {id:'warming-up',name:'Warming Up',description:`Rate chapters ${R.warmingUp} days in a row.`,...count(R.warmingUp,best)},
   {id:'on-a-roll',name:'On a Roll',description:`Rate chapters ${R.streak} days in a row.`,...count(R.streak,best)},
+  {id:'unstoppable',name:'Unstoppable',description:`Rate chapters ${R.unstoppable} days in a row.`,...count(R.unstoppable,best)},
+  {id:'legend',name:'Legend',description:`Rate chapters ${R.legend} days in a row.`,...count(R.legend,best)},
   {id:'perfect-ten',name:'Perfect 10',description:'Give a chapter a perfect 10.',earned:ten,have:ten?1:0,need:1},
  ];
 }

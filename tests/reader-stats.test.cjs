@@ -102,7 +102,7 @@ test('comparison card reports XP gained, level-ups and the daily limit',()=>{
 test('without API progress the browser works out rating XP itself; API progress wins when present',()=>{
  const d={mine:[{book:'a',chapter:1,date:'2026-11-20T10:00:00Z'},{book:'a',chapter:2,date:'2026-11-20T10:00:00Z'},{book:'p',chapter:1,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',chapter_count:2,status:'approved'},{id:'p',chapter_count:5,status:'pending'}]};
  const p=stats.progressOf(d);
- assert.equal(p.xp,2*100+500+100+1000);assert.equal(p.finished,1);assert.equal(p.partial,true); // + First Page and Finisher badge XP
+ assert.equal(p.xp,2*100+500+100+1000+50); // + First Page, Finisher, 1-day streakassert.equal(p.finished,1);assert.equal(p.partial,true); // + First Page and Finisher badge XP
  const server={xp:999,level:6,levelXp:900,nextXp:1300,ratingsToday:0,ratingCap:20,finished:3};
  assert.equal(stats.progressOf({...d,progress:server}),server);
  assert.equal(stats.progressOf(null),undefined);
@@ -170,9 +170,9 @@ test('top chapters use an IMDb-style weighted score so one vote cannot top the l
 
 test('the site owner gets 30,000 bonus XP on top of earned XP; readers do not',()=>{
  const books=[{id:'a',chapter_count:5,status:'approved'}],mine=[{book:'a',chapter:1,score:8,date:'2026-11-20T10:00:00Z'}];
- assert.equal(stats.progressOf({user:{admin:false},mine,books}).xp,200); // 100 + First Page badge
+ assert.equal(stats.progressOf({user:{admin:false},mine,books}).xp,250); // 100 + First Page badge + 1-day streak
  const owner=stats.progressOf({user:{admin:true},mine,books});
- assert.equal(owner.xp,30200);assert.ok(owner.levelXp<=owner.xp&&owner.xp<owner.nextXp);
+ assert.equal(owner.xp,30250);assert.ok(owner.levelXp<=owner.xp&&owner.xp<owner.nextXp);
 });
 
 test('milestone badges count chapters, books, finished books, best day, streak and perfect tens',()=>{
@@ -198,9 +198,22 @@ test('earned badges add their difficulty XP and newBadgeList returns the badge o
  const more=[...mine,{book:'a',chapter:25,score:10,date:at(30)}];
  const after=stats.badgesOf({mine:more,books}),p2=stats.progressOf({mine:more,books});
  // 20 rated chapters earn XP that day (cap), Marathon (1500) and First Page (100) already earned
- assert.equal(p1.xp,20*100+100+1500);
+ assert.equal(p1.xp,20*100+100+1500+50);
  const gained=stats.newBadgeList(before,after).map(b=>b.id).sort();
  assert.deepEqual(gained,['perfect-ten','regular']);
  // the 25th chapter is over the daily cap, so only the new badges add XP: Regular 500 + Perfect 10 200
  assert.equal(p2.xp-p1.xp,500+200);
+});
+
+test('daily streak: 50 XP per day in a row, capped at 500 a day; status warns when today is missing',()=>{
+ const local=(y,m,d)=>new Date(y,m-1,d,12).toISOString();
+ // 3 days in a row, a gap, then 1 day: 50+100+150 + 50
+ assert.equal(stats.streakBonusXp([local(2026,11,1),local(2026,11,1),local(2026,11,2),local(2026,11,3),local(2026,11,5)]),350);
+ // 12 days in a row: 50..500 then 500, 500
+ assert.equal(stats.streakBonusXp(Array.from({length:12},(_,i)=>local(2026,10,i+1))),50*(1+2+3+4+5+6+7+8+9+10)+500+500);
+ const today=new Date(2026,10,10,18);
+ const s=stats.streakStatus([local(2026,11,8),local(2026,11,9)],today);
+ assert.deepEqual([s.current,s.ratedToday,s.atRisk],[2,false,true]);
+ const t=stats.streakStatus([local(2026,11,9),local(2026,11,10)],today);
+ assert.deepEqual([t.current,t.ratedToday,t.atRisk],[2,true,false]);
 });
