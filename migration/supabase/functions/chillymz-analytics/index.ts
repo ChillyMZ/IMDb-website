@@ -28,7 +28,7 @@ async function handler(req:Request){const u=await user(req,true);
   if(d.loadMs!==null&&d.loadMs!==undefined&&(!Number.isInteger(d.loadMs)||d.loadMs<0||d.loadMs>60000))throw new ApiError(400,'Invalid timing.');
   if(['rating_saved','discussion_posted','reply_posted','signup_completed','signin_completed'].includes(d.event)&&!u)return json(req,{recorded:false});
   await limit(u?.id||d.visitor);
-  const {error}=await db.from('visit_events').insert({id:d.id,visitor:d.visitor,session:d.session,reader:u?.id||null,event:d.event,view:d.view,book:d.book||null,chapter:d.chapter||null,duration_ms:d.durationMs,device:d.device,source:['direct','internal','instagram','facebook','tiktok','youtube','google','bing','duckduckgo','external'].includes(d.source)?d.source:'external',code:typeof d.code==='string'&&/^[a-z0-9_:-]{1,50}$/i.test(d.code)?d.code:null,load_ms:d.loadMs??null});
+  const {error}=await db.from('visit_events').insert({id:d.id,visitor:d.visitor,session:d.session,reader:u?.id||null,event:d.event,view:d.view,book:d.book||null,chapter:d.chapter||null,duration_ms:d.durationMs,device:d.device,source:['direct','internal','instagram','threads','facebook','tiktok','youtube','google','bing','duckduckgo','external'].includes(d.source)?d.source:'external',code:typeof d.code==='string'&&/^[a-z0-9_:-]{1,50}$/i.test(d.code)?d.code:null,load_ms:d.loadMs??null});
   if(error&&error.code!=='23505')throw error;
   // Cleanup also runs without a cron extension, whenever a view starts.
   if(d.event==='view')await db.rpc('prune_visit_events');return json(req,{recorded:true});

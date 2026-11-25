@@ -772,3 +772,8 @@ html body .consent-banner .consent-actions{width:100%;max-width:420px;margin:4px
 /* "No ads, ever." selling point: highlighter-pen mark */
 html body .consent-banner .consent-noads{background:linear-gradient(transparent 52%,#f4c95d 52%,#f4c95d 92%,transparent 92%);color:#1c1a17;font-weight:700;padding:0 2px;white-space:nowrap}
 html body .consent-banner .consent-noads{display:inline-block;margin:6px 0 2px;font-size:17px;line-height:1.5;padding:0 4px}
+/* Quiet "rate this book" prompt under the score: the grid stays the main thing */
+.platform.live-reader .board-rate{display:flex;flex-direction:column;gap:6px;margin:14px 0 0;padding-top:12px;border-top:1px solid #e4ddd0}
+.platform.live-reader .board-rate span{font-size:13px;color:#6e675d}
+.platform.live-reader .board-rate button{align-self:flex-start;background:transparent!important;color:#2f6f78!important;border:1.5px solid #2f6f78!important;border-radius:999px!important;padding:7px 16px!important;min-height:0!important;font-weight:700;font-size:14px}
+.platform.live-reader .board-rate button:hover{background:rgba(47,111,120,.08)!important}
