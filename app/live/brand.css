@@ -550,3 +550,77 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .platform.live-reader .top3-mini .book-type-card>*{display:none}
 .platform.live-reader .reader-hero .avatar-wrap{justify-self:start;align-self:center;width:max-content}
 @media(max-width:640px){.platform.live-reader .reader-hero{grid-template-columns:84px minmax(0,1fr);gap:14px 16px}.platform.live-reader .reader-hero .profile-avatar.frame{width:72px;height:72px}.platform.live-reader .reader-hero h1{font-size:28px}}
+
+/* ===== Community: modern feed ===== */
+.platform.live-reader .talk-layout{gap:28px}
+.platform.live-reader .talk-composer{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 16px;padding:12px 14px;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:10px!important;text-align:left;cursor:text}
+.platform.live-reader .talk-composer:hover{border-color:var(--accent)!important}
+.platform.live-reader .tc-prompt{flex:1;color:var(--muted);font-size:15px;font-weight:400}
+.platform.live-reader .tc-post{padding:7px 16px;border-radius:999px;background:var(--accent);color:#fff;font-weight:600;font-size:14px}
+.platform.live-reader .talk-avatar{flex:none;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#2f6f78;color:#fff!important;font-weight:700;font-size:14px}
+.platform.live-reader .talk-filters{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;margin:0 0 6px}
+.platform.live-reader .talk-filters input{height:42px;margin:0;border-radius:999px;padding:0 16px}
+.platform.live-reader .talk-filters select{height:42px;border-radius:999px}
+.platform.live-reader .talk-topics{gap:8px!important;margin:10px 0 16px!important;padding-bottom:4px}
+.platform.live-reader .talk-topics button{padding:6px 14px!important;min-height:34px!important;border:1px solid var(--line-strong)!important;border-radius:999px!important;background:var(--surface)!important;color:var(--text)!important;font-size:13px!important;box-shadow:none!important}
+.platform.live-reader .talk-topics button[aria-pressed=true]{background:var(--paper)!important;border-color:var(--paper)!important;color:#fff!important}
+/* Cards */
+.platform.live-reader .talk-card{display:block!important;margin:0 0 12px;padding:16px 18px 10px!important;background:var(--surface);border:1px solid var(--line)!important;border-radius:12px;transition:border-color .15s,box-shadow .15s}
+.platform.live-reader .talk-card:hover{border-color:var(--line-strong)!important;box-shadow:0 4px 18px rgba(28,26,23,.06)}
+.platform.live-reader .tc-head{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font-size:13px}
+.platform.live-reader .tc-head .talk-author{display:inline-flex;align-items:center;gap:8px}
+.platform.live-reader .tc-head .talk-author b{color:var(--paper);font-size:14px}
+.platform.live-reader .tc-head .talk-avatar{width:30px;height:30px;font-size:12px}
+.platform.live-reader .tc-time{color:var(--muted)}
+.platform.live-reader .tc-topic{margin-left:auto;padding:3px 10px;border-radius:999px;background:rgba(47,111,120,.09);color:var(--accent);font-weight:600;font-size:12px}
+.platform.live-reader .tc-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.platform.live-reader .tc-book,.platform.live-reader .tc-spoiler{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:6px;background:var(--surface-2);color:var(--text);font-size:12px;font-weight:600}
+.platform.live-reader .tc-spoiler{background:#fdecea;color:#a2342a}
+.platform.live-reader .talk-card .talk-title{display:block;width:100%;margin:8px 0 2px;padding:0!important;font-family:var(--serif);font-size:21px!important;line-height:1.3;font-weight:500;text-align:left}
+.platform.live-reader .talk-card .talk-excerpt{margin:4px 0 8px;color:var(--muted);font-size:15px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.platform.live-reader .tc-actions{display:flex;align-items:center;gap:6px;margin:6px -6px 0;padding-top:8px;border-top:1px solid var(--line)}
+.platform.live-reader .tc-vote,.platform.live-reader .tc-reply,.platform.live-reader .tc-icon,.platform.live-reader .talk-card .reader-more{display:inline-flex;align-items:center;gap:6px;min-height:34px!important;padding:4px 12px!important;border:0!important;border-radius:999px!important;background:transparent!important;color:var(--muted)!important;font-size:13px!important;font-weight:600}
+.platform.live-reader .tc-vote:hover,.platform.live-reader .tc-reply:hover,.platform.live-reader .tc-icon:hover,.platform.live-reader .talk-card .reader-more:hover{background:var(--surface-2)!important;color:var(--paper)!important;text-decoration:none!important}
+.platform.live-reader .tc-vote b{color:inherit;font-size:13px}
+.platform.live-reader .tc-vote.on{background:rgba(47,111,120,.1)!important;color:var(--accent)!important}
+.platform.live-reader .tc-vote.on svg{fill:currentColor}
+.platform.live-reader .tc-icon:hover{color:#a2342a!important}
+.platform.live-reader .tc-spacer{flex:1}
+.platform.live-reader .talk-card .p-spoiler{margin:8px 0;width:100%;justify-content:center;border-style:dashed!important}
+/* Sidebar */
+.platform.live-reader .talk-sidebar{border-radius:12px!important;padding:20px!important}
+.platform.live-reader .side-count{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--muted)!important;font-size:13px!important}
+.platform.live-reader .side-count b{color:var(--paper);font-size:16px}
+/* Thread dialog */
+.p-dialog.thread-dialog{border-radius:14px!important;max-width:640px!important}
+.p-dialog.thread-dialog [data-slot=dialog-title]{font-size:26px;line-height:1.25;padding-right:36px}
+.p-dialog .thread-body{white-space:pre-wrap;overflow-wrap:anywhere;margin:14px 0 10px;color:#2a2723!important;font-size:16px;line-height:1.6}
+.p-dialog .thread-bar{display:flex;align-items:center;gap:14px;padding:8px 0;margin:0 0 6px;border-top:1px solid #e4ddd0;border-bottom:1px solid #e4ddd0;color:#6e675d;font-size:13px;font-weight:600}
+.p-dialog .thread-bar span{display:inline-flex;align-items:center;gap:5px}
+.p-dialog .tc-vote{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 12px;border:1px solid #cfc6b6!important;border-radius:999px!important;background:transparent!important;color:#6e675d!important;font-weight:600;font-size:13px}
+.p-dialog .tc-vote.on{border-color:#2f6f78!important;color:#2f6f78!important;background:rgba(47,111,120,.08)!important}
+.p-dialog .tc-vote.on svg{fill:currentColor}
+.p-dialog .tc-head{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font-size:13px}
+.p-dialog .tc-time{color:#6e675d}
+.p-dialog .tc-book{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:6px;background:#efe9dd;color:#2a2723;font-size:12px;font-weight:600}
+.p-dialog .talk-author{display:inline-flex;align-items:center;gap:8px}
+.p-dialog .talk-author b{color:#1c1a17}
+.p-dialog .talk-avatar{flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#2f6f78;color:#fff;font-weight:700;font-size:13px}
+.p-dialog .talk-author .talk-avatar{width:26px;height:26px;font-size:11px}
+.p-dialog .thread-replies{list-style:none;margin:10px 0;padding:0;display:grid;gap:12px}
+.p-dialog .talk-comment{display:flex;gap:10px;align-items:flex-start;border:0!important;padding:0!important}
+.p-dialog .thread-replies .talk-comment>.talk-avatar{display:none}
+.p-dialog .thread-bubble{flex:1;min-width:0;padding:10px 14px;background:#f3eee5;border-radius:4px 14px 14px 14px}
+.p-dialog .thread-who{display:flex;align-items:center;gap:8px;font-size:13px}
+.p-dialog .thread-bubble p{margin:4px 0 0;color:#2a2723!important;font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.p-dialog .thread-bubble .reader-more{float:right;margin:-4px -6px 0 0;border:0!important;background:none!important;min-height:0;padding:2px 6px}
+.p-dialog .thread-empty{color:#6e675d!important;font-style:italic;margin:10px 0}
+.p-dialog .thread-compose{position:sticky;bottom:-28px;display:flex;align-items:flex-end;gap:10px;margin:12px -28px -28px;padding:14px 28px 18px;background:#fffdf8;border-top:1px solid #e4ddd0}
+.p-dialog .thread-compose textarea{flex:1;min-height:44px;margin:0;resize:vertical;border-radius:20px!important;padding:10px 14px}
+.p-dialog .thread-compose .p-primary{border-radius:999px!important;padding:10px 18px;height:44px}
+.p-dialog.thread-dialog .talk-delete{margin-top:18px;border:0!important;background:none!important;color:#a2342a!important;font-size:13px;padding:4px 0}
+@media(max-width:600px){.platform.live-reader .talk-card{padding:14px 14px 8px!important;border-radius:10px}.platform.live-reader .talk-card .talk-title{font-size:19px!important}.platform.live-reader .talk-filters{grid-template-columns:minmax(0,1fr) 120px}.p-dialog .thread-compose{margin:12px -16px -16px;padding:12px 16px 14px;bottom:-16px}}
+.platform.live-reader .talk-author-link,.p-dialog .talk-author-link{border:0!important;background:none!important;padding:0!important;min-height:0!important;box-shadow:none!important}
+.p-dialog .talk-author-link:hover b{text-decoration:underline;text-underline-offset:2px}
+.platform.live-reader .talk-card>*{grid-column:auto}
+.platform.live-reader .talk-card .reader-more{position:static!important}
