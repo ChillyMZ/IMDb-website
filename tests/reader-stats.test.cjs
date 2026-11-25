@@ -74,10 +74,10 @@ test('XP caps ratings at 20 per day, gives reviews no XP, and counts finished bo
  // 30 chapters of one book in a day: only 20 earn XP. The next day's 5 all count.
  const binge=[...Array.from({length:30},(_,i)=>rate('big',i+1,'2026-11-20T10:00:00Z')),...Array.from({length:5},(_,i)=>rate('big',31+i,'2026-11-21T09:00:00Z'))];
  const p=progress.readerProgress(binge,[],books,'2026-11-21T12:00:00Z');
- assert.equal(p.xp,25*10);assert.equal(p.ratingsToday,5);assert.equal(p.finished,0);
+ assert.equal(p.xp,25*100);assert.equal(p.ratingsToday,5);assert.equal(p.finished,0);
  // Finishing the 2-chapter book adds the 50 XP bonus; ratings on unapproved/removed books earn nothing.
  const done=progress.readerProgress([rate('short',1,'2026-11-01T00:00:00Z'),rate('short',2,'2026-11-01T00:00:00Z'),rate('gone',1,'2026-11-01T00:00:00Z')],[],books,'2026-11-21T12:00:00Z');
- assert.equal(done.xp,2*10+50);assert.equal(done.finished,1);assert.equal(done.level,1);
+ assert.equal(done.xp,2*100+500);assert.equal(done.finished,1);assert.equal(done.level,5);
  // 7 reviews on one day: 5 count.
  const reviews=Array.from({length:7},()=>({updated:'2026-11-21T08:00:00Z'}));
  assert.equal(progress.readerProgress([],reviews,books).xp,0); // reviews earn no XP
@@ -102,13 +102,13 @@ test('comparison card reports XP gained, level-ups and the daily limit',()=>{
 test('without API progress the browser works out rating XP itself; API progress wins when present',()=>{
  const d={mine:[{book:'a',chapter:1,date:'2026-11-20T10:00:00Z'},{book:'a',chapter:2,date:'2026-11-20T10:00:00Z'},{book:'p',chapter:1,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',chapter_count:2,status:'approved'},{id:'p',chapter_count:5,status:'pending'}]};
  const p=stats.progressOf(d);
- assert.equal(p.xp,2*10+50);assert.equal(p.finished,1);assert.equal(p.partial,true);
+ assert.equal(p.xp,2*100+500);assert.equal(p.finished,1);assert.equal(p.partial,true);
  const server={xp:999,level:6,levelXp:900,nextXp:1300,ratingsToday:0,ratingCap:20,finished:3};
  assert.equal(stats.progressOf({...d,progress:server}),server);
  assert.equal(stats.progressOf(null),undefined);
  const React=require('react'),{renderToStaticMarkup}=require('react-dom/server'),Stats=load('app/live/reader-stats.tsx').default;
  const page=renderToStaticMarkup(React.createElement(Stats,{name:'Mia',progress:p,mine:[{book:'a',chapter:1,score:9,date:'2026-11-20T10:00:00Z'}],books:[{id:'a',title:'Alpha',author:'X',chapter_count:2}],onOpen(){},onBrowse(){}}));
- assert.match(page,/10 XP per chapter, 50 for finishing/);assert.doesNotMatch(page,/per review/);
+ assert.match(page,/100 XP per chapter, 500 for finishing/);assert.doesNotMatch(page,/per review/);
 });
 
 const {readerBadges}=load('migration/supabase/functions/chillymz-api/badges.ts');

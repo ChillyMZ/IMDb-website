@@ -2,7 +2,7 @@
 // Nothing is stored, so changing these rules re-scores every reader consistently.
 // Kept free of Deno/Supabase imports so tests can load it directly.
 // Reviews earn no XP: XP is worked out in the browser from ratings alone, so every reader sees the same rules.
-export const XP={rating:10,review:0,finish:50},DAILY={rating:20,review:5};
+export const XP={rating:100,review:0,finish:500},DAILY={rating:20,review:5};
 
 // XP needed to reach a level: 0, 100, 250, 450, 700… (each step 50 more than the last).
 export const levelStart=(level:number)=>25*(level-1)*(level+2);
