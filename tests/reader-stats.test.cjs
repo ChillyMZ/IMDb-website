@@ -233,3 +233,13 @@ test('month calendar: Monday-first blanks, every day of the month, rated/today/f
  const days=m.cells.filter(Boolean);assert.equal(days.length,30);
  assert.equal(days[8].rated,true);assert.equal(days[9].today,true);assert.equal(days[10].future,true);assert.equal(m.ratedCount,1);
 });
+
+test('other interactions count as streak days for streak XP and streak badges',()=>{
+ const books=[{id:'a',chapter_count:50,status:'approved',title:'A'}];
+ const mine=[{book:'a',chapter:1,score:8,date:'2026-11-01T10:00:00Z'}];
+ const activity=['2026-11-02T10:00:00Z','2026-11-03T10:00:00Z'];
+ const without=stats.progressOf({mine,books}),withAct=stats.progressOf({mine,books,activity});
+ // 3-day run: +100 (day 2) +150 (day 3) streak XP, plus Warming Up (300)
+ assert.equal(withAct.xp-without.xp,100+150+300);
+ assert.equal(stats.badgesOf({mine,books,activity}).find(b=>b.id==='warming-up').earned,true);
+});
