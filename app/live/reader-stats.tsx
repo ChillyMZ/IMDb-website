@@ -40,7 +40,8 @@ export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:P
  }
  if(!s.total)return <section className="reader-stats"><div className="rs-head"><div><h1>Reading stats</h1></div></div><div className="p-panel"><p>Rate your first chapter and your reading stats will appear here: favourite chapters, harshest takes, streaks and a card you can share.</p><button className="p-primary" onClick={onBrowse}>Find a book to rate</button></div></section>;
  const recent=showAll?s.recent:s.recent.slice(0,15);
- return <section className="reader-stats">
+ const bookList=<article className="p-panel rs-reading"><h2>Your books</h2>{s.progress.map(p=>{const next=nextUnrated(p.book.chapter_count,mine.filter(r=>r.book===p.book.id));return <button type="button" key={p.book.id} className="rs-book" onClick={()=>onOpen(p.book.id,next)}><span className="rs-name">{p.book.title}</span><span className="rs-sub">{p.finished?'Finished · ':''}{p.rated} / {p.book.chapter_count} chapters · avg {p.average.toFixed(1)}</span><progress value={p.rated} max={p.book.chapter_count}/>{next>0&&<span className="rs-next">Continue · Chapter {next}</span>}</button>})}</article>;
+ return <section className="reader-stats rs-layout">
   <div className="rs-head">
    <div><h1>Reading stats</h1><p className="rs-sub">{name||'Reader'}</p></div>
    <div className="rs-actions">
@@ -49,23 +50,26 @@ export default function ReaderStats({name,progress,mine,books,onOpen,onBrowse}:P
    </div>
   </div>
   {message&&<p role="status" className="rs-message">{message}</p>}
-  {progress&&<Level p={progress}/>}
-  <div className="rs-tiles">
-   <div className="rs-tile"><b>{s.total}</b><span>{s.total===1?'chapter rated':'chapters rated'}</span></div>
-   <div className="rs-tile"><b>{s.books}</b><span>{s.books===1?'book':'books'}</span>{s.finished>0&&<small>{s.finished} finished</small>}</div>
-   <div className="rs-tile"><b>{s.average?.toFixed(2)??'—'}</b><span>average score</span></div>
-   <div className="rs-tile"><b>{s.current}</b><span>day streak</span><small>Best: {s.best} {s.best===1?'day':'days'}</small></div>
+  <dl className="rs-summary">
+   <div><dt>Chapters rated</dt><dd>{s.total}</dd></div>
+   <div><dt>Books</dt><dd>{s.books}{s.finished>0&&<small> · {s.finished} finished</small>}</dd></div>
+   <div><dt>Average score</dt><dd>{s.average?.toFixed(2)??'—'}</dd></div>
+   <div><dt>Day streak</dt><dd>{s.current}<small> · best {s.best}</small></dd></div>
+  </dl>
+  <div className="rs-columns">
+   <div className="rs-main">
+    {bookList}
+    <article className="p-panel"><h2>Diary</h2><ol className="rs-list">{recent.map(r=><li key={r.book+r.chapter}>{chapterRow(r,new Date(r.date).toLocaleDateString())}</li>)}</ol>{s.recent.length>15&&<button type="button" onClick={()=>setShowAll(v=>!v)}>{showAll?'Show fewer':'Show all '+s.recent.length+' ratings'}</button>}</article>
+   </div>
+   <aside className="rs-side">
+    {progress&&<article className="p-panel rs-level-panel"><h2>Your level</h2><Level p={progress}/></article>}
+    <article className="p-panel"><h2>Favourite chapters</h2><ol className="rs-list">{s.favourites.map(r=><li key={r.book+r.chapter}>{chapterRow(r)}</li>)}</ol>
+     {s.harshest&&<><h3 className="rs-subhead">Harshest take</h3>{chapterRow(s.harshest)}</>}</article>
+    <article className="p-panel"><h2>Your score mix</h2>
+     <div className="rs-mix" role="img" aria-label={s.bands.filter(b=>b.count).map(b=>b.label+': '+b.count).join(', ')}>{s.bands.filter(b=>b.count).map(b=><i key={b.min} style={{flexGrow:b.count,background:b.color}}/>)}</div>
+     <ul className="rs-legend">{s.bands.map(b=><li key={b.min}><i style={{background:b.color}}/>{b.label}<b>{b.count}</b></li>)}</ul>
+    </article>
+   </aside>
   </div>
-  <div className="rs-pair">
-   {s.kindest&&<article className="p-panel"><h2>Kindest score</h2>{chapterRow(s.kindest)}</article>}
-   {s.harshest&&<article className="p-panel"><h2>Harshest take</h2>{chapterRow(s.harshest)}</article>}
-  </div>
-  <article className="p-panel"><h2>Favourite chapters</h2><ol className="rs-list">{s.favourites.map(r=><li key={r.book+r.chapter}>{chapterRow(r)}</li>)}</ol></article>
-  <article className="p-panel"><h2>Your score mix</h2>
-   <div className="rs-mix" role="img" aria-label={s.bands.filter(b=>b.count).map(b=>b.label+': '+b.count).join(', ')}>{s.bands.filter(b=>b.count).map(b=><i key={b.min} style={{flexGrow:b.count,background:b.color}}/>)}</div>
-   <ul className="rs-legend">{s.bands.map(b=><li key={b.min}><i style={{background:b.color}}/>{b.label}<b>{b.count}</b></li>)}</ul>
-  </article>
-  <article className="p-panel"><h2>Your books</h2>{s.progress.map(p=>{const next=nextUnrated(p.book.chapter_count,mine.filter(r=>r.book===p.book.id));return <button type="button" key={p.book.id} className="rs-book" onClick={()=>onOpen(p.book.id,next)}><span className="rs-name">{p.book.title}</span><span className="rs-sub">{p.finished?'Finished · ':''}{p.rated} / {p.book.chapter_count} chapters · avg {p.average.toFixed(1)}</span><progress value={p.rated} max={p.book.chapter_count}/>{next>0&&<span className="rs-next">Continue · Chapter {next}</span>}</button>})}</article>
-  <article className="p-panel"><h2>Diary</h2><ol className="rs-list">{recent.map(r=><li key={r.book+r.chapter}>{chapterRow(r,new Date(r.date).toLocaleDateString())}</li>)}</ol>{s.recent.length>15&&<button type="button" onClick={()=>setShowAll(v=>!v)}>{showAll?'Show fewer':'Show all '+s.recent.length+' ratings'}</button>}</article>
  </section>;
 }
