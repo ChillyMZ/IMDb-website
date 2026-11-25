@@ -6,7 +6,7 @@ function load(file){
  file=path.resolve(file);if(cache[file])return cache[file].exports;
  const out=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText;
  const mod={exports:{}};cache[file]=mod;
- const req=id=>{if(!id.startsWith('.'))return require(id);const base=path.resolve(path.dirname(file),id);for(const ext of ['','.ts','.tsx'])if(fs.existsSync(base+ext)&&fs.statSync(base+ext).isFile())return load(base+ext);throw Error('Cannot resolve '+id)};
+ const req=id=>{if(!id.startsWith('.'))return require(id);const base=path.resolve(path.dirname(file),id);if(base.endsWith('.json'))return {default:JSON.parse(fs.readFileSync(base,'utf8')),__esModule:true};for(const ext of ['','.ts','.tsx'])if(fs.existsSync(base+ext)&&fs.statSync(base+ext).isFile())return load(base+ext);throw Error('Cannot resolve '+id)};
  new Function('require','module','exports',out)(req,mod,mod.exports);return mod.exports;
 }
 const stats=load('app/live/stats.ts');
