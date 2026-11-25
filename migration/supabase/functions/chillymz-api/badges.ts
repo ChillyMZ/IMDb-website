@@ -2,7 +2,9 @@
 // Kept free of Deno/Supabase imports so the website and tests can load it directly.
 // Scores are on the 0–10 scale. `others` = every reader's ratings on the books this reader rated;
 // leave it (or `reviews`) undefined when unknown and those badges come back as `earned:null`.
-export type Badge={id:'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string};
+export type Badge={id:'first-page'|'regular'|'century'|'explorer'|'bookworm'|'marathon'|'on-a-roll'|'perfect-ten'|'finisher'|'pioneer'|'hot-take'|'critic';name:string;description:string;earned:boolean|null;have:number;need:number;detail?:string;xp?:number};
+// Bonus XP for earning each badge, by difficulty.
+export const BADGE_XP:Record<Badge['id'],number>={'first-page':100,'perfect-ten':200,'hot-take':500,regular:500,explorer:1000,finisher:1000,pioneer:1000,marathon:1500,critic:1500,'on-a-roll':2000,century:2500,bookworm:5000};
 type Rating={book:string;chapter:number;score:number;date:string};
 type Input={user?:string;mine:Rating[];chapters:Map<string,number>;titles?:Map<string,string>;reviews?:{updated:string}[];others?:(Rating&{user:string})[];estimated?:(book:string,chapter:number)=>boolean};
 export const BADGE_RULES={hotTakeGap:2,hotTakeReaders:3,critic:5,regular:25,century:100,explorer:10,bookworm:5,marathon:20,streak:7};
@@ -28,7 +30,8 @@ function milestones(valid:Rating[],done:number):Badge[]{
  ];
 }
 
-export function readerBadges({user,mine,chapters,titles,reviews,others,estimated}:Input):Badge[]{
+export function readerBadges(input:Input):Badge[]{return badgeList(input).map(b=>({...b,xp:BADGE_XP[b.id]}))}
+function badgeList({user,mine,chapters,titles,reviews,others,estimated}:Input):Badge[]{
  const valid=mine.filter(r=>chapters.has(r.book)),name=(b:string)=>titles?.get(b)||'a book',key=(b:string,c:number)=>b+'#'+c;
  const perBook=new Map<string,number>();for(const r of valid)perBook.set(r.book,(perBook.get(r.book)||0)+1);
  const books=[...perBook].map(([book,n])=>({book,n,count:chapters.get(book)||0})).filter(b=>b.count>0).sort((a,b)=>b.n/b.count-a.n/a.count);

@@ -365,3 +365,19 @@ body:has(.live-reader) .cookie-banner>p:last-child,body:has(.authors) .cookie-ba
 .rs-badges li.earned{border:2px solid #2f6f78!important;background:rgba(47,111,120,.06)!important;opacity:1}
 .rs-badges li.earned .rs-badge-icon{background:#2f6f78!important;color:#fff!important}
 .rs-badges li.earned .rs-badge-detail{font-weight:600}
+
+/* Badge unlocked pop-up */
+.platform.live-reader .badge-popup-backdrop{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(28,26,23,.45);animation:cmz-fade .2s ease}
+.platform.live-reader .badge-popup{width:min(380px,100%);text-align:center;background:var(--surface);border:1px solid var(--line-strong);border-radius:6px;padding:28px 24px 22px;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:cmz-pop .45s cubic-bezier(.2,.9,.3,1.35)}
+.platform.live-reader .badge-popup-icon{display:inline-grid;place-items:center;width:76px;height:76px;border-radius:50%;background:#2f6f78;color:#fff;box-shadow:0 0 0 6px rgba(47,111,120,.15),0 0 28px rgba(47,111,120,.45)}
+.platform.live-reader .badge-popup-kicker{margin:16px 0 2px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)!important;font-weight:700}
+.platform.live-reader .badge-popup h2{margin:0 0 6px;font-size:30px}
+.platform.live-reader .badge-popup-desc{margin:0 0 12px}
+.platform.live-reader .badge-popup-xp{display:inline-block;margin:0 0 18px;padding:6px 14px;border-radius:999px;background:#2f6f78;color:#fff!important;font-weight:700;font-size:16px}
+.platform.live-reader .badge-popup-actions{display:grid;gap:8px}
+@keyframes cmz-pop{0%{transform:scale(.8);opacity:0}100%{transform:none;opacity:1}}
+@keyframes cmz-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.platform.live-reader .badge-popup,.platform.live-reader .badge-popup-backdrop{animation:none}}
+/* Badge cards show their XP reward */
+.rs-badge-xp{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#2f6f78;letter-spacing:.02em}
+.platform.live-reader .badge-popup-backdrop,.platform.live-reader .badge-popup-backdrop *{pointer-events:auto}

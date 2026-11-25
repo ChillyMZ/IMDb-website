@@ -11,14 +11,17 @@ export type StatsEntry=MineRating&{title:string};
 // Same XP rules as the API (one shared file). `partial` marks a browser-side figure without review XP,
 // used until/unless the API sends its own `progress` (which includes visible reviews).
 export type Progress=ApiProgress&{partial?:boolean};
-type ProgressSource={user?:{admin?:boolean};progress?:Progress|null;mine:{book:string;date:string}[];books:{id:string;chapter_count:number;status?:string}[]};
+type ProgressSource={user?:{admin?:boolean};progress?:Progress|null;badges?:Badge[]|null;mine:{book:string;chapter:number;score:number;date:string}[];books:{id:string;title?:string;chapter_count:number;status?:string}[]};
 // Site owner's bonus XP, added on top of what their ratings earn.
 export const OWNER_BONUS_XP=30000;
 export function progressOf(d:ProgressSource|null|undefined):Progress|undefined{
  if(!d)return undefined;
  const base:Progress=d.progress?d.progress:{...readerProgress(d.mine,[],new Map(d.books.filter(b=>!b.status||b.status==='approved').map(b=>[b.id,b.chapter_count]))),partial:true};
- if(!d.user?.admin)return base;
- const xp=base.xp+OWNER_BONUS_XP,level=levelOf(xp);
+ // Earned badges add their bonus XP (browser-side figure; the API's own progress is used as-is).
+ const badgeXp=d.progress?0:(badgesOf(d)||[]).filter(b=>b.earned).reduce((a,b)=>a+(b.xp||0),0);
+ const bonus=badgeXp+(d.user?.admin?OWNER_BONUS_XP:0);
+ if(!bonus)return base;
+ const xp=base.xp+bonus,level=levelOf(xp);
  return {...base,xp,level,levelXp:levelStart(level),nextXp:levelStart(level+1)};
 }
 // Badges: the API's when it sends them; otherwise the browser works out Finisher and leaves the
@@ -31,6 +34,10 @@ export function badgesOf(d:BadgeSource|null|undefined):Badge[]|undefined{
  return readerBadges({mine:d.mine,chapters:new Map(approved.map(b=>[b.id,b.chapter_count])),titles:new Map(approved.map(b=>[b.id,b.title||'']))});
 }
 // Badges earned by this save (only ones known before and after, so a fallback→API switch never "unlocks" old badges).
+export function newBadgeList(before?:Badge[],after?:Badge[]):Badge[]{
+ if(!before||!after)return [];
+ return after.filter(b=>b.earned&&before.find(x=>x.id===b.id)?.earned===false);
+}
 export function newBadges(before?:Badge[],after?:Badge[]){
  if(!before||!after)return [];
  return after.filter(b=>b.earned&&before.find(x=>x.id===b.id)?.earned===false).map(b=>b.name);
