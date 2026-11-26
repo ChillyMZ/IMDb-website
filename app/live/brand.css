@@ -801,3 +801,5 @@ html body .consent-banner .consent-noads{display:inline-block;margin:6px 0 2px;f
 .platform.live-reader .notif-list button{justify-content:flex-start!important;white-space:normal!important;overflow:hidden}
 .notif-text{flex:1 1 auto;min-width:0;overflow-wrap:anywhere;white-space:normal}
 .notif-text>span,.notif-text b{white-space:normal}
+/* "Can't find your book?" now sits under the book list */
+.platform.live-reader .add-book-bar.add-book-bottom{margin:32px 0 8px}
