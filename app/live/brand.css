@@ -777,3 +777,27 @@ html body .consent-banner .consent-noads{display:inline-block;margin:6px 0 2px;f
 .platform.live-reader .board-rate span{font-size:13px;color:#6e675d}
 .platform.live-reader .board-rate button{align-self:flex-start;background:transparent!important;color:#2f6f78!important;border:1.5px solid #2f6f78!important;border-radius:999px!important;padding:7px 16px!important;min-height:0!important;font-weight:700;font-size:14px}
 .platform.live-reader .board-rate button:hover{background:rgba(47,111,120,.08)!important}
+/* Notifications bell */
+.notif{position:relative;display:inline-flex;align-items:center}
+.platform.live-reader .notif .notif-bell{position:relative;display:grid;place-items:center;width:40px;height:40px;min-height:0!important;padding:0!important;border-radius:50%!important;border:0!important;background:transparent!important;color:#2a2723!important;cursor:pointer}
+.platform.live-reader .notif .notif-bell:hover{background:rgba(47,111,120,.08)!important}
+.notif-count{position:absolute;top:3px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#c0392b;color:#fff;font-size:11px;font-weight:800;line-height:17px;text-align:center;box-shadow:0 0 0 2px #f6f2ea}
+.notif-panel{position:absolute;top:calc(100% + 8px);right:-8px;z-index:60;width:340px;max-height:70vh;overflow:auto;background:#fffdf8;border:1px solid #e4ddd0;border-radius:12px;box-shadow:0 14px 40px rgba(28,26,23,.18);padding:8px}
+@media (max-width:600px){.notif-panel{position:fixed;top:64px;left:8px;right:8px;width:auto}}
+.notif-title{font-family:"Newsreader",Georgia,serif;font-size:19px;font-weight:600;padding:6px 8px 8px}
+.notif-list{list-style:none;margin:0;padding:0}
+.notif-list.nudges{border-bottom:1px solid #e4ddd0;margin-bottom:4px;padding-bottom:4px}
+.platform.live-reader .notif-list button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;padding:9px 8px!important;border:0!important;border-radius:8px!important;background:transparent!important;min-height:0!important;color:#2a2723!important;font-weight:400;cursor:pointer}
+.platform.live-reader .notif-list button:hover{background:rgba(47,111,120,.07)!important}
+.notif-list li.new button{background:rgba(47,111,120,.06)!important}
+.notif-ic{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(47,111,120,.12);color:#2f6f78}
+.notif-ic.streak,.notif-ic.restore{background:rgba(232,98,26,.13);color:#c4520f}
+.notif-ic.level{background:rgba(31,122,63,.12);color:#1f7a3f}
+.notif-text{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.35}
+.notif-text b{font-weight:700}
+.notif-list.nudges .notif-text b{color:#2f6f78;font-size:13px}
+.notif-text small{font-size:12px;color:#8a8176}
+.notif-empty{padding:8px 10px 12px;margin:0;font-size:14px;color:#6e675d}
+.platform.live-reader .notif-list button{justify-content:flex-start!important;white-space:normal!important;overflow:hidden}
+.notif-text{flex:1 1 auto;min-width:0;overflow-wrap:anywhere;white-space:normal}
+.notif-text>span,.notif-text b{white-space:normal}
